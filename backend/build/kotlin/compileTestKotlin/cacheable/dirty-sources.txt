@@ -1,0 +1,1 @@
+/home/user/IdeaProjects/polish-learn/backend/src/test/kotlin/me/fortibrine/PolishLearn/PolishLearnApplicationTests.kt

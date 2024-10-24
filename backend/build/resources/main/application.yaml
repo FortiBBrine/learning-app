@@ -1,0 +1,14 @@
+server:
+  error:
+    include-message: always
+spring:
+  application:
+    name: PolishLearn
+  data:
+    mongodb:
+      database: ${MONGODB_DATABASE}
+      uri: ${MONGODB_URI}
+security:
+  jwt:
+    secret-key: AzomDE3TeXUOtYaOP/mkRvDd6br4l2Qm8RffNQkD1KE=
+    expiration-time: 3600000
