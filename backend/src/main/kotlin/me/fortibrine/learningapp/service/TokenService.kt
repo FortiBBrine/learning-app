@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.service
 
-import me.fortibrine.learningapp.model.User
+import me.fortibrine.learningapp.model.AppUser
 import org.springframework.security.oauth2.jwt.*
 import org.springframework.stereotype.Service
 import java.time.Instant
@@ -13,7 +13,7 @@ class TokenService (
     private val userService: UserService
 ) {
 
-    fun createToken(user: User): String {
+    fun createToken(user: AppUser): String {
         val jwsHeader = JwsHeader.with { "HS256" }.build()
         val claims = JwtClaimsSet.builder()
             .issuedAt(Instant.now())
@@ -24,7 +24,7 @@ class TokenService (
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).tokenValue
     }
 
-    fun parseToken(token: String): User? {
+    fun parseToken(token: String): AppUser? {
         return try {
             val jwt = jwtDecoder.decode(token)
             val userId = jwt.claims["userId"] as String

@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.dto.register
 
-import me.fortibrine.learningapp.model.User
+import me.fortibrine.learningapp.model.AppUser
 import me.fortibrine.learningapp.service.UserService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -16,7 +16,7 @@ class RegisterValidator(
     override fun validate(target: Any, errors: Errors) {
         val payload = target as RegisterDto
 
-        if (SecurityContextHolder.getContext().authentication.principal is User) {
+        if (SecurityContextHolder.getContext().authentication.principal is AppUser) {
             errors.rejectValue("username", "", "You are already authenticated")
             return
         }

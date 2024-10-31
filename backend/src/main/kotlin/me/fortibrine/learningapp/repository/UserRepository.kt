@@ -1,15 +1,15 @@
 package me.fortibrine.learningapp.repository
 
-import me.fortibrine.learningapp.model.User
-import org.springframework.data.mongodb.repository.MongoRepository
+import me.fortibrine.learningapp.model.AppUser
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository: MongoRepository<User, String> {
+interface UserRepository: JpaRepository<AppUser, String> {
 
-    fun findByUsername(username: String): User?
+    fun findByUsername(username: String): AppUser?
     fun existsByUsername(username: String): Boolean
-    fun findByEmail(email: String): User?
+    fun findByEmail(email: String): AppUser?
 //    fun existByUsername(username: String): Boolean
 //    fun existByEmail(email: String): Boolean
 

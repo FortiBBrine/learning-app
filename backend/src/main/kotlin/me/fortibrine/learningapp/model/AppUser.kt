@@ -1,14 +1,16 @@
 package me.fortibrine.learningapp.model
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.mongodb.core.mapping.Document
+import jakarta.persistence.*
 
-@Document
-class User (
+@Entity
+class AppUser (
     @field:Id
+    @field:GeneratedValue(strategy = GenerationType.UUID)
     var id: String? = null,
     var username: String = "",
     var password: String = "",
     var email: String = "",
+
+    @field:ElementCollection
     var roles: List<String> = listOf("ROLE_USER"),
 )

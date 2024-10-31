@@ -20,6 +20,10 @@ tasks {
 		}
 	}
 
+	bootJar {
+		archiveFileName.set("LearningApp.jar")
+	}
+
 }
 
 repositories {
@@ -27,7 +31,9 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.postgresql:postgresql:42.7.4")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -40,7 +46,7 @@ dependencies {
 	implementation("org.codehaus.jackson:jackson-core-asl:1.9.13")
 	implementation("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
 
-	implementation("org.flywaydb:flyway-core")
+//	implementation("org.flywaydb:flyway-core")
 
 
 }
