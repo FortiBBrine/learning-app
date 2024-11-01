@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {Pressable, ScrollView, StyleSheet, View} from "react-native";
+import React from 'react';
+import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
 import {Text} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
-import {HomeScreenNavigationProp} from "../App";
+import {HomeScreenNavigationProp} from "../navigation/Navigator";
 
 const HomeScreen = () => {
 
@@ -15,12 +15,19 @@ const HomeScreen = () => {
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    useEffect(() => {
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
-            .then(data => dispatch(setPeople(data)))
+            .then(data => {
+                dispatch(setPeople(data))
+                setRefreshing(false);
+            })
             .catch(err => console.log(err));
-    }, []);
+    }
 
     return (
         <ScrollView
@@ -28,10 +35,11 @@ const HomeScreen = () => {
                 flex: 1,
                 margin: 30
             }}
+            refreshControl={<RefreshControl onRefresh={() => onRefresh()} refreshing={refreshing} />}
         >
 
             { people.map((item, index) => (
-                <Pressable onPress={() => {
+                <Pressable key={index} onPress={() => {
                     navigation.navigate(
                         "Profile",
                         {

@@ -1,8 +1,9 @@
 import React from 'react';
 import {Image, StyleSheet, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../App";
+import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../navigation/Navigator";
 import {Button, Text} from "react-native-paper";
+import {StatusBar} from "expo-status-bar";
 
 const ProfileScreen = () => {
     const navigation = useNavigation<ProfileScreenNavigationProp>()
@@ -33,6 +34,7 @@ const ProfileScreen = () => {
                     Розклад
                 </Text>
             </Button>
+            <StatusBar style="auto" />
         </View>
     );
 };
