@@ -1,22 +1,32 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface LoginState {
-    isLoggedIn: boolean;
+    token: string | null;
 }
 
 const initialState: LoginState = {
-    isLoggedIn: false,
+    token: null,
 }
 
 export const loginSlice = createSlice({
     name: "login",
     initialState,
     reducers: {
-        setLoggedIn: (state: LoginState, action: PayloadAction<boolean>) => {
-            state.isLoggedIn = action.payload
+        setToken: (state: LoginState, action: PayloadAction<string | null>) => {
+            state.token = action.payload
+
+            // if (state.token != null) {
+            //     AsyncStorage
+            //         .setItem("token", state.token)
+            //         .then()
+            // } else {
+            //     AsyncStorage
+            //         .removeItem("token")
+            //         .then()
+            // }
         }
     }
 })
 
-export const { setLoggedIn } = loginSlice.actions
+export const { setToken } = loginSlice.actions
 export default loginSlice.reducer

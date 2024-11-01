@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer, RouteProp} from "@react-navigation/native";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -6,6 +6,8 @@ import LoginScreen from "../screens/LoginScreen";
 import {Person} from "../store/slice/peopleSlice";
 import {createStackNavigator, StackNavigationProp} from "@react-navigation/stack";
 import {useAppSelector} from "../store/store";
+import {useDispatch} from "react-redux";
+import {setToken} from "../store/slice/loginSlice";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -25,12 +27,19 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 const Navigator = () => {
 
-    const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+    const token = useAppSelector(state => state.login.token)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setToken(null))
+        // AsyncStorage.getItem("token")
+        //     .then(data => dispatch(setToken(data)))
+    }, [])
 
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                { isLoggedIn ?
+                { token != null ?
                     <>
                         <Stack.Screen options={{headerTitle: "Вчителі / Учні"}} name="Home" component={HomeScreen} />
                         <Stack.Screen options={{headerTitle: "Профіль"}} name="Profile" component={ProfileScreen} />
