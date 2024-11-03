@@ -1,6 +1,5 @@
 package me.fortibrine.learningapp.controller
 
-import ch.qos.logback.core.model.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -8,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController {
 
     @GetMapping("/")
-    fun home(model: Model) = ""
+    fun home() = ""
 
 }
