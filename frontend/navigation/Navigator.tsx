@@ -8,20 +8,24 @@ import {createStackNavigator, StackNavigationProp} from "@react-navigation/stack
 import {useAppSelector} from "../store/store";
 import {useDispatch} from "react-redux";
 import {setToken} from "../store/slice/loginSlice";
+import RegisterScreen from "../screens/RegisterScreen";
 
 export type RootStackParamList = {
     Home: undefined;
     Profile: { person: Person };
     Login: undefined;
+    Register: undefined;
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Profile">
 export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">
+export type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, "Register">
 
 export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
 export type LoginScreenRouteProp = RouteProp<RootStackParamList, "Login">
+export type RegisterScreenRouteProp = RouteProp<RootStackParamList, "Register">
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -32,8 +36,6 @@ const Navigator = () => {
 
     useEffect(() => {
         dispatch(setToken(null))
-        // AsyncStorage.getItem("token")
-        //     .then(data => dispatch(setToken(data)))
     }, [])
 
     return (
@@ -46,6 +48,7 @@ const Navigator = () => {
                     </> :
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+                        <Stack.Screen options={{headerShown: false}} name="Register" component={RegisterScreen} />
                     </>
                 }
             </Stack.Navigator>

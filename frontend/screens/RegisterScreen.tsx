@@ -1,52 +1,56 @@
 import React from 'react';
 import {StyleSheet, View} from "react-native";
-import {StatusBar} from "expo-status-bar";
 import {useNavigation} from "@react-navigation/native";
-import {LoginScreenNavigationProp} from "../navigation/Navigator";
+import {RegisterScreenNavigationProp} from "../navigation/Navigator";
+import {StatusBar} from "expo-status-bar";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
-import {useDispatch} from "react-redux";
 import {setToken} from "../store/slice/loginSlice";
+import {useDispatch} from "react-redux";
 
-type LoginResponseDto = {
+type RegisterResponseDto = {
     result: {
         username: string | undefined,
-        password: string | undefined
+        password: string | undefined,
+        email: string | undefined
     },
     token: null
 }
 
-const LoginScreen = () => {
-
-    const navigation = useNavigation<LoginScreenNavigationProp>();
-    const dispatch = useDispatch();
+const RegisterScreen = () => {
+    const navigation = useNavigation<RegisterScreenNavigationProp>();
+    const dispatch = useDispatch()
 
     const [username, setUsername] = React.useState("")
+    const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
 
     const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined)
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
+    const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
 
-    const onPress = async () => {
-        fetch("https://learning-app-1ll5.onrender.com/api/login", {
+    const onPress = () => {
+        fetch("https://learning-app-1ll5.onrender.com/api/register", {
             method: "POST",
             body: JSON.stringify({
                 username: username,
-                password: password
+                password: password,
+                email: email,
             }),
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             }
         })
-            .then(data => data.json())
-            .then((data: LoginResponseDto) => {
-                if (data.token == null) {
-                    setUsernameErrors(data.result.username)
-                    setPasswordErrors(data.result.password)
-                    return
+            .then(res => res.json())
+            .then((res: RegisterResponseDto) => {
+                if (res.token == null) {
+                    setUsernameErrors(res.result.username)
+                    setEmailErrors(res.result.email)
+                    setPasswordErrors(res.result.password)
+                    return;
                 }
 
-                const token = data.token;
+                const token = res.token;
 
                 dispatch(setToken(token))
             })
@@ -58,7 +62,7 @@ const LoginScreen = () => {
             <Text variant="headlineLarge" style={{
                 alignSelf: "center"
             }}>
-                Ввійдіть в акаунт
+                Зареєструйтесь
             </Text>
 
             <TextInput label="Користувач" value={username} onChangeText={text => setUsername(text)} />
@@ -69,7 +73,15 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label="Пароль" secureTextEntry value={password} onChangeText={text => setPassword(text)} />
+            <TextInput label="Електронна пошта" value={email} onChangeText={text => setEmail(text)} />
+
+            { emailErrors != undefined &&
+                <HelperText type="error" visible={true}>
+                    {emailErrors}
+                </HelperText>
+            }
+
+            <TextInput secureTextEntry label="Пароль" value={password} onChangeText={text => setPassword(text)} />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -77,12 +89,8 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <Button onPress={onPress} mode="outlined">Ввійти</Button>
-            <Button onPress={() => {
-                navigation.navigate("Register")
-            }} mode="outlined">
-                Реєстрація
-            </Button>
+            <Button onPress={onPress} mode="outlined">Зареєструватись</Button>
+
             <StatusBar style="auto" />
         </View>
     );
@@ -98,4 +106,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginScreen;
+export default RegisterScreen;
