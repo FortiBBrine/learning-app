@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-data class RegisterDto (
+data class RegisterRequestDto (
     @field:Email(message = "Please provide a valid email address")
     val email: String,
 

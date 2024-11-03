@@ -23,13 +23,13 @@ const ProfileScreen = () => {
                 uri: 'https://cdn-icons-png.flaticon.com/128/3024/3024605.png'
             }} />
 
-            <Button mode="outlined">
+            <Button mode="outlined" onPress={() => {}}>
                 <Text variant="titleLarge">
                     Записатись на зайняття
                 </Text>
             </Button>
 
-            <Button mode="outlined">
+            <Button mode="outlined" onPress={() => {}}>
                 <Text variant="titleLarge">
                     Розклад
                 </Text>

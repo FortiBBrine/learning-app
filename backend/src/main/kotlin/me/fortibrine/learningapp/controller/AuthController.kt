@@ -4,7 +4,7 @@ import jakarta.validation.Valid
 import me.fortibrine.learningapp.dto.login.LoginRequestDto
 import me.fortibrine.learningapp.dto.login.LoginResponseDto
 import me.fortibrine.learningapp.dto.login.LoginValidator
-import me.fortibrine.learningapp.dto.register.RegisterDto
+import me.fortibrine.learningapp.dto.register.RegisterRequestDto
 import me.fortibrine.learningapp.dto.register.RegisterResponseDto
 import me.fortibrine.learningapp.dto.register.RegisterValidator
 import me.fortibrine.learningapp.model.AppUser
@@ -60,7 +60,7 @@ class AuthController (
     fun register(
         @Valid
         @RequestBody
-        payload: RegisterDto,
+        payload: RegisterRequestDto,
 
         bindingResult: BindingResult
     ): LoginResponseDto {

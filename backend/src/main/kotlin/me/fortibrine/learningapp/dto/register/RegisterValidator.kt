@@ -11,10 +11,10 @@ import org.springframework.validation.Validator
 class RegisterValidator(
     private val userService: UserService
 ): Validator {
-    override fun supports(clazz: Class<*>) = RegisterDto::class.java == clazz
+    override fun supports(clazz: Class<*>) = RegisterRequestDto::class.java == clazz
 
     override fun validate(target: Any, errors: Errors) {
-        val payload = target as RegisterDto
+        val payload = target as RegisterRequestDto
 
         if (SecurityContextHolder.getContext().authentication.principal is AppUser) {
             errors.rejectValue("username", "", "You are already authenticated")

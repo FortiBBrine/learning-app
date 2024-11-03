@@ -6,15 +6,7 @@ import {StatusBar} from "expo-status-bar";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {setToken} from "../store/slice/loginSlice";
 import {useDispatch} from "react-redux";
-
-type RegisterResponseDto = {
-    result: {
-        username: string | undefined,
-        password: string | undefined,
-        email: string | undefined
-    },
-    token: null
-}
+import {register} from "../api/registerApi";
 
 const RegisterScreen = () => {
     const navigation = useNavigation<RegisterScreenNavigationProp>();
@@ -28,33 +20,19 @@ const RegisterScreen = () => {
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
     const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
 
-    const onPress = () => {
-        fetch("https://learning-app-1ll5.onrender.com/api/register", {
-            method: "POST",
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                email: email,
-            }),
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then((res: RegisterResponseDto) => {
-                if (res.token == null) {
-                    setUsernameErrors(res.result.username)
-                    setEmailErrors(res.result.email)
-                    setPasswordErrors(res.result.password)
-                    return;
-                }
+    const onPress = async () => {
+        const res = await register(username, email, password)
 
-                const token = res.token;
+        if (res.token == null) {
+            setUsernameErrors(res.result.username)
+            setEmailErrors(res.result.email)
+            setPasswordErrors(res.result.password)
+            return;
+        }
 
-                dispatch(setToken(token))
-            })
-            .catch(err => console.log(err))
+        const token = res.token;
+
+        dispatch(setToken(token))
     }
 
     return (

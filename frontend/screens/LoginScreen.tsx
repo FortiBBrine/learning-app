@@ -6,14 +6,7 @@ import {LoginScreenNavigationProp} from "../navigation/Navigator";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setToken} from "../store/slice/loginSlice";
-
-type LoginResponseDto = {
-    result: {
-        username: string | undefined,
-        password: string | undefined
-    },
-    token: null
-}
+import {login} from "../api/loginApi";
 
 const LoginScreen = () => {
 
@@ -27,30 +20,17 @@ const LoginScreen = () => {
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
 
     const onPress = async () => {
-        fetch("https://learning-app-1ll5.onrender.com/api/login", {
-            method: "POST",
-            body: JSON.stringify({
-                username: username,
-                password: password
-            }),
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-            .then(data => data.json())
-            .then((data: LoginResponseDto) => {
-                if (data.token == null) {
-                    setUsernameErrors(data.result.username)
-                    setPasswordErrors(data.result.password)
-                    return
-                }
+        const data = await login(username, password)
 
-                const token = data.token;
+        if (data.token == null) {
+            setUsernameErrors(data.result.username)
+            setPasswordErrors(data.result.password)
+            return
+        }
 
-                dispatch(setToken(token))
-            })
-            .catch(err => console.log(err))
+        const token = data.token;
+
+        dispatch(setToken(token))
     }
 
     return (
