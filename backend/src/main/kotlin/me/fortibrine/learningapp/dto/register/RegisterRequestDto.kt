@@ -8,7 +8,7 @@ data class RegisterRequestDto (
     @field:Email(message = "Please provide a valid email address")
     val email: String,
 
-    @field:NotBlank(message = "Please provide a valid password")
+    @field:NotBlank(message = "Please provide a valid username")
     val username: String,
 
     @field:Size(min = 8, max = 32, message = "Password must contain at least 8 characters")

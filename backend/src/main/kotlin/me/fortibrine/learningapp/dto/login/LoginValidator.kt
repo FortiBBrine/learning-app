@@ -18,7 +18,7 @@ class LoginValidator (
 
     override fun validate(target: Any, errors: Errors) {
         val payload = target as LoginRequestDto
-        val user = userService.findByUsername(payload.username)
+        val user = userService.findByUsername(payload.username.replace(" ", ""))
 
         if (SecurityContextHolder.getContext().authentication.principal is AppUser) {
             errors.rejectValue("username", "", "You are already authenticated")

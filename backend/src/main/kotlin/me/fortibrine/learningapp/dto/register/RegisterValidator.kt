@@ -21,7 +21,7 @@ class RegisterValidator(
             return
         }
 
-        if (userService.existsByName(payload.username)) {
+        if (userService.existsByName(payload.username.replace(" ", ""))) {
             errors.rejectValue("username", "", "Already exists")
         }
 
