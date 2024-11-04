@@ -21,7 +21,7 @@ const RegisterScreen = () => {
     const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
 
     const onPress = async () => {
-        const res = await register(username, email, password)
+        const res = await register(email, username, password)
 
         if (res.token == null) {
             setUsernameErrors(res.result.username)
