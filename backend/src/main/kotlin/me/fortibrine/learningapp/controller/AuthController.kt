@@ -11,6 +11,7 @@ import me.fortibrine.learningapp.model.AppUser
 import me.fortibrine.learningapp.service.HashService
 import me.fortibrine.learningapp.service.TokenService
 import me.fortibrine.learningapp.service.UserService
+import org.slf4j.LoggerFactory
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.annotation.*
@@ -25,6 +26,8 @@ class AuthController (
     private val registerValidator: RegisterValidator
 ) {
 
+    private val logger = LoggerFactory.getLogger(AuthController::class.java)
+
     @PostMapping("/login")
     fun login(
         @Valid
@@ -33,6 +36,8 @@ class AuthController (
 
         bindingResult: BindingResult
     ): RegisterResponseDto {
+
+        logger.info(payload.toString())
 
         loginValidator.validate(payload, bindingResult)
 
@@ -64,6 +69,8 @@ class AuthController (
 
         bindingResult: BindingResult
     ): LoginResponseDto {
+
+        logger.info(payload.toString())
 
         registerValidator.validate(payload, bindingResult)
 
