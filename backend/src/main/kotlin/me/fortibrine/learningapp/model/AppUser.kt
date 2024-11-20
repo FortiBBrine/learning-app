@@ -1,6 +1,7 @@
 package me.fortibrine.learningapp.model
 
 import jakarta.persistence.*
+import me.fortibrine.learningapp.dto.controller.ContactDto
 
 @Entity
 class AppUser (
@@ -12,5 +13,8 @@ class AppUser (
     var email: String = "",
 
     @field:ElementCollection
-    var roles: List<String> = listOf("ROLE_USER"),
+    var roles: MutableList<String> = listOf("ROLE_USER"),
+
+    @field:ElementCollection
+    var contacts: MutableList<String> = listOf()
 )
