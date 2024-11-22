@@ -7,7 +7,7 @@ class Relation (
 
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int? = null,
+    var id: Long? = null,
 
     @field:OneToOne(fetch = FetchType.EAGER)
     @field:JoinColumn(name = "target_id")

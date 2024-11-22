@@ -8,6 +8,9 @@ data class RegisterRequestDto (
     @field:Email(message = "Please provide a valid email address")
     val email: String,
 
+    @field:NotBlank(message = "Please provide a valid name")
+    val name: String,
+
     @field:NotBlank(message = "Please provide a valid username")
     val username: String,
 

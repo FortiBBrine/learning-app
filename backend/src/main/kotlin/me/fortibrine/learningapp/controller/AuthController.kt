@@ -17,7 +17,7 @@ import org.springframework.validation.FieldError
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 class AuthController (
     private val hashService: HashService,
     private val tokenService: TokenService,
@@ -88,6 +88,7 @@ class AuthController (
 
         val user = User(
             email = payload.email,
+            name = payload.name,
             username = payload.username.replace(" ", ""),
             password = hashService.hashBcrypt(payload.password),
         )

@@ -27,8 +27,8 @@ class SecurityConfig (
         // Define public and private routes
         http.authorizeHttpRequests { request ->
             request
-                .requestMatchers("/api/login").permitAll()
-                .requestMatchers("/api/register").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/register").permitAll()
                 .requestMatchers("/api/test").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()

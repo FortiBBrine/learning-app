@@ -6,7 +6,8 @@ import jakarta.persistence.*
 class User (
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Int? = null,
+    var id: Long? = null,
+    var name: String = "",
     var username: String = "",
     var password: String = "",
     var email: String = "",
