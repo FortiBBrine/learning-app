@@ -1,5 +1,5 @@
 package me.fortibrine.learningapp.dto.controller
 
-data class ContactDto (
+data class RelationDto (
     val username: String
 )

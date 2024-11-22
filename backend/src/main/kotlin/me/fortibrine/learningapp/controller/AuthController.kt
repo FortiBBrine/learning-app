@@ -7,7 +7,7 @@ import me.fortibrine.learningapp.dto.login.LoginValidator
 import me.fortibrine.learningapp.dto.register.RegisterRequestDto
 import me.fortibrine.learningapp.dto.register.RegisterResponseDto
 import me.fortibrine.learningapp.dto.register.RegisterValidator
-import me.fortibrine.learningapp.model.AppUser
+import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.service.HashService
 import me.fortibrine.learningapp.service.TokenService
 import me.fortibrine.learningapp.service.UserService
@@ -53,7 +53,7 @@ class AuthController (
             )
         }
 
-        val user = userService.findByUsername(payload.username.replace(" ", "")) as AppUser
+        val user = userService.findByUsername(payload.username.replace(" ", "")) as User
 
         return RegisterResponseDto(
             result = mapOf(),
@@ -86,7 +86,7 @@ class AuthController (
             )
         }
 
-        val user = AppUser(
+        val user = User(
             email = payload.email,
             username = payload.username.replace(" ", ""),
             password = hashService.hashBcrypt(payload.password),

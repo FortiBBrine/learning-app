@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.service
 
-import me.fortibrine.learningapp.model.AppUser
+import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -10,9 +10,9 @@ class UserService (
     private val userRepository: UserRepository
 ) {
 
-    fun findById(id: String): AppUser? = userRepository.findByIdOrNull(id)
-    fun findByUsername(username: String): AppUser? = userRepository.findByUsername(username)
+    fun findById(id: Long): User? = userRepository.findByIdOrNull(id)
+    fun findByUsername(username: String): User? = userRepository.findByUsername(username)
     fun existsByName(name: String): Boolean = userRepository.existsByUsername(name)
-    fun save(user: AppUser): AppUser = userRepository.save(user)
+    fun save(user: User): User = userRepository.save(user)
 
 }
