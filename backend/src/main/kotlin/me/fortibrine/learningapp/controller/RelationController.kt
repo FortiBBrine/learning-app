@@ -24,7 +24,11 @@ class RelationController (
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         val relation = relationRepository.findByTarget(principal) ?: return emptyList()
-        return relation.users.map { RelationDto(name = it.name) }
+        return relation.users.map { RelationDto(
+            name = it.name,
+            username = it.username,
+            email = it.email
+        ) }
     }
 
     @PostMapping("/add")
