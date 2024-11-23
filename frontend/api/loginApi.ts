@@ -8,7 +8,7 @@ export type LoginResponseDto = {
 }
 
 export async function login(username: string, password: string): Promise<LoginResponseDto> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/login", {
+    const res = await fetch("https://learning-app-1ll5.onrender.com/api/auth/login", {
         method: "POST",
         body: JSON.stringify({
             username: username,

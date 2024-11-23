@@ -15,18 +15,21 @@ const RegisterScreen = () => {
     const [username, setUsername] = React.useState("")
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
+    const [name, setName] = React.useState("")
 
     const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined)
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
     const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
+    const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined)
 
     const onPress = async () => {
-        const res = await register(email, username, password)
+        const res = await register(email, name, username, password)
 
         if (res.token == null) {
             setUsernameErrors(res.result.username)
             setEmailErrors(res.result.email)
             setPasswordErrors(res.result.password)
+            setNameErrors(res.result.name)
             return;
         }
 
@@ -43,11 +46,19 @@ const RegisterScreen = () => {
                 Зареєструйтесь
             </Text>
 
-            <TextInput label="Користувач" value={username} onChangeText={text => setUsername(text)} />
+            <TextInput label="Нікнейм" value={username} onChangeText={text => setUsername(text)} />
 
             { usernameErrors != undefined &&
                 <HelperText type="error" visible={true}>
                     {usernameErrors}
+                </HelperText>
+            }
+
+            <TextInput label="Користувач" value={name} onChangeText={text => setName(text)} />
+
+            { nameErrors != undefined &&
+                <HelperText type="error" visible={true}>
+                    {nameErrors}
                 </HelperText>
             }
 

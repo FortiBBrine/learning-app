@@ -7,26 +7,30 @@ import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
+import {getAllRelations} from "../api/relationApi";
 
 const HomeScreen = () => {
 
     const people = useAppSelector(state => state.people.people);
+    const token = useAppSelector(state => state.login.token);
     const dispatch = useDispatch();
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = () => {
-        setRefreshing(true);
+    const onRefresh = async () => {
+        if (token == null) return
+        setRefreshing(true)
 
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then(response => response.json())
-            .then(data => {
-                dispatch(setPeople(data))
-                setRefreshing(false);
-            })
-            .catch(err => console.log(err));
+        try {
+            const data = await getAllRelations(token)
+            dispatch(setPeople(data))
+        } catch (err) {
+            console.log(err);
+        }
+
+        setRefreshing(false)
     }
 
     return (
