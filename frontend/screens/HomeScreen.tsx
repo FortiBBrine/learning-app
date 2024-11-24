@@ -2,12 +2,12 @@ import React from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
-import {Text} from "react-native-paper";
+import {Button, Dialog, IconButton, Portal, Text} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
-import {getAllRelations} from "../api/relationApi";
+import {deleteRelation, getAllRelations} from "../api/relationApi";
 
 const HomeScreen = () => {
 
@@ -18,6 +18,7 @@ const HomeScreen = () => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     const [refreshing, setRefreshing] = React.useState(false);
+    const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
 
     const onRefresh = async () => {
         if (token == null) return
@@ -31,6 +32,20 @@ const HomeScreen = () => {
         }
 
         setRefreshing(false)
+    }
+
+    const onDeleteUser = async () => {
+        if (deleteUser == null) return
+        if (token == null) return
+
+        try {
+            await deleteRelation(deleteUser, token)
+        } catch (err) {
+            console.log(err);
+        }
+
+        setDeleteUser(null)
+        await onRefresh()
     }
 
     return (
@@ -52,26 +67,51 @@ const HomeScreen = () => {
                     )
                 }}>
                     <View style={styles.listItem}>
-                        <Text variant="titleLarge">
+                        <Text variant="titleMedium">
                             {item.name}
                         </Text>
+
+                        <IconButton
+                            icon="trash-can"
+                            size={20}
+                            onPress={() => setDeleteUser(item.username)}
+                            />
 
                     </View>
                 </Pressable>
             ))}
             <StatusBar style="auto" />
+            <Portal>
+                <Dialog
+                    visible={deleteUser != undefined}
+                    onDismiss={() => setDeleteUser(null)}
+                >
+                    <Dialog.Title>Видалити</Dialog.Title>
+                    <Dialog.Content>
+                        <Text variant="bodyMedium">
+                            Видалити користувача {deleteUser}
+                        </Text>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={onDeleteUser}>Так</Button>
+                        <Button onPress={() => setDeleteUser(null)}>Ні</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 20,
+        padding: 10,
         borderRadius: 10,
         borderColor: "teal",
         borderStyle: "solid",
         borderWidth: 1,
         alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
         marginTop: 10
     }
 })
