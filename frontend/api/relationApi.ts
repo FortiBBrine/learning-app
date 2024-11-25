@@ -26,3 +26,15 @@ export async function deleteRelation(username: string, token: string): Promise<v
         }
     })
 }
+
+export async function addRelation(username: string, token: string): Promise<void> {
+    const res = await fetch("https://learning-app-1ll5.onrender.com/api/relation/add?username=" + username, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+        }
+    })
+}
+

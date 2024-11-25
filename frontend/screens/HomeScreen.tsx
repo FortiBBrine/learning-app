@@ -2,12 +2,13 @@ import React from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
-import {Button, Dialog, IconButton, Portal, Text} from "react-native-paper";
+import {Appbar, Button, Dialog, IconButton, Portal, Text} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
+import AddUserDialog from "../component/AddUserDialog";
 
 const HomeScreen = () => {
 
@@ -19,6 +20,7 @@ const HomeScreen = () => {
 
     const [refreshing, setRefreshing] = React.useState(false);
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
+    const [addUserDialogShown, setAddUserDialogShown] = React.useState(false);
 
     const onRefresh = async () => {
         if (token == null) return
@@ -48,39 +50,47 @@ const HomeScreen = () => {
         await onRefresh()
     }
 
+
     return (
-        <ScrollView
-            style={{
-                flex: 1,
-                margin: 30
-            }}
-            refreshControl={<RefreshControl onRefresh={() => onRefresh()} refreshing={refreshing} />}
-        >
+        <>
+            <Appbar.Header>
+                <Appbar.Content title="Вчителі / учні" />
+                <Appbar.Action icon={"plus"} onPress={() => setAddUserDialogShown(true)} />
+            </Appbar.Header>
+            <ScrollView
+                style={{
+                    flex: 1,
+                    margin: 30
+                }}
+                refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
+            >
 
-            { people.map((item, index) => (
-                <Pressable key={index} onPress={() => {
-                    navigation.navigate(
-                        "Profile",
-                        {
-                            person: item
-                        }
-                    )
-                }}>
-                    <View style={styles.listItem}>
-                        <Text variant="titleMedium">
-                            {item.name}
-                        </Text>
+                { people.map((item, index) => (
+                    <Pressable key={index} onPress={() => {
+                        navigation.navigate(
+                            "Profile",
+                            {
+                                person: item
+                            }
+                        )
+                    }}>
+                        <View style={styles.listItem}>
+                            <Text variant="titleMedium">
+                                {item.name}
+                            </Text>
 
-                        <IconButton
-                            icon="trash-can"
-                            size={20}
-                            onPress={() => setDeleteUser(item.username)}
+                            <IconButton
+                                icon="trash-can"
+                                size={20}
+                                onPress={() => setDeleteUser(item.username)}
                             />
 
-                    </View>
-                </Pressable>
-            ))}
-            <StatusBar style="auto" />
+                        </View>
+                    </Pressable>
+                ))}
+                <StatusBar style="auto" />
+            </ScrollView>
+
             <Portal>
                 <Dialog
                     visible={deleteUser != undefined}
@@ -97,8 +107,14 @@ const HomeScreen = () => {
                         <Button onPress={() => setDeleteUser(null)}>Ні</Button>
                     </Dialog.Actions>
                 </Dialog>
+                <AddUserDialog
+                    shown={addUserDialogShown}
+                    onDismiss={() => setAddUserDialogShown(false)}
+                    refresh={onRefresh}
+                />
+
             </Portal>
-        </ScrollView>
+        </>
     );
 };
 
