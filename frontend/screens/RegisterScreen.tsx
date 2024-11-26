@@ -7,6 +7,7 @@ import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {setToken} from "../store/slice/loginSlice";
 import {useDispatch} from "react-redux";
 import {register} from "../api/registerApi";
+import {useTranslation} from "react-i18next";
 
 const RegisterScreen = () => {
     const navigation = useNavigation<RegisterScreenNavigationProp>();
@@ -21,6 +22,8 @@ const RegisterScreen = () => {
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
     const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
     const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined)
+
+    const [t, i18n] = useTranslation();
 
     const onPress = async () => {
         const res = await register(email, name, username, password)
@@ -43,10 +46,10 @@ const RegisterScreen = () => {
             <Text variant="headlineLarge" style={{
                 alignSelf: "center"
             }}>
-                Зареєструйтесь
+                {t("register-page-title")}
             </Text>
 
-            <TextInput label="Нікнейм" value={username} onChangeText={text => setUsername(text)} />
+            <TextInput label={t("username")} value={username} onChangeText={text => setUsername(text)} />
 
             { usernameErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -54,7 +57,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label="Користувач" value={name} onChangeText={text => setName(text)} />
+            <TextInput label={t("name")} value={name} onChangeText={text => setName(text)} />
 
             { nameErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -62,7 +65,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label="Електронна пошта" value={email} onChangeText={text => setEmail(text)} />
+            <TextInput label={t("email")} value={email} onChangeText={text => setEmail(text)} />
 
             { emailErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -70,7 +73,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <TextInput secureTextEntry label="Пароль" value={password} onChangeText={text => setPassword(text)} />
+            <TextInput secureTextEntry label={t("password")} value={password} onChangeText={text => setPassword(text)} />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -78,7 +81,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <Button onPress={onPress} mode="outlined">Зареєструватись</Button>
+            <Button onPress={onPress} mode="outlined">{t("register-button")}</Button>
 
             <StatusBar style="auto" />
         </View>

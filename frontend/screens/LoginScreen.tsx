@@ -7,6 +7,7 @@ import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setToken} from "../store/slice/loginSlice";
 import {login} from "../api/loginApi";
+import {useTranslation} from "react-i18next";
 
 const LoginScreen = () => {
 
@@ -18,6 +19,8 @@ const LoginScreen = () => {
 
     const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined)
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
+
+    const [t, i18n] = useTranslation();
 
     const onPress = async () => {
         const data = await login(username, password)
@@ -38,10 +41,10 @@ const LoginScreen = () => {
             <Text variant="headlineLarge" style={{
                 alignSelf: "center"
             }}>
-                Ввійдіть в акаунт
+                {t("login-page-title")}
             </Text>
 
-            <TextInput label="Користувач" value={username} onChangeText={text => setUsername(text)} />
+            <TextInput label={t("login")} value={username} onChangeText={text => setUsername(text)} />
 
             { usernameErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -49,7 +52,7 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label="Пароль" secureTextEntry value={password} onChangeText={text => setPassword(text)} />
+            <TextInput label={t("password")} secureTextEntry value={password} onChangeText={text => setPassword(text)} />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -57,11 +60,11 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <Button onPress={onPress} mode="outlined">Ввійти</Button>
+            <Button onPress={onPress} mode="outlined">{t("login-button")}</Button>
             <Button onPress={() => {
                 navigation.navigate("Register")
             }} mode="outlined">
-                Реєстрація
+                {t("register-goto-button")}
             </Button>
             <StatusBar style="auto" />
         </View>

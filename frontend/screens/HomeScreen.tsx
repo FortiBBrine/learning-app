@@ -9,6 +9,7 @@ import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
 import AddUserDialog from "../component/AddUserDialog";
+import {useTranslation} from "react-i18next";
 
 const HomeScreen = () => {
 
@@ -21,6 +22,8 @@ const HomeScreen = () => {
     const [refreshing, setRefreshing] = React.useState(false);
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
     const [addUserDialogShown, setAddUserDialogShown] = React.useState(false);
+
+    const [t, i18n] = useTranslation();
 
     const onRefresh = async () => {
         if (token == null) return
@@ -54,7 +57,7 @@ const HomeScreen = () => {
     return (
         <>
             <Appbar.Header>
-                <Appbar.Content title="Вчителі / учні" />
+                <Appbar.Content title={t("main-page-title")} />
                 <Appbar.Action icon={"plus"} onPress={() => setAddUserDialogShown(true)} />
             </Appbar.Header>
             <ScrollView
@@ -96,15 +99,15 @@ const HomeScreen = () => {
                     visible={deleteUser != undefined}
                     onDismiss={() => setDeleteUser(null)}
                 >
-                    <Dialog.Title>Видалити</Dialog.Title>
+                    <Dialog.Title>{t("delete-dialog-title")}</Dialog.Title>
                     <Dialog.Content>
                         <Text variant="bodyMedium">
-                            Видалити користувача {deleteUser}
+                            {t("delete-dialog-content")}{deleteUser}
                         </Text>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={onDeleteUser}>Так</Button>
-                        <Button onPress={() => setDeleteUser(null)}>Ні</Button>
+                        <Button onPress={onDeleteUser}>{t("yes-button")}</Button>
+                        <Button onPress={() => setDeleteUser(null)}>{t("no-button")}</Button>
                     </Dialog.Actions>
                 </Dialog>
                 <AddUserDialog

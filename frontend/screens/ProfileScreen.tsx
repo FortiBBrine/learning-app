@@ -4,10 +4,13 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../navigation/Navigator";
 import {Button, Text} from "react-native-paper";
 import {StatusBar} from "expo-status-bar";
+import {useTranslation} from "react-i18next";
 
 const ProfileScreen = () => {
     const navigation = useNavigation<ProfileScreenNavigationProp>()
     const route = useRoute<ProfileScreenRouteProp>()
+
+    const [t, i18n] = useTranslation();
 
     return (
         <View style={styles.container}>
@@ -25,13 +28,13 @@ const ProfileScreen = () => {
 
             <Button mode="outlined" onPress={() => {}}>
                 <Text variant="titleLarge">
-                    Записатись на зайняття
+                    {t("get-into-schedule")}
                 </Text>
             </Button>
 
             <Button mode="outlined" onPress={() => {}}>
                 <Text variant="titleLarge">
-                    Розклад
+                    {t("schedule")}
                 </Text>
             </Button>
             <StatusBar style="auto" />

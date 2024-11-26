@@ -1,9 +1,10 @@
 
 import {Provider} from "react-redux";
-import {store, useAppSelector} from "./store/store";
+import {store} from "./store/store";
 import {PaperProvider} from "react-native-paper";
 import React from "react";
 import Navigator from "./navigation/Navigator";
+import "./language/i18n";
 
 export default function App() {
 

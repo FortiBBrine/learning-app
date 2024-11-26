@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Dialog, Text, TextInput} from "react-native-paper";
 import {addRelation} from "../api/relationApi";
 import {useAppSelector} from "../store/store";
+import {useTranslation} from "react-i18next";
 
 type AddUserDialogProps = {
     shown: boolean,
@@ -11,6 +12,7 @@ type AddUserDialogProps = {
 
 const AddUserDialog: React.FC<AddUserDialogProps> = (props) => {
 
+    const [t, i18n] = useTranslation();
     const [username, setUsername] = React.useState("")
     const token = useAppSelector(state => state.login.token);
 
@@ -34,16 +36,16 @@ const AddUserDialog: React.FC<AddUserDialogProps> = (props) => {
             visible={props.shown}
             onDismiss={props.onDismiss}
         >
-            <Dialog.Title>Створити</Dialog.Title>
+            <Dialog.Title>{t("create-relation-dialog-title")}</Dialog.Title>
             <Dialog.Content>
-                <Text>Увага! Це тимчасове меню!</Text>
+                <Text>{t("create-relation-dialog-content")}</Text>
                 <TextInput
-                    placeholder="Користувач"
+                    placeholder={t("create-relation-dialog-input")}
                     onChangeText={text => setUsername(text)}
                 />
             </Dialog.Content>
             <Dialog.Actions>
-                <Button onPress={addUser}>Створити</Button>
+                <Button onPress={addUser}>{t("create-relation-dialog-button")}</Button>
             </Dialog.Actions>
         </Dialog>
 

@@ -1,0 +1,27 @@
+{
+  "login-page-title": "Увійдіть в обліковий запис",
+  "login": "Користувач",
+  "password": "Пароль",
+  "login-button": "Увійти",
+  "register-goto-button": "Реєстрація",
+
+  "register-page-title": "Зареєструйтесь",
+  "username": "Нікнейм",
+  "name": "Ім'я",
+  "email": "Електронна пошта",
+  "register-button": "Зареєструватись",
+
+  "get-into-schedule": "Записатись на заняття",
+  "schedule": "Розклад",
+
+  "main-page-title": "Вчителі / учні",
+  "delete-dialog-title": "Видалити",
+  "delete-dialog-content": "Видалити користувача: ",
+  "yes-button": "Так",
+  "no-button": "Ні",
+
+  "create-relation-dialog-title": "Створити",
+  "create-relation-dialog-content": "Увага! Це тимчасове меню!",
+  "create-relation-dialog-input": "Користувач",
+  "create-relation-dialog-button": "Створити"
+}
