@@ -9,13 +9,14 @@ class Calendar (
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
 
-    @field:OneToOne(fetch = FetchType.EAGER)
+    @field:ManyToOne(fetch = FetchType.EAGER)
     @field:JoinColumn(name = "user_id")
     var user: User? = null,
 
-    var timestamp: Timestamp? = null,
+    var fromTime: Timestamp? = null,
+    var toTime: Timestamp? = null,
 
-    @field:OneToOne(fetch = FetchType.EAGER)
+    @field:ManyToOne(fetch = FetchType.EAGER)
     @field:JoinColumn(name = "target_id")
     var target: User? = null
 )

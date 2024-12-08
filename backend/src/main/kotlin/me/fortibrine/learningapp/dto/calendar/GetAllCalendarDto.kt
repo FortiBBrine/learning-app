@@ -7,6 +7,8 @@ data class GetAllCalendarDto (
 )
 
 data class CalendarDto (
+    val name: String,
     val username: String,
-    val timestamp: Timestamp
+    val from: Timestamp,
+    val to: Timestamp
 )

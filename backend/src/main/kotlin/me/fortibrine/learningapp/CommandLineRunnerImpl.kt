@@ -8,23 +8,26 @@ import org.springframework.stereotype.Component
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-@Component
+//@Component
 class CommandLineRunnerImpl(
     private val calendarRepository: CalendarRepository,
     private val userRepository: UserRepository
 ): CommandLineRunner {
 
     override fun run(vararg args: String) {
-        /*
-        val user = userRepository.findByUsername("sashasteblevets") ?: return
-
-        println(user)
         calendarRepository.save(Calendar(
-            user = user,
-            timestamp = Timestamp.valueOf(LocalDateTime.now()),
+            user = userRepository.findByUsername("sashasteblevets") ?: return,
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 9, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 10, 0)),
             target = userRepository.findByUsername("Kamren") ?: return
         ))
-         */
+
+        calendarRepository.save(Calendar(
+            user = userRepository.findByUsername("Kamren") ?: return,
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 9, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 10, 0)),
+            target = userRepository.findByUsername("sashasteblevets") ?: return
+        ))
     }
 
 }
