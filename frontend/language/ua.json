@@ -23,5 +23,8 @@
   "create-relation-dialog-title": "Створити",
   "create-relation-dialog-content": "Увага! Це тимчасове меню!",
   "create-relation-dialog-input": "Користувач",
-  "create-relation-dialog-button": "Створити"
+  "create-relation-dialog-button": "Створити",
+
+  "profile": "Профіль",
+  "calendar": "Розклад"
 }

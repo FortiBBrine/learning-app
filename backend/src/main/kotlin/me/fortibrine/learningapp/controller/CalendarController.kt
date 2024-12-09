@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.sql.Timestamp
+import java.time.Instant
 
 @RequestMapping("/api/calendar")
 @RestController
@@ -51,12 +52,12 @@ class CalendarController(
     ): GetAllCalendarDto {
 
         val calendars = if (username == "me") {
-            calendarRepository.findByUser(principal)
+            calendarRepository.findByUserAndFromTimeAfter(principal, Timestamp.from(Instant.now()))
         } else {
-            calendarRepository.findByUser(
+            calendarRepository.findByUserAndFromTimeAfter(
                 userRepository.findByUsername(username) ?: return GetAllCalendarDto(
                     emptyList()
-                )
+                ), Timestamp.from(Instant.now())
             )
         }
 

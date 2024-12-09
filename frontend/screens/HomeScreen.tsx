@@ -59,6 +59,7 @@ const HomeScreen = () => {
             <Appbar.Header>
                 <Appbar.Content title={t("main-page-title")} />
                 <Appbar.Action icon={"plus"} onPress={() => setAddUserDialogShown(true)} />
+                <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
             </Appbar.Header>
             <ScrollView
                 style={{

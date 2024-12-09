@@ -17,15 +17,15 @@ class CommandLineRunnerImpl(
     override fun run(vararg args: String) {
         calendarRepository.save(Calendar(
             user = userRepository.findByUsername("sashasteblevets") ?: return,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 9, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 10, 0)),
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 9, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 10, 0)),
             target = userRepository.findByUsername("Kamren") ?: return
         ))
 
         calendarRepository.save(Calendar(
             user = userRepository.findByUsername("Kamren") ?: return,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 9, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 8, 10, 0)),
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 9, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 10, 0)),
             target = userRepository.findByUsername("sashasteblevets") ?: return
         ))
     }
