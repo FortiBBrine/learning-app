@@ -2,25 +2,19 @@ import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
 import {useAppSelector} from "../store/store";
-import {getAllCalendars} from "../api/calendarApi";
+import {Calendar, getAllCalendars} from "../api/calendarApi";
 
 const CalendarScreen = () => {
 
     const token = useAppSelector(state => state.login.token)
+    const [calendars, setCalendars] = React.useState<Calendar[]>([]);
 
     useEffect(() => {
         if (token == null) return;
 
         getAllCalendars(token)
             .then(res => {
-                res.calendars.forEach(calendar => {
-                    const from = new Date(calendar.from)
-                    const to = new Date(calendar.to)
-
-                    console.log(from)
-                    console.log(to)
-
-                })
+                setCalendars(res.calendars)
             })
     }, [])
 
@@ -29,16 +23,26 @@ const CalendarScreen = () => {
             <ScrollView style={{
                 flex: 1
             }}>
-                <View style={{
-                    flex: 1,
-                    padding: 30,
-                    borderRadius: 10,
-                    borderColor: "teal",
-                    borderWidth: 3,
-                    alignItems: "center"
-                }}>
-                    <Text variant="titleMedium">123</Text>
-                </View>
+                { calendars.map((calendar, index) => (
+                    <View key={index} style={{
+                        flex: 1,
+                        padding: 30,
+                        borderRadius: 10,
+                        borderColor: "teal",
+                        borderWidth: 3,
+                        alignItems: "center"
+                    }}>
+                        <Text variant="titleLarge">{calendar.name}</Text>
+                        <Text variant="titleLarge">{new Date(calendar.from).toDateString()}</Text>
+                        <Text variant="titleSmall">
+                            {calendar.from}
+                        </Text>
+                        <Text variant="titleSmall">
+                            {calendar.to}
+                        </Text>
+                    </View>
+                ))}
+
             </ScrollView>
         </View>
     );
