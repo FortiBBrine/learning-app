@@ -10,5 +10,5 @@ import java.sql.Timestamp
 interface CalendarRepository: JpaRepository<Calendar, Long> {
     fun findByUser(user: User): List<Calendar>
     fun findByTarget(user: User): List<Calendar>
-    fun findByUserAndFromTimeAfter(user: User, fromTimeAfter: Timestamp): MutableList<Calendar>
+    fun findByUserAndFromTimeAfterOrderByFromTime(user: User, fromTimeAfter: Timestamp): MutableList<Calendar>
 }

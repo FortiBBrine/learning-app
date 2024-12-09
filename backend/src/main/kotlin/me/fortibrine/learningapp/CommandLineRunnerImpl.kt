@@ -15,18 +15,22 @@ class CommandLineRunnerImpl(
 ): CommandLineRunner {
 
     override fun run(vararg args: String) {
+
+        val user = userRepository.findByUsername("sashasteblevets") ?: return
+        val target = userRepository.findByUsername("Samantha") ?: return
+
         calendarRepository.save(Calendar(
-            user = userRepository.findByUsername("sashasteblevets") ?: return,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 9, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 10, 0)),
-            target = userRepository.findByUsername("Kamren") ?: return
+            user = user,
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 7, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 8, 0)),
+            target = target
         ))
 
         calendarRepository.save(Calendar(
-            user = userRepository.findByUsername("Kamren") ?: return,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 9, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 10, 0)),
-            target = userRepository.findByUsername("sashasteblevets") ?: return
+            user = target,
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 7, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 12, 13, 8, 0)),
+            target = user
         ))
     }
 
