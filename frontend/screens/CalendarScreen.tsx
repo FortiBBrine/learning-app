@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, View} from "react-native";
 import {Text} from "react-native-paper";
 import {useAppSelector} from "../store/store";
 import {Calendar, getAllCalendars} from "../api/calendarApi";
@@ -19,43 +19,42 @@ const CalendarScreen = () => {
     }, [])
 
     return (
-        <View style={styles.container}>
-            <ScrollView style={{
-                flex: 1
-            }}>
-                { calendars.map((calendar, index) => (
-                    <View key={index} style={{
-                        flex: 1,
-                        padding: 30,
-                        borderRadius: 10,
-                        borderColor: "teal",
-                        borderWidth: 3,
-                        alignItems: "center"
-                    }}>
-                        <Text variant="titleLarge">{calendar.name}</Text>
-                        <Text variant="titleLarge">{new Date(calendar.from).toDateString()}</Text>
-                        <Text variant="titleSmall">
-                            {calendar.from}
-                        </Text>
-                        <Text variant="titleSmall">
-                            {calendar.to}
-                        </Text>
-                    </View>
-                ))}
+        <ScrollView style={{
+            flex: 1,
+            margin: 20,
+            display: "flex",
+            flexDirection: "column"
+        }}>
+            { calendars.map((calendar, index) => (
+                <View key={index}>
+                    { calendar.from != undefined && calendar.to != undefined &&
+                        <View style={{
+                            flex: 1,
+                            padding: 15,
+                            borderRadius: 15,
+                            borderColor: "teal",
+                            borderWidth: 2,
+                            alignItems: "center",
+                            marginTop: 15
+                        }}>
+                            <Text variant="titleLarge">{calendar.name}</Text>
+                            <Text variant="titleMedium">{new Date(calendar.from).toDateString()}</Text>
+                            <Text variant="titleSmall">
+                                {new Date(calendar.from).getHours().toString().padStart(2, "0")}:
+                                {new Date(calendar.from).getMinutes().toString().padStart(2, "0")}
+                            </Text>
+                            <Text variant="titleSmall">
+                                {new Date(calendar.to).getHours().toString().padStart(2, "0")}:
+                                {new Date(calendar.to).getMinutes().toString().padStart(2, "0")}
+                            </Text>
+                        </View>
+                    }
+                </View>
 
-            </ScrollView>
-        </View>
+            ))}
+
+        </ScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        margin: 20,
-        justifyContent: "center",
-        alignItems: "stretch",
-        gap: 20
-    }
-})
 
 export default CalendarScreen;
