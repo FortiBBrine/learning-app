@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
@@ -22,6 +22,10 @@ const HomeScreen = () => {
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
 
     const [t, i18n] = useTranslation();
+
+    useEffect(() => {
+        onRefresh().then()
+    }, []);
 
     const onRefresh = async () => {
         if (token == null) return
@@ -74,7 +78,8 @@ const HomeScreen = () => {
                         navigation.navigate(
                             "Profile",
                             {
-                                person: item
+                                person: item,
+                                addButton: false
                             }
                         )
                     }}>

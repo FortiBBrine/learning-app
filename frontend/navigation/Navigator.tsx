@@ -15,7 +15,7 @@ import AddRelationScreen from "../screens/AddRelationScreen";
 
 export type RootStackParamList = {
     Home: undefined;
-    Profile: { person: RelationDto };
+    Profile: { person: RelationDto, addButton: boolean };
     Login: undefined;
     Register: undefined;
     Calendar: undefined;

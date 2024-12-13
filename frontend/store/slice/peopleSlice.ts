@@ -24,5 +24,5 @@ export const peopleSlice = createSlice({
     }
 })
 
-export const { setPeople } = peopleSlice.actions;
+export const { setPeople, setAllPeople } = peopleSlice.actions;
 export default peopleSlice.reducer
