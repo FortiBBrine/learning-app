@@ -2,11 +2,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RelationDto} from "../../api/relationApi";
 
 interface PeopleState {
-    people: Array<RelationDto>
+    relations: Array<RelationDto>,
+    allPeople: Array<RelationDto>
 }
 
 const initialState: PeopleState = {
-    people: []
+    relations: [],
+    allPeople: []
 }
 
 export const peopleSlice = createSlice({
@@ -14,7 +16,10 @@ export const peopleSlice = createSlice({
     initialState,
     reducers: {
         setPeople: (state: PeopleState, action: PayloadAction<RelationDto[]>) => {
-            state.people = action.payload
+            state.relations = action.payload
+        },
+        setAllPeople: (state: PeopleState, action: PayloadAction<RelationDto[]>) => {
+            state.allPeople = action.payload
         }
     }
 })

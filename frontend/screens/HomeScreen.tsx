@@ -8,12 +8,11 @@ import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
-import AddUserDialog from "../component/AddUserDialog";
 import {useTranslation} from "react-i18next";
 
 const HomeScreen = () => {
 
-    const people = useAppSelector(state => state.people.people);
+    const people = useAppSelector(state => state.people.relations);
     const token = useAppSelector(state => state.login.token);
     const dispatch = useDispatch();
 
@@ -21,7 +20,6 @@ const HomeScreen = () => {
 
     const [refreshing, setRefreshing] = React.useState(false);
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
-    const [addUserDialogShown, setAddUserDialogShown] = React.useState(false);
 
     const [t, i18n] = useTranslation();
 
@@ -58,13 +56,15 @@ const HomeScreen = () => {
         <>
             <Appbar.Header>
                 <Appbar.Content title={t("main-page-title")} />
-                <Appbar.Action icon={"plus"} onPress={() => setAddUserDialogShown(true)} />
+                <Appbar.Action icon={"plus"} onPress={() => {
+                    navigation.navigate("AddRelationScreen")
+                }} />
                 <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
             </Appbar.Header>
             <ScrollView
                 style={{
                     flex: 1,
-                    margin: 30
+                    margin: 15
                 }}
                 refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
             >
@@ -79,13 +79,13 @@ const HomeScreen = () => {
                         )
                     }}>
                         <View style={styles.listItem}>
-                            <Text variant="titleMedium">
+                            <Text variant="titleLarge">
                                 {item.name}
                             </Text>
 
                             <IconButton
                                 icon="trash-can"
-                                size={20}
+                                size={25}
                                 onPress={() => setDeleteUser(item.username)}
                             />
 
@@ -111,11 +111,6 @@ const HomeScreen = () => {
                         <Button onPress={() => setDeleteUser(null)}>{t("no-button")}</Button>
                     </Dialog.Actions>
                 </Dialog>
-                <AddUserDialog
-                    shown={addUserDialogShown}
-                    onDismiss={() => setAddUserDialogShown(false)}
-                    refresh={onRefresh}
-                />
 
             </Portal>
         </>
@@ -124,7 +119,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 10,
+        padding: 5,
         borderRadius: 10,
         borderColor: "teal",
         borderStyle: "solid",

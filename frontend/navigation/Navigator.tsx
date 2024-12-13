@@ -11,6 +11,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import {RelationDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import CalendarScreen from "../screens/CalendarScreen";
+import AddRelationScreen from "../screens/AddRelationScreen";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     Calendar: undefined;
+    AddRelationScreen: undefined;
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
@@ -25,12 +27,9 @@ export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList
 export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">
 export type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, "Register">
 export type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, "Calendar">
+export type AddRelationScreenNavigationProp = StackNavigationProp<RootStackParamList, "AddRelationScreen">
 
-export type HomeScreenRouteProp = RouteProp<RootStackParamList, "Home">
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
-export type LoginScreenRouteProp = RouteProp<RootStackParamList, "Login">
-export type RegisterScreenRouteProp = RouteProp<RootStackParamList, "Register">
-export type CalendarScreenRouteProp = RouteProp<RootStackParamList, "Calendar">
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -53,6 +52,7 @@ const Navigator = () => {
                         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
                         <Stack.Screen options={{headerTitle: t("profile")}} name="Profile" component={ProfileScreen} />
                         <Stack.Screen options={{headerTitle: t("calendar")}} name="Calendar" component={CalendarScreen} />
+                        <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
                     </> :
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
