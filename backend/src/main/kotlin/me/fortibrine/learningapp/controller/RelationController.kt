@@ -19,6 +19,17 @@ class RelationController (
     private val relationRepository: RelationRepository
 ) {
 
+    @GetMapping("/notmy")
+    fun getAllNotMyRelations(
+        @AuthenticationPrincipal principal: User
+    ): List<RelationDto> {
+        return userRepository.findAll().map { RelationDto (
+            name = it.name,
+            username = it.username,
+            email = it.email
+        ) }
+    }
+
     @GetMapping("/all")
     fun allRelations(
         @AuthenticationPrincipal principal: User
