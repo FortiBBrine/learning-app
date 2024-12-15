@@ -25,8 +25,6 @@ export type RootStackParamList = {
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Profile">
 export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">
-export type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, "Register">
-export type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, "Calendar">
 export type AddRelationScreenNavigationProp = StackNavigationProp<RootStackParamList, "AddRelationScreen">
 
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
@@ -47,7 +45,7 @@ const Navigator = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                { token != null ?
+                { token !== null ?
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
                         <Stack.Screen options={{headerTitle: t("profile")}} name="Profile" component={ProfileScreen} />

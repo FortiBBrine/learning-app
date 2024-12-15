@@ -13,7 +13,6 @@ import {useTranslation} from "react-i18next";
 const HomeScreen = () => {
 
     const people = useAppSelector(state => state.people.relations);
-    const token = useAppSelector(state => state.login.token);
     const dispatch = useDispatch();
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -28,28 +27,18 @@ const HomeScreen = () => {
     }, []);
 
     const onRefresh = async () => {
-        if (token == null) return
         setRefreshing(true)
 
-        try {
-            const data = await getAllRelations(token)
-            dispatch(setPeople(data))
-        } catch (err) {
-            console.log(err);
-        }
+        const data = await getAllRelations()
+        dispatch(setPeople(data))
 
         setRefreshing(false)
     }
 
     const onDeleteUser = async () => {
         if (deleteUser == null) return
-        if (token == null) return
 
-        try {
-            await deleteRelation(deleteUser, token)
-        } catch (err) {
-            console.log(err);
-        }
+        await deleteRelation(deleteUser)
 
         setDeleteUser(null)
         await onRefresh()

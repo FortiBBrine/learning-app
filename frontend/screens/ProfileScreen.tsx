@@ -6,13 +6,11 @@ import {Button, Text} from "react-native-paper";
 import {StatusBar} from "expo-status-bar";
 import {useTranslation} from "react-i18next";
 import {addRelation} from "../api/relationApi";
-import {useAppSelector} from "../store/store";
 
 const ProfileScreen = () => {
-    const navigation = useNavigation<ProfileScreenNavigationProp>()
-    const route = useRoute<ProfileScreenRouteProp>()
+    const navigation = useNavigation<ProfileScreenNavigationProp>();
+    const route = useRoute<ProfileScreenRouteProp>();
 
-    const token = useAppSelector(state => state.login.token)
     const [t, i18n] = useTranslation();
 
     return (
@@ -43,10 +41,9 @@ const ProfileScreen = () => {
 
             { route.params.addButton && (
                 <Button mode="outlined" onPress={async () => {
-                    if (token == null) return
-                    await addRelation(route.params.person.username, token)
+                    await addRelation(route.params.person.username);
 
-                    navigation.navigate("Home")
+                    navigation.navigate("Home");
                 }}>
                     <Text variant="titleLarge">
                         {t("add")}

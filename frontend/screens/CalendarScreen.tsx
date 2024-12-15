@@ -1,18 +1,14 @@
 import React, {useEffect} from 'react';
 import {ScrollView, View} from "react-native";
 import {Text} from "react-native-paper";
-import {useAppSelector} from "../store/store";
 import {Calendar, getAllCalendars} from "../api/calendarApi";
 
 const CalendarScreen = () => {
 
-    const token = useAppSelector(state => state.login.token)
     const [calendars, setCalendars] = React.useState<Calendar[]>([]);
 
     useEffect(() => {
-        if (token == null) return;
-
-        getAllCalendars(token)
+        getAllCalendars()
             .then(res => {
                 setCalendars(res.calendars)
             })

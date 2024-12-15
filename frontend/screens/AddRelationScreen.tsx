@@ -11,8 +11,7 @@ import {AddRelationScreenNavigationProp} from "../navigation/Navigator";
 const AddRelationScreen = () => {
 
     useEffect(() => {
-        if (token == null) return
-        getNotMyRelations(token)
+        getNotMyRelations()
             .then(res => {
                 dispatch(setAllPeople(res));
             })

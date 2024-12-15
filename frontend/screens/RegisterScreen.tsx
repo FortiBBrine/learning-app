@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from "react-native";
-import {useNavigation} from "@react-navigation/native";
-import {RegisterScreenNavigationProp} from "../navigation/Navigator";
 import {StatusBar} from "expo-status-bar";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
 import {setToken} from "../store/slice/loginSlice";
@@ -10,7 +8,6 @@ import {register} from "../api/registerApi";
 import {useTranslation} from "react-i18next";
 
 const RegisterScreen = () => {
-    const navigation = useNavigation<RegisterScreenNavigationProp>();
     const dispatch = useDispatch()
 
     const [username, setUsername] = React.useState("")

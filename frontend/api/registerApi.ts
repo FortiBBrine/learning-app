@@ -1,3 +1,6 @@
+
+import {api} from "./api";
+
 export type RegisterResponseDto = {
     result: {
         name: string | undefined,
@@ -14,19 +17,12 @@ export async function register(
     username: string,
     password: string,
 ): Promise<RegisterResponseDto> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/auth/register", {
-        method: "POST",
-        body: JSON.stringify({
-            name: name,
-            username: username,
-            password: password,
-            email: email,
-        }),
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    })
+    const response = await api.post("/auth/register", {
+        name: name,
+        username: username,
+        email: email,
+        password: password,
+    });
 
-    return await res.json()
+    return response.data;
 }

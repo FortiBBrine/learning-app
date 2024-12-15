@@ -1,52 +1,40 @@
+import {api} from "./api";
+
 export type RelationDto = {
     name: string,
     email: string,
     username: string,
 }
 
-export async function getNotMyRelations(token: string): Promise<RelationDto[]> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/relation/notmy", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-        }
-    })
-    return await res.json()
+export async function getNotMyRelations(): Promise<RelationDto[]> {
+    const response = await api.get("/relation/notmy");
+
+    return response.data;
 }
 
-export async function getAllRelations(token: string): Promise<RelationDto[]> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/relation/all", {
-        method: "GET",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-        }
-    })
-    return await res.json()
+export async function getAllRelations(): Promise<RelationDto[]> {
+    const response = await api.get("/relation/all");
+
+    return response.data;
 }
 
-export async function deleteRelation(username: string, token: string): Promise<void> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/relation/remove?username=" + username, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
+export async function deleteRelation(username: string): Promise<void> {
+    const response = await api.post("/relation/remove", {
+        params: {
+            username: username,
         }
-    })
+    });
+
+    return response.data;
 }
 
-export async function addRelation(username: string, token: string): Promise<void> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/relation/add?username=" + username, {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
+export async function addRelation(username: string): Promise<void> {
+    const response = await api.post("/relation/add", {
+        params: {
+            username: username,
         }
-    })
+    });
+
+    return response.data;
 }
 

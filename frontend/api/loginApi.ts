@@ -1,3 +1,4 @@
+import {api} from "./api";
 
 export type LoginResponseDto = {
     result: {
@@ -8,16 +9,9 @@ export type LoginResponseDto = {
 }
 
 export async function login(username: string, password: string): Promise<LoginResponseDto> {
-    const res = await fetch("https://learning-app-1ll5.onrender.com/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({
-            username: username,
-            password: password
-        }),
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    })
-    return await res.json()
+    const response = await api.post("/auth/login", {
+        username: username,
+        password: password
+    });
+    return response.data;
 }
