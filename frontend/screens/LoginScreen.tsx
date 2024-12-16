@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {setToken} from "../store/slice/loginSlice";
 import {login} from "../api/loginApi";
 import {useTranslation} from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
 
@@ -32,6 +33,8 @@ const LoginScreen = () => {
         }
 
         const token = data.token;
+
+        await AsyncStorage.setItem("token", token)
 
         dispatch(setToken(token))
     }

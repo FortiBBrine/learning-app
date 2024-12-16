@@ -12,6 +12,7 @@ import {RelationDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import CalendarScreen from "../screens/CalendarScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -39,7 +40,9 @@ const Navigator = () => {
     const [t, i18n] = useTranslation()
 
     useEffect(() => {
-        dispatch(setToken(null))
+        AsyncStorage.getItem("token")
+            .then(data => dispatch(setToken(data)))
+            .catch(err => console.error(err));
     }, [])
 
     return (

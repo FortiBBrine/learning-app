@@ -9,6 +9,8 @@ import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {setToken} from "../store/slice/loginSlice";
 
 const HomeScreen = () => {
 
@@ -53,6 +55,10 @@ const HomeScreen = () => {
                     navigation.navigate("AddRelationScreen")
                 }} />
                 <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
+                <Appbar.Action icon={"logout"} onPress={async () => {
+                    await AsyncStorage.removeItem("token")
+                    dispatch(setToken(null))
+                }} />
             </Appbar.Header>
             <ScrollView
                 style={{
