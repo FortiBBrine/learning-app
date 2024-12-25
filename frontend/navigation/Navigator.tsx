@@ -13,6 +13,7 @@ import {useTranslation} from "react-i18next";
 import CalendarScreen from "../screens/CalendarScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TuneScreen from "../screens/TuneScreen";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -21,6 +22,7 @@ export type RootStackParamList = {
     Register: undefined;
     Calendar: undefined;
     AddRelationScreen: undefined;
+    Tune: undefined;
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
@@ -54,6 +56,7 @@ const Navigator = () => {
                         <Stack.Screen options={{headerTitle: t("profile")}} name="Profile" component={ProfileScreen} />
                         <Stack.Screen options={{headerTitle: t("calendar")}} name="Calendar" component={CalendarScreen} />
                         <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
+                        <Stack.Screen options={{headerShown: false}} name="Tune" component={TuneScreen} />
                     </> :
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />

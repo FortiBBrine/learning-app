@@ -20,6 +20,7 @@ export async function getAllRelations(): Promise<RelationDto[]> {
 
 export async function deleteRelation(username: string): Promise<void> {
     const response = await api.post("/relation/remove", {
+    }, {
         params: {
             username: username,
         }
@@ -29,7 +30,7 @@ export async function deleteRelation(username: string): Promise<void> {
 }
 
 export async function addRelation(username: string): Promise<void> {
-    const response = await api.post("/relation/add", {
+    const response = await api.post("/relation/add", {}, {
         params: {
             username: username,
         }

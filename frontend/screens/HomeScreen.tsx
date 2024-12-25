@@ -55,9 +55,9 @@ const HomeScreen = () => {
                     navigation.navigate("AddRelationScreen")
                 }} />
                 <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
-                <Appbar.Action icon={"logout"} onPress={async () => {
-                    await AsyncStorage.removeItem("token")
-                    dispatch(setToken(null))
+
+                <Appbar.Action icon={"tune"} onPress={async () => {
+                    navigation.navigate("Tune")
                 }} />
             </Appbar.Header>
             <ScrollView
