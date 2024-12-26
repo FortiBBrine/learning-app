@@ -14,6 +14,7 @@ import CalendarScreen from "../screens/CalendarScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TuneScreen from "../screens/TuneScreen";
+import ChangeLanguageScreen from "../screens/ChangeLanguageScreen";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -23,12 +24,14 @@ export type RootStackParamList = {
     Calendar: undefined;
     AddRelationScreen: undefined;
     Tune: undefined;
+    ChangeLanguage: undefined;
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
 export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, "Profile">
 export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">
 export type AddRelationScreenNavigationProp = StackNavigationProp<RootStackParamList, "AddRelationScreen">
+export type TuneScreenNavigationProp = StackNavigationProp<RootStackParamList, "Tune">
 
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
 
@@ -57,10 +60,12 @@ const Navigator = () => {
                         <Stack.Screen options={{headerTitle: t("calendar")}} name="Calendar" component={CalendarScreen} />
                         <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
                         <Stack.Screen options={{headerShown: false}} name="Tune" component={TuneScreen} />
+                        <Stack.Screen options={{headerTitle: t("change-language")}} name={"ChangeLanguage"} component={ChangeLanguageScreen} />
                     </> :
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
                         <Stack.Screen options={{headerShown: false}} name="Register" component={RegisterScreen} />
+                        <Stack.Screen options={{headerTitle: t("change-language")}} name={"ChangeLanguage"} component={ChangeLanguageScreen} />
                     </>
                 }
             </Stack.Navigator>

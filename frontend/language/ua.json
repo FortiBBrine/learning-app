@@ -29,5 +29,9 @@
   "calendar": "Розклад",
 
   "add": "Додати",
-  "logout": "Вийти"
+  "logout": "Вийти",
+
+  "change-language": "Вибрати мову",
+  "ua-language": "Українська",
+  "uk-language": "Англійська"
 }

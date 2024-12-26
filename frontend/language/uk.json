@@ -1,0 +1,37 @@
+{
+  "login-page-title": "Log in to your account",
+  "login": "Username",
+  "password": "Password",
+  "login-button": "Log in",
+  "register-goto-button": "Register",
+
+  "register-page-title": "Sign up",
+  "username": "Username",
+  "name": "Name",
+  "email": "Email",
+  "register-button": "Sign up",
+
+  "get-into-schedule": "Join a class",
+  "schedule": "Schedule",
+
+  "main-page-title": "Teachers / Students",
+  "delete-dialog-title": "Delete",
+  "delete-dialog-content": "Delete user: ",
+  "yes-button": "Yes",
+  "no-button": "No",
+
+  "create-relation-dialog-title": "Create",
+  "create-relation-dialog-content": "Attention! This is a temporary menu!",
+  "create-relation-dialog-input": "User",
+  "create-relation-dialog-button": "Create",
+
+  "profile": "Profile",
+  "calendar": "Calendar",
+
+  "add": "Add",
+  "logout": "Log out",
+
+  "change-language": "Select language",
+  "ua-language": "Ukrainian",
+  "uk-language": "English"
+}

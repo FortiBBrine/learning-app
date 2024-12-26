@@ -69,6 +69,10 @@ const LoginScreen = () => {
             }} mode="outlined">
                 {t("register-goto-button")}
             </Button>
+            <Button icon="translate" mode="outlined" onPress={() => {
+                navigation.navigate("ChangeLanguage");
+            }}>{t("change-language")}</Button>
+
             <StatusBar style="auto" />
         </View>
     );
