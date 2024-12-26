@@ -23,7 +23,7 @@ class RelationController (
     fun getAllNotMyRelations(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
-        return userRepository.findAll().map { RelationDto (
+        return userRepository.findUsersNotInRelation(principal).map { RelationDto (
             name = it.name,
             username = it.username,
             email = it.email

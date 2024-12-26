@@ -20,6 +20,8 @@ const RegisterScreen = () => {
     const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
     const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined)
 
+    const [secure, setSecure] = React.useState<boolean>(true);
+
     const [t, i18n] = useTranslation();
 
     const onPress = async () => {
@@ -70,7 +72,13 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <TextInput secureTextEntry label={t("password")} value={password} onChangeText={text => setPassword(text)} />
+            <TextInput
+                secureTextEntry={secure}
+                label={t("password")}
+                value={password}
+                onChangeText={text => setPassword(text)}
+                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
+            />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>

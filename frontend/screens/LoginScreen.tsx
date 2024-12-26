@@ -22,6 +22,7 @@ const LoginScreen = () => {
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
 
     const [t, i18n] = useTranslation();
+    const [secure, setSecure] = React.useState(true);
 
     const onPress = async () => {
         const data = await login(username, password)
@@ -55,7 +56,13 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label={t("password")} secureTextEntry value={password} onChangeText={text => setPassword(text)} />
+            <TextInput
+                label={t("password")}
+                secureTextEntry={secure}
+                value={password}
+                onChangeText={text => setPassword(text)}
+                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
+            />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>
