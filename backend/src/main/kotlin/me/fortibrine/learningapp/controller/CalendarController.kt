@@ -52,9 +52,9 @@ class CalendarController(
     ): GetAllCalendarDto {
 
         val calendars = if (username == "me") {
-            calendarRepository.findByUserAndFromTimeAfterOrderByFromTime(principal, Timestamp.from(Instant.now()))
+            calendarRepository.findByUser(principal, Timestamp.from(Instant.now()))
         } else {
-            calendarRepository.findByUserAndFromTimeAfterOrderByFromTime(
+            calendarRepository.findByUser(
                 userRepository.findByUsername(username) ?: return GetAllCalendarDto(
                     emptyList()
                 ), Timestamp.from(Instant.now())
