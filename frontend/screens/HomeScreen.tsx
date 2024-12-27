@@ -2,15 +2,13 @@ import React, {useEffect} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
-import {Appbar, Button, Dialog, IconButton, Portal, Text} from "react-native-paper";
+import {Appbar, Button, Dialog, FAB, IconButton, Portal, Text} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setToken} from "../store/slice/loginSlice";
 
 const HomeScreen = () => {
 
@@ -51,11 +49,7 @@ const HomeScreen = () => {
         <>
             <Appbar.Header>
                 <Appbar.Content title={t("main-page-title")} />
-                <Appbar.Action icon={"plus"} onPress={() => {
-                    navigation.navigate("AddRelationScreen")
-                }} />
                 <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
-
                 <Appbar.Action icon={"tune"} onPress={async () => {
                     navigation.navigate("Tune")
                 }} />
@@ -95,6 +89,12 @@ const HomeScreen = () => {
                 <StatusBar style="auto" />
             </ScrollView>
 
+            <FAB
+                icon="magnify"
+                style={styles.magnify}
+                onPress={() => navigation.navigate("AddRelationScreen")}
+            />
+
             <Portal>
                 <Dialog
                     visible={deleteUser != undefined}
@@ -128,6 +128,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 10
+    },
+    magnify: {
+        position: "absolute",
+        bottom: 20,
+        right: 20
     }
 })
 

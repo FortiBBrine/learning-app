@@ -8,37 +8,65 @@ import {register} from "../api/registerApi";
 import {useTranslation} from "react-i18next";
 
 const RegisterScreen = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const [username, setUsername] = React.useState("")
-    const [email, setEmail] = React.useState("")
-    const [password, setPassword] = React.useState("")
-    const [name, setName] = React.useState("")
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [name, setName] = React.useState("");
 
-    const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined)
-    const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
-    const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined)
-    const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined)
+    const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined);
+    const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined);
+    const [emailErrors, setEmailErrors] = React.useState<string | undefined>(undefined);
+    const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined);
 
     const [secure, setSecure] = React.useState<boolean>(true);
 
     const [t, i18n] = useTranslation();
 
+    const changeUsernameText = (value: string) => {
+        setUsername(
+            value
+                .split("")
+                .filter(char => /[A-Za-z0-9]/.test(char))
+                .join("")
+        );
+    };
+
+    const changePasswordText = (value: string) => {
+        setPassword(
+            value
+                .split("")
+                .filter(char => /[A-Za-z0-9.%+-]/.test(char))
+                .join("")
+        );
+    };
+
+    const changeEmailText = (value: string) => {
+        setEmail(
+            value
+                .toLowerCase()
+                .split("")
+                .filter(char => /[A-Za-z0-9@.]/.test(char))
+                .join("")
+        );
+    };
+
     const onPress = async () => {
-        const res = await register(email, name, username, password)
+        const res = await register(email, name, username, password);
 
         if (res.token == null) {
-            setUsernameErrors(res.result.username)
-            setEmailErrors(res.result.email)
-            setPasswordErrors(res.result.password)
-            setNameErrors(res.result.name)
+            setUsernameErrors(res.result.username);
+            setEmailErrors(res.result.email);
+            setPasswordErrors(res.result.password);
+            setNameErrors(res.result.name);
             return;
         }
 
         const token = res.token;
 
-        dispatch(setToken(token))
-    }
+        dispatch(setToken(token));
+    };
 
     return (
         <View style={styles.container}>
@@ -48,7 +76,7 @@ const RegisterScreen = () => {
                 {t("register-page-title")}
             </Text>
 
-            <TextInput label={t("username")} value={username} onChangeText={text => setUsername(text)} />
+            <TextInput label={t("username")} value={username} onChangeText={changeUsernameText} />
 
             { usernameErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -64,7 +92,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <TextInput label={t("email")} value={email} onChangeText={text => setEmail(text)} />
+            <TextInput label={t("email")} value={email} onChangeText={changeEmailText} />
 
             { emailErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -76,7 +104,7 @@ const RegisterScreen = () => {
                 secureTextEntry={secure}
                 label={t("password")}
                 value={password}
-                onChangeText={text => setPassword(text)}
+                onChangeText={changePasswordText}
                 right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
             />
 

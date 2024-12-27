@@ -15,30 +15,48 @@ const LoginScreen = () => {
     const navigation = useNavigation<LoginScreenNavigationProp>();
     const dispatch = useDispatch();
 
-    const [username, setUsername] = React.useState("")
-    const [password, setPassword] = React.useState("")
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
-    const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined)
-    const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined)
+    const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined);
+    const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined);
 
     const [t, i18n] = useTranslation();
     const [secure, setSecure] = React.useState(true);
 
     const onPress = async () => {
-        const data = await login(username, password)
+        const data = await login(username, password);
 
         if (data.token == null) {
-            setUsernameErrors(data.result.username)
-            setPasswordErrors(data.result.password)
-            return
+            setUsernameErrors(data.result.username);
+            setPasswordErrors(data.result.password);
+            return;
         }
 
         const token = data.token;
 
-        await AsyncStorage.setItem("token", token)
+        await AsyncStorage.setItem("token", token);
 
-        dispatch(setToken(token))
-    }
+        dispatch(setToken(token));
+    };
+
+    const changeUsernameText = (value: string) => {
+        setUsername(
+            value
+                .split("")
+                .filter(char => /[A-Za-z0-9]/.test(char))
+                .join("")
+        );
+    };
+
+    const changePasswordText = (value: string) => {
+        setPassword(
+            value
+                .split("")
+                .filter(char => /[A-Za-z0-9.%+-]/.test(char))
+                .join("")
+        );
+    };
 
     return (
         <View style={styles.container}>
@@ -48,7 +66,7 @@ const LoginScreen = () => {
                 {t("login-page-title")}
             </Text>
 
-            <TextInput label={t("login")} value={username} onChangeText={text => setUsername(text)} />
+            <TextInput label={t("login")} value={username} onChangeText={changeUsernameText} />
 
             { usernameErrors != undefined &&
                 <HelperText type="error" visible={true}>
@@ -60,7 +78,7 @@ const LoginScreen = () => {
                 label={t("password")}
                 secureTextEntry={secure}
                 value={password}
-                onChangeText={text => setPassword(text)}
+                onChangeText={changePasswordText}
                 right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
             />
 

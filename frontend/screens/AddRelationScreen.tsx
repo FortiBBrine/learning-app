@@ -23,23 +23,25 @@ const AddRelationScreen = () => {
     const allPeople = useAppSelector(state => state.people.allPeople)
 
     return (
-        <ScrollView contentContainerStyle={styles.list}>
-            { allPeople.map((relation, index) => (
-                <View key={index} style={styles.listItem}>
-                    <Pressable onPress={() => {
-                        navigation.navigate(
-                            "Profile",
-                            {
-                                person: relation,
-                                addButton: true
-                            }
-                        )
-                    }}>
-                        <Text variant="titleLarge">{relation.name}</Text>
-                    </Pressable>
-                </View>
-            ))}
-        </ScrollView>
+        <View style={styles.list}>
+            <ScrollView>
+                { allPeople.map((relation, index) => (
+                    <View key={index} style={styles.listItem}>
+                        <Pressable onPress={() => {
+                            navigation.navigate(
+                                "Profile",
+                                {
+                                    person: relation,
+                                    addButton: true
+                                }
+                            )
+                        }}>
+                            <Text variant="titleLarge">{relation.name}</Text>
+                        </Pressable>
+                    </View>
+                ))}
+            </ScrollView>
+        </View>
     );
 };
 
