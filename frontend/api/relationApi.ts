@@ -4,6 +4,7 @@ export type RelationDto = {
     name: string,
     email: string,
     username: string,
+    subjects: string[]
 }
 
 export async function getNotMyRelations(): Promise<RelationDto[]> {

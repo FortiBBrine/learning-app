@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../navigation/Navigator";
-import {Button, Text} from "react-native-paper";
+import {Button, Chip, Text} from "react-native-paper";
 import {StatusBar} from "expo-status-bar";
 import {useTranslation} from "react-i18next";
 import {addRelation} from "../api/relationApi";
@@ -19,13 +19,17 @@ const ProfileScreen = () => {
                 fontWeight: "bold",
                 textAlign: "center"
             }}>{route.params.person.name}</Text>
-            <Image style={{
-                width: 200,
-                height: 200,
-                alignSelf: "center"
-            }} source={{
+            <Image style={styles.image} source={{
                 uri: 'https://cdn-icons-png.flaticon.com/128/3024/3024605.png'
             }} />
+
+            <View style={styles.subjectList}>
+                { route.params.person.subjects.map((value, index) => (
+                    <Chip key={index} mode="outlined">
+                        {t(value)}
+                    </Chip>
+                ))}
+            </View>
 
             <Button mode="outlined" onPress={() => {}}>
                 <Text variant="titleLarge">
@@ -63,6 +67,17 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "stretch",
         rowGap: 20
+    },
+    image: {
+        width: 200,
+        height: 200,
+        alignSelf: "center"
+    },
+    subjectList: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: 5,
+        justifyContent: "center"
     }
 })
 
