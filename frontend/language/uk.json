@@ -33,5 +33,16 @@
 
   "change-language": "Select language",
   "ua-language": "Ukrainian",
-  "uk-language": "English"
+  "uk-language": "English",
+
+  "math": "Mathematics",
+  "physics": "Physics",
+  "geography": "Geography",
+  "history": "History",
+  "biology": "Biology",
+  "chemistry": "Chemistry",
+  "algebra": "Algebra",
+  "geometry": "Geometry",
+  "information-technology": "Information Technology",
+  "foreign-languages": "Foreign Languages"
 }

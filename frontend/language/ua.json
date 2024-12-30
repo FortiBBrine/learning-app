@@ -36,5 +36,13 @@
   "uk-language": "Англійська",
 
   "math": "Математика",
-  "physics": "Фізика"
+  "physics": "Фізика",
+  "geography": "Географія",
+  "history": "Історія",
+  "biology": "Біологія",
+  "chemistry": "Хімія",
+  "algebra": "Алгебра",
+  "geometry": "Геометрія",
+  "information-technology": "Інформатика",
+  "foreign-languages": "Іноземна мова"
 }

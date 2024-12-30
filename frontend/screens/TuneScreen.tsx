@@ -19,7 +19,15 @@ const TuneScreen = () => {
 
     const subjects = [
         "math",
-        "physics"
+        "physics",
+        "geography",
+        "history",
+        "biology",
+        "chemistry",
+        "algebra",
+        "geometry",
+        "information-technology",
+        "foreign-languages"
     ];
 
     useEffect(() => {
