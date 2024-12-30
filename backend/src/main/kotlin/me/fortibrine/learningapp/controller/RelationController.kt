@@ -5,6 +5,7 @@ import me.fortibrine.learningapp.model.Relation
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.RelationRepository
 import me.fortibrine.learningapp.repository.UserRepository
+import me.fortibrine.learningapp.service.RelationService
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,18 +17,17 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/relation")
 class RelationController (
     private val userRepository: UserRepository,
-    private val relationRepository: RelationRepository
+    private val relationRepository: RelationRepository,
+    private val relationService: RelationService
 ) {
 
     @GetMapping("/notmy")
     fun getAllNotMyRelations(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
-        return userRepository.findUsersNotInRelation(principal).map { RelationDto (
-            name = it.name,
-            username = it.username,
-            email = it.email
-        ) }
+        return userRepository.findUsersNotInRelation(principal).map {
+            relationService.getRelation(it)
+        }
     }
 
     @GetMapping("/all")
@@ -35,11 +35,9 @@ class RelationController (
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         val relation = relationRepository.findByTarget(principal) ?: return emptyList()
-        return relation.users.map { RelationDto(
-            name = it.name,
-            username = it.username,
-            email = it.email
-        ) }
+        return relation.users.map {
+            relationService.getRelation(it)
+        }
     }
 
     @PostMapping("/add")
