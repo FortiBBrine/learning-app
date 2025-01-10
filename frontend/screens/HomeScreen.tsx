@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {useAppSelector} from "../store/store";
-import {Appbar, Button, Dialog, FAB, IconButton, Portal, Text} from "react-native-paper";
+import {Appbar, Avatar, Button, Dialog, FAB, IconButton, MD3Colors, Portal, Text} from "react-native-paper";
 import {useDispatch} from "react-redux";
 import {setPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
@@ -73,12 +73,21 @@ const HomeScreen = () => {
                         )
                     }}>
                         <View style={styles.listItem}>
-                            <Text variant="titleLarge">
-                                {item.name}
-                            </Text>
+
+                            <View style={{
+                                flexDirection: "row",
+                                gap: 20,
+                                alignItems: "center"
+                            }}>
+                                <Avatar.Icon icon={"account"} size={36} />
+
+                                <Text variant="titleLarge">
+                                    {item.name}
+                                </Text>
+                            </View>
 
                             <IconButton
-                                icon="trash-can"
+                                icon="trash-can-outline"
                                 size={25}
                                 onPress={() => setDeleteUser(item.username)}
                             />
@@ -121,9 +130,9 @@ const styles = StyleSheet.create({
     listItem: {
         padding: 5,
         borderRadius: 10,
-        borderColor: "teal",
-        borderStyle: "solid",
-        borderWidth: 1,
+        // borderColor: "teal",
+        // borderStyle: "solid",
+        // borderWidth: 1,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
