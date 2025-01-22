@@ -10,9 +10,11 @@
   "name": "Name",
   "email": "Email",
   "register-button": "Sign up",
+  "personal-data": "I consent to the processing of personal data.",
 
   "get-into-schedule": "Join a class",
   "schedule": "Schedule",
+  "upload": "Upload",
 
   "main-page-title": "Teachers / Students",
   "delete-dialog-title": "Delete",

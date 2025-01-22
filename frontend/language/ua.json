@@ -10,9 +10,11 @@
   "name": "Ім'я",
   "email": "Електронна пошта",
   "register-button": "Зареєструватись",
+  "personal-data": "Даю згоду на обробку персональних даних",
 
   "get-into-schedule": "Записатись на заняття",
   "schedule": "Розклад",
+  "upload": "Завантажити файл",
 
   "main-page-title": "Вчителі / учні",
   "delete-dialog-title": "Видалити",

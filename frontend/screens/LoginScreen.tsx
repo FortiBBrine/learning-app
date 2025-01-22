@@ -79,7 +79,7 @@ const LoginScreen = () => {
                 secureTextEntry={secure}
                 value={password}
                 onChangeText={changePasswordText}
-                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
+                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye" : "eye-off"} />}
             />
 
             { passwordErrors != undefined &&

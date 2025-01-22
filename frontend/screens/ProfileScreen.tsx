@@ -43,6 +43,12 @@ const ProfileScreen = () => {
                 </Text>
             </Button>
 
+            <Button mode="outlined" icon="cloud-upload-outline" onPress={() => {}}>
+                <Text variant="titleLarge">
+                    {t("upload")}
+                </Text>
+            </Button>
+
             { route.params.addButton && (
                 <Button mode="outlined" onPress={async () => {
                     await addRelation(route.params.person.username);

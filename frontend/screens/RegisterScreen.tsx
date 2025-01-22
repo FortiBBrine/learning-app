@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
-import {Button, HelperText, Text, TextInput} from "react-native-paper";
+import {Button, Checkbox, HelperText, Text, TextInput} from "react-native-paper";
 import {setToken} from "../store/slice/loginSlice";
 import {useDispatch} from "react-redux";
 import {register} from "../api/registerApi";
@@ -21,6 +21,7 @@ const RegisterScreen = () => {
     const [nameErrors, setNameErrors] = React.useState<string | undefined>(undefined);
 
     const [secure, setSecure] = React.useState<boolean>(true);
+    const [personalData, setPersonalData] = React.useState<boolean>(false);
 
     const [t, i18n] = useTranslation();
 
@@ -105,8 +106,10 @@ const RegisterScreen = () => {
                 label={t("password")}
                 value={password}
                 onChangeText={changePasswordText}
-                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye-off" : "eye"} />}
+                right={<TextInput.Icon onPress={() => setSecure(!secure)} icon={secure ? "eye" : "eye-off"} />}
             />
+
+            <Checkbox.Item status={personalData ? "checked" : "unchecked"} label={t("personal-data")} onPress={() => setPersonalData(!personalData)} />
 
             { passwordErrors != undefined &&
                 <HelperText type="error" visible={true}>
