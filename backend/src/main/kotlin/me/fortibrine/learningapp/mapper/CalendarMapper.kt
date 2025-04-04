@@ -1,0 +1,14 @@
+package me.fortibrine.learningapp.mapper
+
+import me.fortibrine.learningapp.dto.calendar.CalendarDto
+import me.fortibrine.learningapp.model.Calendar
+import org.mapstruct.Mapper
+import org.mapstruct.Mapping
+
+@Mapper(componentModel = "spring")
+interface CalendarMapper {
+
+    @Mapping(source = "target.name", target = "name")
+    fun toDto(calendar: Calendar): CalendarDto
+
+}

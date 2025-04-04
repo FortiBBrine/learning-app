@@ -1,7 +1,7 @@
 package me.fortibrine.learningapp.controller
 
-import me.fortibrine.learningapp.dto.calendar.CalendarDto
 import me.fortibrine.learningapp.dto.calendar.GetAllCalendarDto
+import me.fortibrine.learningapp.mapper.CalendarMapper
 import me.fortibrine.learningapp.model.Calendar
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.CalendarRepository
@@ -20,7 +20,9 @@ import java.time.Instant
 @RestController
 class CalendarController(
     private val calendarRepository: CalendarRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+
+    private val calendarMapper: CalendarMapper
 ) {
 
     @PostMapping("/schedule/{username}")
@@ -66,14 +68,7 @@ class CalendarController(
                 .filter { it.target != null }
                 .filter { it.fromTime != null }
                 .filter { it.toTime != null }
-                .map { calendar ->
-                    return@map CalendarDto(
-                        username = calendar.target!!.username,
-                        from = calendar.fromTime!!,
-                        to = calendar.toTime!!,
-                        name = calendar.target!!.name
-                    )
-                }
+                .map { calendarMapper.toDto(it) }
         )
     }
 

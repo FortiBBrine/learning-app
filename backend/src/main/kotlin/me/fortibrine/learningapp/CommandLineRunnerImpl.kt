@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-//@Component
+@Component
 class CommandLineRunnerImpl(
     private val calendarRepository: CalendarRepository,
     private val userRepository: UserRepository,
@@ -33,16 +33,16 @@ class CommandLineRunnerImpl(
 
         calendarRepository.save(Calendar(
             user = user,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2025, 1, 30, 7, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 1, 30, 8, 0)),
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2025, 2, 1, 7, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2024, 2, 1, 8, 0)),
             target = target
         ))
 
         calendarRepository.save(
             Calendar(
             user = target,
-            fromTime = Timestamp.valueOf(LocalDateTime.of(2025, 1, 30, 7, 0)),
-            toTime = Timestamp.valueOf(LocalDateTime.of(2025, 1, 30, 8, 0)),
+            fromTime = Timestamp.valueOf(LocalDateTime.of(2025, 2, 1, 7, 0)),
+            toTime = Timestamp.valueOf(LocalDateTime.of(2025, 2, 1, 8, 0)),
             target = user
         )
         )
