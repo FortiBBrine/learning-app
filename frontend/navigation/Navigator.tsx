@@ -15,6 +15,7 @@ import AddRelationScreen from "../screens/AddRelationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TuneScreen from "../screens/TuneScreen";
 import ChangeLanguageScreen from "../screens/ChangeLanguageScreen";
+import ChatScreen from "../screens/ChatScreen";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -25,6 +26,7 @@ export type RootStackParamList = {
     AddRelationScreen: undefined;
     Tune: undefined;
     ChangeLanguage: undefined;
+    Chat: { person: RelationDto }
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
@@ -34,6 +36,7 @@ export type AddRelationScreenNavigationProp = StackNavigationProp<RootStackParam
 export type TuneScreenNavigationProp = StackNavigationProp<RootStackParamList, "Tune">
 
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
+export type ChatScreenRouteProp = RouteProp<RootStackParamList, "Chat">
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -60,6 +63,7 @@ const Navigator = () => {
                         <Stack.Screen options={{headerTitle: t("calendar")}} name="Calendar" component={CalendarScreen} />
                         <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
                         <Stack.Screen options={{headerShown: false}} name="Tune" component={TuneScreen} />
+                        <Stack.Screen options={{headerShown: false}} name={"Chat"} component={ChatScreen} />
                         <Stack.Screen options={{headerTitle: t("change-language")}} name={"ChangeLanguage"} component={ChangeLanguageScreen} />
                     </> :
                     <>

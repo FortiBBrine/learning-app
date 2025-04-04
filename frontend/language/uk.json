@@ -46,5 +46,8 @@
   "algebra": "Algebra",
   "geometry": "Geometry",
   "information-technology": "Information Technology",
-  "foreign-languages": "Foreign Languages"
+  "foreign-languages": "Foreign Languages",
+
+  "chat": "Chat",
+  "chat-message": "Message"
 }

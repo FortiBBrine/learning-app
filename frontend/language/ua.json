@@ -46,5 +46,8 @@
   "algebra": "Алгебра",
   "geometry": "Геометрія",
   "information-technology": "Інформатика",
-  "foreign-languages": "Іноземна мова"
+  "foreign-languages": "Іноземна мова",
+
+  "chat": "Чат",
+  "chat-message": "Повідомлення"
 }
