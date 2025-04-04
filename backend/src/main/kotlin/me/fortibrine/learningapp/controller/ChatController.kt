@@ -49,6 +49,9 @@ class ChatController (
 
         chatMessageRepository.save(chatMessage)
 
+        message.sender = sender.username
+        message.timestamp = LocalDateTime.now()
+
         simpMessagingTemplate.convertAndSendToUser(
             message.receiver,
             "/queue/private",

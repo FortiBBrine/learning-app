@@ -13,7 +13,7 @@ class WebSocketConfig(private val authChannelInterceptor: AuthChannelInterceptor
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/ws-chat")
             .setAllowedOrigins("*")
-//            .withSockJS()
+            .withSockJS()
     }
 
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
