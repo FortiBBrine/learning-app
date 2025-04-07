@@ -1,0 +1,125 @@
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View} from "react-native";
+import {useRoute} from "@react-navigation/native";
+import {ChatScreenRouteProp, ProfileScreenRouteProp} from "../navigation/Navigator";
+import {useTranslation} from "react-i18next";
+import {Text, TextInput} from "react-native-paper";
+import {ChatMessageDto, getMessages} from "../api/messagesApi";
+import SockJS from "sockjs-client";
+import {CompatClient, Stomp} from "@stomp/stompjs";
+import {useAppSelector} from "../store/store";
+
+const ChatScreen = () => {
+
+    const route = useRoute<ChatScreenRouteProp>();
+    const [messages, setMessages] = useState<ChatMessageDto[]>([]);
+    const [message, setMessage] = useState<string>("");
+    const [t, i18n] = useTranslation();
+    const [stompClient, setStompClient] = useState<CompatClient | null>(null);
+    const token = useAppSelector(state => state.login.token)
+
+    useEffect(() => {
+        getMessages(route.params.person.username)
+            .then(setMessages)
+    }, [])
+
+
+    useEffect(() => {
+        const initializeWebSocket = () => {
+            const socket = new SockJS('https://learning-app-1ll5.onrender.com/ws-chat');
+            const client = Stomp.over(socket);
+
+            client.connect(
+                { Authorization: `Bearer ${token}` },
+                () => {
+                    client.subscribe('/user/queue/private', (message) => {
+                        const newMessage: ChatMessageDto = JSON.parse(message.body);
+                        setMessages(prev => [...prev, newMessage]);
+                    });
+                },
+                (error: any) => console.error('WebSocket Error:', error)
+            );
+
+            setStompClient(client);
+            return () => client.disconnect();
+        };
+
+        if (token) initializeWebSocket();
+    }, [token]);
+
+    const writeMessage = async () => {
+        if (!message.trim() || !stompClient) return;
+
+        const messageDto: ChatMessageDto = {
+            content: message,
+            sender: "",
+            receiver: route.params.person.username,
+            timestamp: new Date().toISOString()
+        };
+
+        stompClient.send(
+            '/app/send-private',
+            {},
+            JSON.stringify(messageDto)
+        );
+
+        setMessage('');
+        setMessages(prev => [...prev, messageDto]);
+    }
+
+    return (
+        <View style={styles.container}>
+            <Text variant="displayMedium" style={styles.username}>
+                {route.params.person.name}
+            </Text>
+            <ScrollView style={{
+                flex: 1,
+                padding: 10
+            }}>
+                <View style={{
+                    gap: 10
+                }}>
+                    { messages.map((message, index) => (
+                        <View style={[styles.message, {
+                            alignSelf: (route.params.person.username === message.sender) ? "flex-start" : "flex-end"
+                        }]} key={index}>
+                            <Text style={{color: "white"}}>{message.content}</Text>
+                        </View>
+                    ))}
+                </View>
+            </ScrollView>
+
+            <View style={styles.input}>
+                <TextInput
+                    placeholder={t("chat-message")}
+                    onSubmitEditing={writeMessage}
+                    onChangeText={setMessage}
+                    mode="outlined"
+                    value={message}
+                />
+            </View>
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 30,
+        flex: 1,
+        alignItems: "stretch"
+    },
+    message: {
+        borderRadius: 8,
+        padding: 10,
+        backgroundColor: "#24A1DE"
+    },
+    username: {
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    input: {
+
+    }
+})
+
+export default ChatScreen;
