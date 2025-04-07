@@ -12,11 +12,11 @@ class ChatMessage (
     var content: String = "",
     var timestamp: LocalDateTime = LocalDateTime.now(),
 
-    @field:ManyToOne
-    @field:JoinColumn(name = "sender_id")
-    var sender: User? = null,
+    @field:ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @field:JoinColumn(name = "sender_id", nullable = false)
+    var sender: User,
 
-    @field:ManyToOne
-    @field:JoinColumn(name = "receiver_id")
-    var receiver: User? = null,
+    @field:ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @field:JoinColumn(name = "receiver_id", nullable = false)
+    var receiver: User
 )

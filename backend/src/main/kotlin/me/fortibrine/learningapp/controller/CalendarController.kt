@@ -65,9 +65,6 @@ class CalendarController(
 
         return GetAllCalendarDto(
             calendars = calendars
-                .filter { it.target != null }
-                .filter { it.fromTime != null }
-                .filter { it.toTime != null }
                 .map { calendarMapper.toDto(it) }
         )
     }
