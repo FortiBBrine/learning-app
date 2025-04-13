@@ -4,16 +4,14 @@ import {StatusBar} from "expo-status-bar";
 import {useNavigation} from "@react-navigation/native";
 import {LoginScreenNavigationProp} from "../navigation/Navigator";
 import {Button, HelperText, Text, TextInput} from "react-native-paper";
-import {useDispatch} from "react-redux";
-import {setToken} from "../store/slice/loginSlice";
 import {login} from "../api/loginApi";
 import {useTranslation} from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useAuthStore} from "../store/authStore";
 
 const LoginScreen = () => {
 
     const navigation = useNavigation<LoginScreenNavigationProp>();
-    const dispatch = useDispatch();
+    const { setToken } = useAuthStore();
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -21,23 +19,21 @@ const LoginScreen = () => {
     const [usernameErrors, setUsernameErrors] = React.useState<string | undefined>(undefined);
     const [passwordErrors, setPasswordErrors] = React.useState<string | undefined>(undefined);
 
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
     const [secure, setSecure] = React.useState(true);
 
     const onPress = async () => {
         const data = await login(username, password);
 
         if (data.token == null) {
-            setUsernameErrors(data.result.username);
-            setPasswordErrors(data.result.password);
+            setUsernameErrors(data.errors.username);
+            setPasswordErrors(data.errors.password);
             return;
         }
 
         const token = data.token;
 
-        await AsyncStorage.setItem("token", token);
-
-        dispatch(setToken(token));
+        await setToken(token);
     };
 
     const changeUsernameText = (value: string) => {

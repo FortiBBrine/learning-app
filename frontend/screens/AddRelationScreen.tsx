@@ -1,26 +1,21 @@
 import React, {useEffect} from 'react';
 import {Pressable, ScrollView, StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
-import {useAppSelector} from "../store/store";
-import {useDispatch} from "react-redux";
 import {getNotMyRelations} from "../api/relationApi";
-import {setAllPeople} from "../store/slice/peopleSlice";
 import {useNavigation} from "@react-navigation/native";
 import {AddRelationScreenNavigationProp} from "../navigation/Navigator";
+import {usePeopleStore} from "../store/peopleStore";
 
 const AddRelationScreen = () => {
 
+    const { setAllPeople, allPeople } = usePeopleStore();
+
     useEffect(() => {
         getNotMyRelations()
-            .then(res => {
-                dispatch(setAllPeople(res));
-            })
+            .then(setAllPeople)
     }, []);
 
     const navigation = useNavigation<AddRelationScreenNavigationProp>()
-    const token = useAppSelector(state => state.login.token)
-    const dispatch = useDispatch();
-    const allPeople = useAppSelector(state => state.people.allPeople)
 
     return (
         <View style={styles.list}>

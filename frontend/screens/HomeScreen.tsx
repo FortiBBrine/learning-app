@@ -1,26 +1,23 @@
 import React, {useEffect} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
-import {useAppSelector} from "../store/store";
-import {Appbar, Avatar, Button, Dialog, FAB, IconButton, MD3Colors, Portal, Text} from "react-native-paper";
-import {useDispatch} from "react-redux";
-import {setPeople} from "../store/slice/peopleSlice";
+import {Appbar, Avatar, Button, Dialog, FAB, IconButton, Portal, Text} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
+import {usePeopleStore} from "../store/peopleStore";
 
 const HomeScreen = () => {
 
-    const people = useAppSelector(state => state.people.relations);
-    const dispatch = useDispatch();
+    const { relations, setPeople } = usePeopleStore();
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     const [refreshing, setRefreshing] = React.useState(false);
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
 
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         onRefresh().then()
@@ -30,7 +27,7 @@ const HomeScreen = () => {
         setRefreshing(true)
 
         const data = await getAllRelations()
-        dispatch(setPeople(data))
+        setPeople(data);
 
         setRefreshing(false)
     }
@@ -62,7 +59,7 @@ const HomeScreen = () => {
                 refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
             >
 
-                { people.map((item, index) => (
+                { relations.map((item, index) => (
                     <Pressable key={index} onPress={() => {
                         navigation.navigate(
                             "Profile",

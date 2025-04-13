@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {Button, Checkbox, HelperText, Text, TextInput} from "react-native-paper";
-import {setToken} from "../store/slice/loginSlice";
-import {useDispatch} from "react-redux";
 import {register} from "../api/registerApi";
 import {useTranslation} from "react-i18next";
+import {useAuthStore} from "../store/authStore";
 
 const RegisterScreen = () => {
-    const dispatch = useDispatch();
+
+    const { setToken } = useAuthStore();
 
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
@@ -23,7 +23,7 @@ const RegisterScreen = () => {
     const [secure, setSecure] = React.useState<boolean>(true);
     const [personalData, setPersonalData] = React.useState<boolean>(false);
 
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
 
     const changeUsernameText = (value: string) => {
         setUsername(
@@ -57,16 +57,16 @@ const RegisterScreen = () => {
         const res = await register(email, name, username, password);
 
         if (res.token == null) {
-            setUsernameErrors(res.result.username);
-            setEmailErrors(res.result.email);
-            setPasswordErrors(res.result.password);
-            setNameErrors(res.result.name);
+            setUsernameErrors(res.errors.username);
+            setEmailErrors(res.errors.email);
+            setPasswordErrors(res.errors.password);
+            setNameErrors(res.errors.name);
             return;
         }
 
         const token = res.token;
 
-        dispatch(setToken(token));
+        await setToken(token);
     };
 
     return (

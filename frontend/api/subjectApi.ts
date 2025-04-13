@@ -9,13 +9,13 @@ export type ChangeSubjectListDto = {
 };
 
 export async function getMySubjectList(): Promise<GetSubjectListDto> {
-    const response = await api.get("/subject/view");
+    const response = await api.get("/subjects");
 
     return response.data;
 }
 
 export async function changeSubjectList(subjects: string[]): Promise<void> {
-    const response = await api.post("/subject/change", {
+    const response = await api.post("/subjects", {
         subjects: subjects
     });
 }

@@ -4,9 +4,6 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LoginScreen from "../screens/LoginScreen";
 import {createStackNavigator, StackNavigationProp} from "@react-navigation/stack";
-import {useAppSelector} from "../store/store";
-import {useDispatch} from "react-redux";
-import {setToken} from "../store/slice/loginSlice";
 import RegisterScreen from "../screens/RegisterScreen";
 import {RelationDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
@@ -16,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import TuneScreen from "../screens/TuneScreen";
 import ChangeLanguageScreen from "../screens/ChangeLanguageScreen";
 import ChatScreen from "../screens/ChatScreen";
+import {useAuthStore} from "../store/authStore";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -42,14 +40,13 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 const Navigator = () => {
 
-    const token = useAppSelector(state => state.login.token)
-    const dispatch = useDispatch()
+    const { token, setToken } = useAuthStore()
 
     const [t, i18n] = useTranslation()
 
     useEffect(() => {
         AsyncStorage.getItem("token")
-            .then(data => dispatch(setToken(data)))
+            .then(data => setToken(data))
             .catch(err => console.error(err));
     }, [])
 

@@ -8,20 +8,19 @@ export type RelationDto = {
 }
 
 export async function getNotMyRelations(): Promise<RelationDto[]> {
-    const response = await api.get("/relation/notmy");
+    const response = await api.get("/relations/notmy");
 
     return response.data;
 }
 
 export async function getAllRelations(): Promise<RelationDto[]> {
-    const response = await api.get("/relation/all");
+    const response = await api.get("/relations");
 
     return response.data;
 }
 
 export async function deleteRelation(username: string): Promise<void> {
-    const response = await api.post("/relation/remove", {
-    }, {
+    const response = await api.delete("/relations", {
         params: {
             username: username,
         }
@@ -31,7 +30,7 @@ export async function deleteRelation(username: string): Promise<void> {
 }
 
 export async function addRelation(username: string): Promise<void> {
-    const response = await api.post("/relation/add", {}, {
+    const response = await api.post("/relations", {}, {
         params: {
             username: username,
         }

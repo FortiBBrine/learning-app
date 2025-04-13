@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from "react-native";
 import {Button, Chip} from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {setToken} from "../store/slice/loginSlice";
-import {useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import {TuneScreenNavigationProp} from "../navigation/Navigator";
 import {changeSubjectList, getMySubjectList} from "../api/subjectApi";
+import {useAuthStore} from "../store/authStore";
 
 const TuneScreen = () => {
 
-    const dispatch = useDispatch();
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
     const navigation = useNavigation<TuneScreenNavigationProp>();
+
+    const { setToken } = useAuthStore();
 
     const [selected, setSelected] = useState<string[]>([]);
 
@@ -63,8 +62,7 @@ const TuneScreen = () => {
                 navigation.navigate("ChangeLanguage");
             }}>{t("change-language")}</Button>
             <Button icon="lock" mode="outlined" onPress={async () => {
-                await AsyncStorage.removeItem("token");
-                dispatch(setToken(null));
+                await setToken(null);
             }}>{t("logout")}</Button>
         </View>
     );

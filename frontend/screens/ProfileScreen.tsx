@@ -3,7 +3,6 @@ import {Image, ScrollView, StyleSheet, View} from "react-native";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../navigation/Navigator";
 import {Button, Chip, Text} from "react-native-paper";
-import {StatusBar} from "expo-status-bar";
 import {useTranslation} from "react-i18next";
 import {addRelation} from "../api/relationApi";
 
@@ -11,7 +10,7 @@ const ProfileScreen = () => {
     const navigation = useNavigation<ProfileScreenNavigationProp>();
     const route = useRoute<ProfileScreenRouteProp>();
 
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <ScrollView>

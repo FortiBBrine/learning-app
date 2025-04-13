@@ -1,22 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from "react-native";
 import {useRoute} from "@react-navigation/native";
-import {ChatScreenRouteProp, ProfileScreenRouteProp} from "../navigation/Navigator";
+import {ChatScreenRouteProp} from "../navigation/Navigator";
 import {useTranslation} from "react-i18next";
 import {Text, TextInput} from "react-native-paper";
 import {ChatMessageDto, getMessages} from "../api/messagesApi";
 import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
-import {useAppSelector} from "../store/store";
+import {useAuthStore} from "../store/authStore";
 
 const ChatScreen = () => {
 
     const route = useRoute<ChatScreenRouteProp>();
     const [messages, setMessages] = useState<ChatMessageDto[]>([]);
     const [message, setMessage] = useState<string>("");
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
     const [stompClient, setStompClient] = useState<CompatClient | null>(null);
-    const token = useAppSelector(state => state.login.token)
+    const { token } = useAuthStore();
 
     useEffect(() => {
         getMessages(route.params.person.username)

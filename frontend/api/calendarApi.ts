@@ -13,6 +13,6 @@ export type GetAllCalendarDto = {
 }
 
 export async function getAllCalendars(): Promise<GetAllCalendarDto> {
-    const response = await api.get("/calendar/show/me")
+    const response = await api.get("/calendars/show")
     return response.data;
 }

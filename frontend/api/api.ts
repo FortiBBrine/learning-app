@@ -1,14 +1,13 @@
 import axios from "axios";
-import {store, useAppDispatch} from "../store/store";
-import {setToken} from "../store/slice/loginSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuthStore } from "../store/authStore";
 
 export const api = axios.create({
     baseURL: "https://learning-app-1ll5.onrender.com/api",
 })
 
 api.interceptors.request.use((request) => {
-    const token = store.getState().login.token;
+
+    const token = useAuthStore.getState().token;
 
     if (token !== null) {
         request.headers["Authorization"] = "Bearer " + token;
@@ -17,21 +16,19 @@ api.interceptors.request.use((request) => {
     return request;
 })
 
-api.interceptors.response.use((response) => {
+api.interceptors.response.use(async (response) => {
     if (response.statusText === "Unauthorized") {
-        store.dispatch(setToken(null));
-
-        AsyncStorage.removeItem("token").then()
+        await useAuthStore.getState().setToken(null);
     }
 
     return response;
-}, (error) => {
+}/*, async (error) => {
     if (axios.isAxiosError(error)) {
-        if (error.response !== undefined && error.response.status === 401) {
-            store.dispatch(setToken(null));
-
-            AsyncStorage.removeItem("token").then()
+        if (error.response !== undefined) {
+            console.error(error.response.status + " " + JSON.stringify(error.response.data));
         }
-        console.log(error.toJSON());
+        if (error.response !== undefined && error.response.status === 401) {
+            await useAuthStore.getState().setToken(null);
+        }
     }
-})
+}*/)
