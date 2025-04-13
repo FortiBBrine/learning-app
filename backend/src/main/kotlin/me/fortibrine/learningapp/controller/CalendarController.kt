@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.sql.Timestamp
 import java.time.Instant
 
-@RequestMapping("/api/calendar")
+@RequestMapping("/api/calendars")
 @RestController
 class CalendarController(
     private val calendarRepository: CalendarRepository,
@@ -36,13 +36,24 @@ class CalendarController(
     ) {
         val targetUser = userRepository.findByUsername(username) ?: return
 
-        calendarRepository.save(
-            Calendar(
-                user = principal,
-                fromTime = from,
-                toTime = to,
-                target = targetUser
-            )
+        calendarRepository.save(Calendar(
+            user = principal,
+            fromTime = from,
+            toTime = to,
+            target = targetUser
+        ))
+    }
+
+    @GetMapping("/show")
+    fun showCalendar(
+        @AuthenticationPrincipal principal: User
+    ): GetAllCalendarDto {
+
+        val calendars = calendarRepository.findByUser(principal, Timestamp.from(Instant.now()))
+
+        return GetAllCalendarDto(
+            calendars = calendars
+                .map { calendarMapper.toDto(it) }
         )
     }
 
@@ -53,15 +64,11 @@ class CalendarController(
         @AuthenticationPrincipal principal: User
     ): GetAllCalendarDto {
 
-        val calendars = if (username == "me") {
-            calendarRepository.findByUser(principal, Timestamp.from(Instant.now()))
-        } else {
-            calendarRepository.findByUser(
-                userRepository.findByUsername(username) ?: return GetAllCalendarDto(
-                    emptyList()
-                ), Timestamp.from(Instant.now())
-            )
-        }
+        val calendars = calendarRepository.findByUser(
+            userRepository.findByUsername(username) ?: return GetAllCalendarDto(
+                emptyList()
+            ), Timestamp.from(Instant.now())
+        )
 
         return GetAllCalendarDto(
             calendars = calendars

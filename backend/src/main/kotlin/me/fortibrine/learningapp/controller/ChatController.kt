@@ -35,6 +35,7 @@ class ChatController (
             println("Sender not found: ${principal.name}")
             return
         }
+
         if (receiver == null) {
             println("Receiver not found: ${message.receiver}")
             return
@@ -72,8 +73,8 @@ class ChatController (
         ).map {
             ChatMessageDto(
                 content = it.content,
-                sender = it.sender?.username ?: return listOf(),
-                receiver = it.receiver?.username ?: return listOf(),
+                sender = it.sender.username,
+                receiver = it.receiver.username,
                 timestamp = it.timestamp
             )
         }

@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
@@ -16,9 +19,9 @@ tasks {
 		targetCompatibility = "17"
 	}
 
-	withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-		kotlinOptions {
-			jvmTarget = "17"
+	withType<KotlinCompile>().configureEach {
+		compilerOptions {
+			jvmTarget.set(JvmTarget.JVM_17)
 		}
 	}
 
@@ -41,6 +44,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
+
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

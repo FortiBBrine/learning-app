@@ -5,8 +5,8 @@ import me.fortibrine.learningapp.dto.login.LoginRequestDto
 import me.fortibrine.learningapp.dto.login.LoginResponseDto
 import me.fortibrine.learningapp.dto.login.LoginValidator
 import me.fortibrine.learningapp.dto.register.RegisterRequestDto
-import me.fortibrine.learningapp.dto.register.RegisterResponseDto
 import me.fortibrine.learningapp.dto.register.RegisterValidator
+import me.fortibrine.learningapp.exception.ValidationError
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.service.HashService
 import me.fortibrine.learningapp.service.TokenService
@@ -31,23 +31,19 @@ class AuthController (
         payload: LoginRequestDto,
 
         bindingResult: BindingResult
-    ): RegisterResponseDto {
+    ): LoginResponseDto {
 
         loginValidator.validate(payload, bindingResult)
 
         if (bindingResult.hasErrors()) {
-            return RegisterResponseDto(
-                result = bindingResult.fieldErrors.associate {
-                    it.field to it.defaultMessage.orEmpty()
-                },
-            )
+            throw ValidationError(bindingResult.fieldErrors.associate {
+                it.field to it.defaultMessage.orEmpty()
+            })
         }
 
         val user = userService.findByUsername(payload.username) as User
 
-        return RegisterResponseDto(
-            token = tokenService.createToken(user),
-        )
+        return LoginResponseDto(tokenService.createToken(user))
     }
 
     @PostMapping("/register")
@@ -62,11 +58,9 @@ class AuthController (
         registerValidator.validate(payload, bindingResult)
 
         if (bindingResult.hasErrors()) {
-            return LoginResponseDto(
-                result = bindingResult.fieldErrors.associate {
-                    it.field to it.defaultMessage.orEmpty()
-                }
-            )
+            throw ValidationError(bindingResult.fieldErrors.associate {
+                it.field to it.defaultMessage.orEmpty()
+            })
         }
 
         val user = User(
@@ -78,9 +72,7 @@ class AuthController (
 
         val savedUser = userService.save(user)
 
-        return LoginResponseDto(
-            token = tokenService.createToken(savedUser),
-        )
+        return LoginResponseDto(tokenService.createToken(savedUser))
     }
 
 }

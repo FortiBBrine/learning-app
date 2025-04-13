@@ -1,6 +1,6 @@
-server:
-  error:
-    include-message: always
+#server:
+#  error:
+#    include-message: always
 spring:
   application:
     name: LearningApp
@@ -18,4 +18,3 @@ spring:
 security:
   jwt:
     secret-key: AzomDE3TeXUOtYaOP/mkRvDd6br4l2Qm8RffNQkD1KE=
-    expiration-time: 3600000

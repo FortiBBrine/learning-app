@@ -7,6 +7,7 @@ import me.fortibrine.learningapp.repository.RelationRepository
 import me.fortibrine.learningapp.repository.UserRepository
 import me.fortibrine.learningapp.service.RelationService
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/relation")
+@RequestMapping("/api/relations")
 class RelationController (
     private val userRepository: UserRepository,
     private val relationRepository: RelationRepository,
@@ -30,7 +31,7 @@ class RelationController (
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping
     fun allRelations(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
@@ -40,7 +41,7 @@ class RelationController (
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping
     fun add(
         @RequestParam(name = "username") username: String,
 
@@ -51,8 +52,8 @@ class RelationController (
         relationRepository.save(relation)
     }
 
-    @PostMapping("/remove")
-    fun remove(
+    @DeleteMapping
+    fun delete(
         @RequestParam(name = "username") username: String,
 
         @AuthenticationPrincipal principal: User

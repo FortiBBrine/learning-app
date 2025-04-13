@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.mapper
 
-import me.fortibrine.learningapp.dto.calendar.CalendarDto
+import me.fortibrine.learningapp.dto.calendar.GetAllCalendarDto
 import me.fortibrine.learningapp.model.Calendar
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -12,6 +12,6 @@ interface CalendarMapper {
     @Mapping(source = "target.username", target = "username")
     @Mapping(source = "fromTime", target = "from")
     @Mapping(source = "toTime", target = "to")
-    fun toDto(calendar: Calendar): CalendarDto
+    fun toDto(calendar: Calendar): GetAllCalendarDto.CalendarDto
 
 }
