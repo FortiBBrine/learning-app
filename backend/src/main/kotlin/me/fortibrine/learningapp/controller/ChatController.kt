@@ -60,7 +60,7 @@ class ChatController (
         )
     }
 
-    @GetMapping("/api/v1/messages")
+    @GetMapping("/api/messages")
     @ResponseBody
     fun getMessages(
         @RequestParam(name = "target") target: String,
