@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.sql.Timestamp
 import java.time.Instant
 
-@RequestMapping("/api/calendars")
+@RequestMapping("/api/v1/calendars")
 @RestController
 class CalendarController(
     private val calendarRepository: CalendarRepository,

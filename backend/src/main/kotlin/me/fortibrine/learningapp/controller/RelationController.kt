@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.controller
 
-import me.fortibrine.learningapp.dto.controller.RelationDto
+import me.fortibrine.learningapp.dto.relation.RelationDto
 import me.fortibrine.learningapp.model.Relation
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.RelationRepository
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/relations")
+@RequestMapping("/api/v1/relations")
 class RelationController (
     private val userRepository: UserRepository,
     private val relationRepository: RelationRepository,

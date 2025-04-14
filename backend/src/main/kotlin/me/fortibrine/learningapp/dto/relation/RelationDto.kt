@@ -1,4 +1,4 @@
-package me.fortibrine.learningapp.dto.controller
+package me.fortibrine.learningapp.dto.relation
 
 data class RelationDto (
     val name: String,

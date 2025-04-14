@@ -1,6 +1,6 @@
 package me.fortibrine.learningapp.service
 
-import me.fortibrine.learningapp.dto.controller.RelationDto
+import me.fortibrine.learningapp.dto.relation.RelationDto
 import me.fortibrine.learningapp.model.SubjectList
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.SubjectRepository

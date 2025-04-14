@@ -21,18 +21,17 @@ class LoginValidator (
         val user = userService.findByUsername(payload.username)
 
         if (SecurityContextHolder.getContext().authentication.principal is User) {
-            errors.rejectValue("username", "", "You are already authenticated")
+            errors.rejectValue("username", "", "Ви вже автентифіковані")
             return
         }
 
         if (user == null) {
-            errors.rejectValue("username", "", "Wrong username or password.")
+            errors.rejectValue("username", "", "Невірне ім’я користувача або пароль")
             return
         }
 
         if (!hashService.checkBcrypt(payload.password, user.password)) {
-            errors.rejectValue("username", "", "Wrong username or password.")
-            return
+            errors.rejectValue("username", "", "Невірне ім’я користувача або пароль")
         }
     }
 
