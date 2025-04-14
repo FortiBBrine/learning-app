@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 
 export const api = axios.create({
-    baseURL: "https://learning-app-1ll5.onrender.com/api",
+    baseURL: "https://learning-app-1ll5.onrender.com/api/v1",
 })
 
 api.interceptors.request.use((request) => {
