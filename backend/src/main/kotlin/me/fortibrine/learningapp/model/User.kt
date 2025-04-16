@@ -2,7 +2,7 @@ package me.fortibrine.learningapp.model
 
 import jakarta.persistence.*
 
-@Entity
+@Entity(name = "AppUser")
 class User (
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)

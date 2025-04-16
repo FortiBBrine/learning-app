@@ -24,7 +24,8 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         return relationRepository.findNotInRelation(principal).map {
-            relationMapper.toDto(it)
+            val rating = relationRepository.findAverageRatingByTarget(it) ?: 0.0
+            return@map relationMapper.toDto(it, rating)
         }
     }
 
@@ -33,7 +34,10 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         val relations = relationRepository.findBySource(principal)
-        return relations.map { relationMapper.toDto(it) }
+        return relations.map {
+            val rating = relationRepository.findAverageRatingByTarget(it.target) ?: 0.0
+            return@map relationMapper.toDto(it, rating)
+        }
     }
 
     @PostMapping
@@ -49,5 +53,17 @@ class RelationController(
 
         @AuthenticationPrincipal principal: User
     ): Unit = relationRepository.delete(principal, username)
+
+    @PostMapping("/rating")
+    fun setRating(
+        @RequestParam(name = "username") username: String,
+        @RequestParam(name = "rating") rating: Int,
+
+        @AuthenticationPrincipal principal: User
+    ) {
+        if (rating < 1 || rating > 5) return
+
+        relationRepository.updateRating(principal, username, rating)
+    }
 
 }

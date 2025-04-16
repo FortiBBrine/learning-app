@@ -17,4 +17,5 @@ class Relation (
     @field:JoinColumn(name = "relation_id", nullable = false)
     var target: User,
 
+    var rating: Int? = null
 )

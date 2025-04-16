@@ -8,11 +8,17 @@ import org.mapstruct.Mapping
 
 @Mapper(componentModel = "spring")
 interface RelationMapper {
-    @Mapping(source = "target.name", target = "name")
-    @Mapping(source = "target.username", target = "username")
-    @Mapping(source = "target.email", target = "email")
-    @Mapping(source = "target.subjects", target = "subjects")
-    fun toDto(relation: Relation): RelationDto
+    @Mapping(source = "relation.target.name", target = "name")
+    @Mapping(source = "relation.target.username", target = "username")
+    @Mapping(source = "relation.target.email", target = "email")
+    @Mapping(source = "relation.target.subjects", target = "subjects")
+    @Mapping(target = "rating", source = "rating")
+    fun toDto(relation: Relation, rating: Double): RelationDto
 
-    fun toDto(user: User): RelationDto
+    @Mapping(source = "user.name", target = "name")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.email", target = "email")
+    @Mapping(source = "user.subjects", target = "subjects")
+    @Mapping(target = "rating", source = "rating")
+    fun toDto(user: User, rating: Double): RelationDto
 }

@@ -4,5 +4,6 @@ data class RelationDto (
     val name: String,
     val username: String,
     val email: String,
-    val subjects: List<String>
+    val subjects: List<String>,
+    val rating: Double
 )
