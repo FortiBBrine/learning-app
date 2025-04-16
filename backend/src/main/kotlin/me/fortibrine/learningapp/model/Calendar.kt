@@ -3,7 +3,7 @@ package me.fortibrine.learningapp.model
 import jakarta.persistence.*
 import java.sql.Timestamp
 
-@Entity(name = "calendars")
+@Entity
 class Calendar (
     @field:Id
     @GeneratedValue(strategy = GenerationType.AUTO)

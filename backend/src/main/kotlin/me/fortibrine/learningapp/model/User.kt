@@ -2,7 +2,7 @@ package me.fortibrine.learningapp.model
 
 import jakarta.persistence.*
 
-@Entity(name = "users")
+@Entity
 class User (
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,5 +13,9 @@ class User (
     var email: String = "",
 
     @field:ElementCollection(fetch = FetchType.EAGER)
-    var roles: List<String> = listOf("ROLE_USER")
+    var roles: List<String> = listOf("ROLE_USER"),
+
+    @field:ElementCollection(fetch = FetchType.EAGER)
+    var subjects: MutableSet<String> = mutableSetOf()
+
 )

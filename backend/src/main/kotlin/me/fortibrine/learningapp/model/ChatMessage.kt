@@ -3,7 +3,7 @@ package me.fortibrine.learningapp.model
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-@Entity(name = "messages")
+@Entity
 class ChatMessage (
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)

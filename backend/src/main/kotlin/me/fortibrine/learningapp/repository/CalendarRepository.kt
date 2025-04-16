@@ -13,7 +13,7 @@ interface CalendarRepository: JpaRepository<Calendar, Long> {
     fun findByUser(user: User): List<Calendar>
     fun findByTarget(user: User): List<Calendar>
 
-    @Query("SELECT c FROM calendars c WHERE c.user = :user AND c.fromTime > :fromTime ORDER BY c.fromTime")
+    @Query("SELECT c FROM Calendar c WHERE c.user = :user AND c.fromTime > :fromTime ORDER BY c.fromTime")
     fun findByUser(
         @Param("user") user: User,
         @Param("fromTime") from: Timestamp
