@@ -31,44 +31,49 @@ const ProfileScreen = () => {
                     ))}
                 </View>
 
-                <Button mode="outlined" onPress={() => {}}>
-                    <Text variant="titleLarge">
-                        {t("get-into-schedule")}
-                    </Text>
-                </Button>
-
-                <Button mode="outlined" onPress={() => {}}>
-                    <Text variant="titleLarge">
-                        {t("schedule")}
-                    </Text>
-                </Button>
-
-                <Button mode="outlined" icon="cloud-upload-outline" onPress={() => {}}>
-                    <Text variant="titleLarge">
-                        {t("upload")}
-                    </Text>
-                </Button>
-
                 { route.params.addButton ? (
-                    <Button mode="outlined" onPress={async () => {
-                        await addRelation(route.params.person.username);
+                    <>
+                        <Text variant={"titleSmall"}>Рейтинг: { route.params.person.rating }</Text>
+                        <Button mode="outlined" onPress={async () => {
+                            await addRelation(route.params.person.username);
 
-                        navigation.navigate("Home");
-                    }}>
-                        <Text variant="titleLarge">
-                            {t("add")}
-                        </Text>
-                    </Button>
+                            navigation.navigate("Home");
+                        }}>
+                            <Text variant="titleLarge">
+                                {t("add")}
+                            </Text>
+                        </Button>
+                    </>
                 ) : (
-                    <Button mode="outlined" onPress={async () => {
-                        navigation.navigate("Chat", {
-                            person: route.params.person
-                        });
-                    }}>
-                        <Text variant="titleLarge">
-                            {t("chat")}
-                        </Text>
-                    </Button>
+                    <>
+
+                        <Button mode="outlined" onPress={() => {}}>
+                            <Text variant="titleLarge">
+                                {t("get-into-schedule")}
+                            </Text>
+                        </Button>
+
+                        <Button mode="outlined" onPress={() => {}}>
+                            <Text variant="titleLarge">
+                                {t("schedule")}
+                            </Text>
+                        </Button>
+
+                        <Button mode="outlined" icon="cloud-upload-outline" onPress={() => {}}>
+                            <Text variant="titleLarge">
+                                {t("upload")}
+                            </Text>
+                        </Button>
+                        <Button mode="outlined" onPress={async () => {
+                            navigation.navigate("Chat", {
+                                person: route.params.person
+                            });
+                        }}>
+                            <Text variant="titleLarge">
+                                {t("chat")}
+                            </Text>
+                        </Button>
+                    </>
                 )}
 
             </View>

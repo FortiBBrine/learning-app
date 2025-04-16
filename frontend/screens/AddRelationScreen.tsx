@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Pressable, ScrollView, StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
-import {getNotMyRelations} from "../api/relationApi";
+import {getSuggestions} from "../api/relationApi";
 import {useNavigation} from "@react-navigation/native";
 import {AddRelationScreenNavigationProp} from "../navigation/Navigator";
 import {usePeopleStore} from "../store/peopleStore";
@@ -11,7 +11,7 @@ const AddRelationScreen = () => {
     const { setAllPeople, allPeople } = usePeopleStore();
 
     useEffect(() => {
-        getNotMyRelations()
+        getSuggestions()
             .then(setAllPeople)
     }, []);
 

@@ -4,11 +4,12 @@ export type RelationDto = {
     name: string,
     email: string,
     username: string,
-    subjects: string[]
+    subjects: string[],
+    rating: number
 }
 
-export async function getNotMyRelations(): Promise<RelationDto[]> {
-    const response = await api.get("/relations/notmy");
+export async function getSuggestions(): Promise<RelationDto[]> {
+    const response = await api.get("/relations/suggestions");
 
     return response.data;
 }
@@ -39,3 +40,13 @@ export async function addRelation(username: string): Promise<void> {
     return response.data;
 }
 
+export async function rating(username: string, rating: number): Promise<void> {
+    const response = await api.post("/relations/rating", {}, {
+        params: {
+            username: username,
+            rating: rating
+        }
+    });
+
+    return response.data;
+}
