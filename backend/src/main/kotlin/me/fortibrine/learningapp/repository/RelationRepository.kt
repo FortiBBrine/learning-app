@@ -48,4 +48,14 @@ interface RelationRepository: JpaRepository<Relation, Long> {
     @Query("SELECT ROUND(AVG(r.rating), 2) FROM Relation r WHERE r.target = :user AND r.rating IS NOT NULL")
     fun findAverageRatingByTarget(@Param("user") user: User): Double?
 
+    @Modifying
+    @Query("UPDATE Relation r SET r.show = false WHERE r.source = :user AND r.target.username = :username")
+    @Transactional
+    fun hideRelation(
+        @Param("user") user: User,
+        @Param("username") username: String
+    )
+
+    fun existsBySourceAndTarget_Username(source: User, targetUsername: String): Boolean
+
 }

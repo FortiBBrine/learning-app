@@ -34,7 +34,7 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         val relations = relationRepository.findBySource(principal)
-        return relations.map {
+        return relations.filter { it.show }.map {
             val rating = relationRepository.findAverageRatingByTarget(it.target) ?: 0.0
             return@map relationMapper.toDto(it, rating)
         }
@@ -45,7 +45,11 @@ class RelationController(
         @RequestParam(name = "username") username: String,
 
         @AuthenticationPrincipal principal: User
-    ): Unit = relationRepository.addRelation(principal, username)
+    ) {
+        if (!relationRepository.existsBySourceAndTarget_Username(principal, username)) {
+            relationRepository.addRelation(principal, username)
+        }
+    }
 
     @DeleteMapping
     fun delete(
@@ -53,6 +57,13 @@ class RelationController(
 
         @AuthenticationPrincipal principal: User
     ): Unit = relationRepository.delete(principal, username)
+
+    @PostMapping("/hide")
+    fun hide(
+        @RequestParam(name = "username") username: String,
+
+        @AuthenticationPrincipal principal: User
+    ): Unit = relationRepository.hideRelation(principal, username)
 
     @PostMapping("/rating")
     fun setRating(
