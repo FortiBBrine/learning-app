@@ -27,8 +27,8 @@ interface RelationRepository: JpaRepository<Relation, Long> {
     fun findNotInRelation(@Param("user") user: User): List<User>
 
     @Modifying
-    @Query("INSERT INTO Relation (source, target) " +
-            "SELECT :principal, u FROM AppUser u WHERE u.username = :username"
+    @Query("INSERT INTO Relation (source, target, show) " +
+            "SELECT :principal, u, true FROM AppUser u WHERE u.username = :username"
     )
     @Transactional
     fun addRelation(
