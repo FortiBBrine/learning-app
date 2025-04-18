@@ -29,7 +29,6 @@ class SecurityConfig (
             request
                 .requestMatchers("/ws-chat/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/test").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
         }
