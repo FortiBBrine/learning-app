@@ -117,7 +117,7 @@ const RegisterScreen = () => {
                 </HelperText>
             }
 
-            <Button onPress={onPress} mode="outlined">{t("register-button")}</Button>
+            <Button onPress={onPress} mode="contained-tonal">{t("register-button")}</Button>
 
             <StatusBar style="auto" />
         </View>

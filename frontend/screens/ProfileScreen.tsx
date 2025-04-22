@@ -4,13 +4,32 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import {ProfileScreenNavigationProp, ProfileScreenRouteProp} from "../navigation/Navigator";
 import {Button, Chip, Text} from "react-native-paper";
 import {useTranslation} from "react-i18next";
-import {addRelation} from "../api/relationApi";
+import {addRelation, rating} from "../api/relationApi";
+import {AirbnbRating} from "react-native-ratings";
 
 const ProfileScreen = () => {
     const navigation = useNavigation<ProfileScreenNavigationProp>();
     const route = useRoute<ProfileScreenRouteProp>();
 
     const { t } = useTranslation();
+
+    const finishRating = async (chosenRating: number) => {
+        await rating(route.params.person.username, chosenRating);
+
+        navigation.navigate("Home");
+    };
+
+    const newRelation = async () => {
+        await addRelation(route.params.person.username);
+
+        navigation.navigate("Home");
+    };
+
+    const goToChat = async () => {
+        navigation.navigate("Chat", {
+            person: route.params.person
+        });
+    };
 
     return (
         <ScrollView>
@@ -23,23 +42,34 @@ const ProfileScreen = () => {
                     uri: 'https://cdn-icons-png.flaticon.com/128/3024/3024605.png'
                 }} />
 
-                <View style={styles.subjectList}>
-                    { route.params.person.subjects.map((value, index) => (
-                        <Chip key={index} mode="outlined">
-                            {t(value)}
-                        </Chip>
-                    ))}
-                </View>
+                <Text variant="titleMedium" style={{
+                    textAlign: "center"
+                }}>{t("rating")}: {route.params.person.rating}</Text>
+
+                { route.params.person.subjects.length > 0 && <View style={styles.subjectList}>
+                        { route.params.person.subjects.map((value, index) => (
+                            <Chip key={index} mode="outlined">
+                                {t(value)}
+                            </Chip>
+                        ))}
+                    </View>
+                }
+
+                <AirbnbRating
+                    count={5}
+                    size={15}
+                    defaultRating={0}
+                    showRating={false}
+                    onFinishRating={finishRating}
+                />
 
                 { route.params.addButton ? (
                     <>
-                        <Text variant={"titleSmall"}>Рейтинг: { route.params.person.rating }</Text>
-                        <Button mode="outlined" onPress={async () => {
-                            await addRelation(route.params.person.username);
-
-                            navigation.navigate("Home");
-                        }}>
-                            <Text variant="titleLarge">
+                        <Button
+                            mode="contained-tonal"
+                            icon="account-plus"
+                            onPress={newRelation}>
+                            <Text variant="titleMedium">
                                 {t("add")}
                             </Text>
                         </Button>
@@ -47,29 +77,25 @@ const ProfileScreen = () => {
                 ) : (
                     <>
 
-                        <Button mode="outlined" onPress={() => {}}>
-                            <Text variant="titleLarge">
+                        <Button mode="contained-tonal" icon="calendar-edit" onPress={() => {}}>
+                            <Text variant="titleMedium">
                                 {t("get-into-schedule")}
                             </Text>
                         </Button>
 
-                        <Button mode="outlined" onPress={() => {}}>
-                            <Text variant="titleLarge">
+                        <Button mode="contained-tonal" icon="calendar-clock" onPress={() => {}}>
+                            <Text variant="titleMedium">
                                 {t("schedule")}
                             </Text>
                         </Button>
 
-                        <Button mode="outlined" icon="cloud-upload-outline" onPress={() => {}}>
-                            <Text variant="titleLarge">
+                        <Button mode="contained-tonal" icon="cloud-upload-outline" onPress={() => {}}>
+                            <Text variant="titleMedium">
                                 {t("upload")}
                             </Text>
                         </Button>
-                        <Button mode="outlined" onPress={async () => {
-                            navigation.navigate("Chat", {
-                                person: route.params.person
-                            });
-                        }}>
-                            <Text variant="titleLarge">
+                        <Button mode="contained-tonal"icon="message-text-outline" onPress={goToChat}>
+                            <Text variant="titleMedium">
                                 {t("chat")}
                             </Text>
                         </Button>

@@ -84,13 +84,13 @@ const LoginScreen = () => {
                 </HelperText>
             }
 
-            <Button onPress={onPress} mode="outlined">{t("login-button")}</Button>
+            <Button onPress={onPress} mode="contained-tonal">{t("login-button")}</Button>
             <Button onPress={() => {
                 navigation.navigate("Register")
-            }} mode="outlined">
+            }} mode="contained-tonal">
                 {t("register-goto-button")}
             </Button>
-            <Button icon="translate" mode="outlined" onPress={() => {
+            <Button icon="translate" mode="contained-tonal" onPress={() => {
                 navigation.navigate("ChangeLanguage");
             }}>{t("change-language")}</Button>
 

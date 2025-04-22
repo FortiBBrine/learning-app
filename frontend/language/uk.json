@@ -49,5 +49,7 @@
   "foreign-languages": "Foreign Languages",
 
   "chat": "Chat",
-  "chat-message": "Message"
+  "chat-message": "Message",
+
+  "rating": "Rating"
 }

@@ -58,10 +58,10 @@ const TuneScreen = () => {
                     </Chip>
                 ))}
             </View>
-            <Button icon="translate" mode="outlined" onPress={() => {
+            <Button icon="translate" mode="contained-tonal" onPress={() => {
                 navigation.navigate("ChangeLanguage");
             }}>{t("change-language")}</Button>
-            <Button icon="lock" mode="outlined" onPress={async () => {
+            <Button icon="lock" mode="contained-tonal" onPress={async () => {
                 await setToken(null);
             }}>{t("logout")}</Button>
         </View>
