@@ -7,6 +7,7 @@ import {HomeScreenNavigationProp} from "../navigation/Navigator";
 import {deleteRelation, getAllRelations} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import {usePeopleStore} from "../store/peopleStore";
+import PersonList from "../component/PersonList";
 
 const HomeScreen = () => {
 
@@ -14,8 +15,8 @@ const HomeScreen = () => {
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    const [refreshing, setRefreshing] = React.useState(false);
     const [deleteUser, setDeleteUser] = React.useState<string | null>(null);
+    const [refreshing, setRefreshing] = React.useState(false);
 
     const { t } = useTranslation();
 
@@ -24,12 +25,12 @@ const HomeScreen = () => {
     }, []);
 
     const onRefresh = async () => {
-        setRefreshing(true)
+        setRefreshing(true);
 
         const data = await getAllRelations()
         setPeople(data);
 
-        setRefreshing(false)
+        setRefreshing(false);
     }
 
     const onDeleteUser = async () => {
@@ -41,7 +42,6 @@ const HomeScreen = () => {
         await onRefresh()
     }
 
-
     return (
         <>
             <Appbar.Header>
@@ -51,49 +51,22 @@ const HomeScreen = () => {
                     navigation.navigate("Tune")
                 }} />
             </Appbar.Header>
-            <ScrollView
-                style={{
-                    flex: 1,
-                    margin: 15
+
+            <PersonList
+                relations={relations}
+                onRefresh={onRefresh}
+                removeUser={async user => setDeleteUser(user.username)}
+                onPress={async relation => {
+                    navigation.navigate(
+                        "Profile",
+                        {
+                            person: relation,
+                            addButton: false
+                        }
+                    )
                 }}
-                refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
-            >
-
-                { relations.map((item, index) => (
-                    <Pressable key={index} onPress={() => {
-                        navigation.navigate(
-                            "Profile",
-                            {
-                                person: item,
-                                addButton: false
-                            }
-                        )
-                    }}>
-                        <View style={styles.listItem}>
-
-                            <View style={{
-                                flexDirection: "row",
-                                gap: 20,
-                                alignItems: "center"
-                            }}>
-                                <Avatar.Icon icon={"account"} size={36} />
-
-                                <Text variant="titleLarge">
-                                    {item.name}
-                                </Text>
-                            </View>
-
-                            <IconButton
-                                icon="trash-can-outline"
-                                size={25}
-                                onPress={() => setDeleteUser(item.username)}
-                            />
-
-                        </View>
-                    </Pressable>
-                ))}
-                <StatusBar style="auto" />
-            </ScrollView>
+                refreshing={refreshing}
+            />
 
             <FAB
                 icon="magnify"
@@ -124,17 +97,6 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    listItem: {
-        padding: 5,
-        borderRadius: 10,
-        // borderColor: "teal",
-        // borderStyle: "solid",
-        // borderWidth: 1,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 10
-    },
     magnify: {
         position: "absolute",
         bottom: 20,
