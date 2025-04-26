@@ -26,7 +26,7 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         return relationRepository.findNotInRelation(principal).map {
-            val rating = ratingRepository.findAverageRatingByTarget(it)
+            val rating = ratingRepository.findAverageRatingByTarget(it) ?: 0.0
             return@map relationMapper.toDto(it, rating)
         }
     }
@@ -37,7 +37,7 @@ class RelationController(
     ): List<RelationDto> {
         val relations = relationRepository.findBySource(principal)
         return relations.map {
-            val rating = ratingRepository.findAverageRatingByTarget(it.target)
+            val rating = ratingRepository.findAverageRatingByTarget(it.target) ?: 0.0
             return@map relationMapper.toDto(it, rating)
         }
     }

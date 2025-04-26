@@ -22,6 +22,6 @@ interface RatingRepository: JpaRepository<Rating, Long> {
     )
 
     @Query("SELECT ROUND(AVG(r.rating), 2) FROM Rating r WHERE r.target = :user")
-    fun findAverageRatingByTarget(@Param("user") user: User): Double
+    fun findAverageRatingByTarget(@Param("user") user: User): Double?
 
 }
