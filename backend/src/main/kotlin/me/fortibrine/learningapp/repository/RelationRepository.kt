@@ -28,7 +28,7 @@ interface RelationRepository: JpaRepository<Relation, Long> {
 
     @Modifying
     @Query("INSERT INTO Relation (source, target) " +
-            "SELECT :principal, u, true FROM AppUser u WHERE u.username = :username"
+            "SELECT :principal, u FROM AppUser u WHERE u.username = :username"
     )
     @Transactional
     fun addRelation(
