@@ -2,9 +2,11 @@ package me.fortibrine.learningapp.controller
 
 import me.fortibrine.learningapp.dto.relation.RelationDto
 import me.fortibrine.learningapp.mapper.RelationMapper
+import me.fortibrine.learningapp.model.Rating
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.RatingRepository
 import me.fortibrine.learningapp.repository.RelationRepository
+import me.fortibrine.learningapp.repository.UserRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController
 class RelationController(
     private val relationRepository: RelationRepository,
     private val relationMapper: RelationMapper,
-    private val ratingRepository: RatingRepository
+    private val ratingRepository: RatingRepository,
+    private val userRepository: UserRepository
 ) {
 
     @GetMapping("/suggestions")
@@ -69,7 +72,16 @@ class RelationController(
     ) {
         if (rating < 1 || rating > 5) return
 
-        ratingRepository.updateRating(principal, username, rating)
+        if (ratingRepository.findBySourceAndTarget_Username(principal, username) == null) {
+            ratingRepository.save(Rating(
+                source = principal,
+                target = userRepository.findByUsername(username) ?: return,
+                rating = rating,
+            ))
+        } else {
+            ratingRepository.updateRating(principal, username, rating)
+        }
+
     }
 
 }
