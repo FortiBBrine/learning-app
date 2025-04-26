@@ -3,6 +3,7 @@ package me.fortibrine.learningapp.controller
 import me.fortibrine.learningapp.dto.relation.RelationDto
 import me.fortibrine.learningapp.mapper.RelationMapper
 import me.fortibrine.learningapp.model.User
+import me.fortibrine.learningapp.repository.RatingRepository
 import me.fortibrine.learningapp.repository.RelationRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/relations")
 class RelationController(
     private val relationRepository: RelationRepository,
-    private val relationMapper: RelationMapper
+    private val relationMapper: RelationMapper,
+    private val ratingRepository: RatingRepository
 ) {
 
     @GetMapping("/suggestions")
@@ -24,7 +26,7 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         return relationRepository.findNotInRelation(principal).map {
-            val rating = relationRepository.findAverageRatingByTarget(it) ?: 0.0
+            val rating = ratingRepository.findAverageRatingByTarget(it)
             return@map relationMapper.toDto(it, rating)
         }
     }
@@ -34,8 +36,8 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): List<RelationDto> {
         val relations = relationRepository.findBySource(principal)
-        return relations.filter { it.show }.map {
-            val rating = relationRepository.findAverageRatingByTarget(it.target) ?: 0.0
+        return relations.map {
+            val rating = ratingRepository.findAverageRatingByTarget(it.target)
             return@map relationMapper.toDto(it, rating)
         }
     }
@@ -58,13 +60,6 @@ class RelationController(
         @AuthenticationPrincipal principal: User
     ): Unit = relationRepository.delete(principal, username)
 
-    @PostMapping("/hide")
-    fun hide(
-        @RequestParam(name = "username") username: String,
-
-        @AuthenticationPrincipal principal: User
-    ): Unit = relationRepository.hideRelation(principal, username)
-
     @PostMapping("/rating")
     fun setRating(
         @RequestParam(name = "username") username: String,
@@ -74,7 +69,7 @@ class RelationController(
     ) {
         if (rating < 1 || rating > 5) return
 
-        relationRepository.updateRating(principal, username, rating)
+        ratingRepository.updateRating(principal, username, rating)
     }
 
 }

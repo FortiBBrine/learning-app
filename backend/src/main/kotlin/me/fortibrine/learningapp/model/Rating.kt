@@ -3,7 +3,7 @@ package me.fortibrine.learningapp.model
 import jakarta.persistence.*
 
 @Entity
-class Relation (
+class Rating (
 
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,5 +15,7 @@ class Relation (
 
     @field:ManyToOne(fetch = FetchType.EAGER, optional = false)
     @field:JoinColumn(name = "relation_id", nullable = false)
-    var target: User
+    var target: User,
+
+    var rating: Int
 )

@@ -27,32 +27,12 @@ interface RelationRepository: JpaRepository<Relation, Long> {
     fun findNotInRelation(@Param("user") user: User): List<User>
 
     @Modifying
-    @Query("INSERT INTO Relation (source, target, show) " +
+    @Query("INSERT INTO Relation (source, target) " +
             "SELECT :principal, u, true FROM AppUser u WHERE u.username = :username"
     )
     @Transactional
     fun addRelation(
         @Param("principal") principal: User,
-        @Param("username") username: String
-    )
-
-    @Modifying
-    @Query("UPDATE Relation r SET r.rating = :rating WHERE r.source = :source AND r.target.username = :targetUsername")
-    @Transactional
-    fun updateRating(
-        @Param("source") source: User,
-        @Param("targetUsername") targetUsername: String,
-        @Param("rating") rating: Int
-    )
-
-    @Query("SELECT ROUND(AVG(r.rating), 2) FROM Relation r WHERE r.target = :user AND r.rating IS NOT NULL")
-    fun findAverageRatingByTarget(@Param("user") user: User): Double?
-
-    @Modifying
-    @Query("UPDATE Relation r SET r.show = false WHERE r.source = :user AND r.target.username = :username")
-    @Transactional
-    fun hideRelation(
-        @Param("user") user: User,
         @Param("username") username: String
     )
 
