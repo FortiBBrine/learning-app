@@ -7,7 +7,7 @@ import {createStackNavigator, StackNavigationProp} from "@react-navigation/stack
 import RegisterScreen from "../screens/RegisterScreen";
 import {RelationDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
-import CalendarScreen from "../screens/CalendarScreen";
+import ScheduledLessonScreen from "../screens/ScheduledLessonScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TuneScreen from "../screens/TuneScreen";
@@ -20,7 +20,7 @@ export type RootStackParamList = {
     Profile: { person: RelationDto, addButton: boolean };
     Login: undefined;
     Register: undefined;
-    Calendar: undefined;
+    ScheduledLessonsScreen: undefined;
     AddRelationScreen: undefined;
     Tune: undefined;
     ChangeLanguage: undefined;
@@ -42,7 +42,7 @@ const Navigator = () => {
 
     const { token, setToken } = useAuthStore()
 
-    const [t, i18n] = useTranslation()
+    const { t } = useTranslation()
 
     useEffect(() => {
         AsyncStorage.getItem("token")
@@ -57,7 +57,7 @@ const Navigator = () => {
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
                         <Stack.Screen options={{headerTitle: t("profile")}} name="Profile" component={ProfileScreen} />
-                        <Stack.Screen options={{headerTitle: t("calendar")}} name="Calendar" component={CalendarScreen} />
+                        <Stack.Screen options={{headerTitle: t("calendar")}} name="ScheduledLessonsScreen" component={ScheduledLessonScreen} />
                         <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
                         <Stack.Screen options={{headerShown: false}} name="Tune" component={TuneScreen} />
                         <Stack.Screen options={{headerShown: false}} name={"Chat"} component={ChatScreen} />
