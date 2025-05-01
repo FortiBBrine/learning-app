@@ -5,7 +5,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import LoginScreen from "../screens/LoginScreen";
 import {createStackNavigator, StackNavigationProp} from "@react-navigation/stack";
 import RegisterScreen from "../screens/RegisterScreen";
-import {RelationDto} from "../api/relationApi";
+import {UserDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import ScheduledLessonScreen from "../screens/ScheduledLessonScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
@@ -14,17 +14,21 @@ import TuneScreen from "../screens/TuneScreen";
 import ChangeLanguageScreen from "../screens/ChangeLanguageScreen";
 import ChatScreen from "../screens/ChatScreen";
 import {useAuthStore} from "../store/authStore";
+import RequestsScreen from "../screens/RequestsScreen";
+import ScheduleLessonScreen from "../screens/ScheduleLessonScreen";
 
 export type RootStackParamList = {
     Home: undefined;
-    Profile: { person: RelationDto, addButton: boolean };
+    Profile: { person: UserDto, addButton: boolean };
     Login: undefined;
     Register: undefined;
     ScheduledLessonsScreen: undefined;
     AddRelationScreen: undefined;
     Tune: undefined;
     ChangeLanguage: undefined;
-    Chat: { person: RelationDto }
+    Chat: { person: UserDto };
+    RequestsScreen: undefined;
+    ScheduleLesson: { person: UserDto };
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
@@ -32,9 +36,12 @@ export type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList
 export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">
 export type AddRelationScreenNavigationProp = StackNavigationProp<RootStackParamList, "AddRelationScreen">
 export type TuneScreenNavigationProp = StackNavigationProp<RootStackParamList, "Tune">
+export type RequestsScreenNavigationProp = StackNavigationProp<RootStackParamList, "RequestsScreen">
+export type ScheduleLessonScreenNavigationProp = StackNavigationProp<RootStackParamList, "ScheduleLesson">
 
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
 export type ChatScreenRouteProp = RouteProp<RootStackParamList, "Chat">
+export type ScheduleLessonScreenRouteProp = RouteProp<RootStackParamList, "ScheduleLesson">
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -61,6 +68,8 @@ const Navigator = () => {
                         <Stack.Screen options={{headerTitle: t("add")}} name="AddRelationScreen" component={AddRelationScreen} />
                         <Stack.Screen options={{headerShown: false}} name="Tune" component={TuneScreen} />
                         <Stack.Screen options={{headerShown: false}} name={"Chat"} component={ChatScreen} />
+                        <Stack.Screen options={{headerShown: false}} name={"RequestsScreen"} component={RequestsScreen} />
+                        <Stack.Screen options={{headerShown: false}} name={"ScheduleLesson"} component={ScheduleLessonScreen} />
                         <Stack.Screen options={{headerTitle: t("change-language")}} name={"ChangeLanguage"} component={ChangeLanguageScreen} />
                     </> :
                     <>

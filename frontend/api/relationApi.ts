@@ -1,6 +1,6 @@
 import {api} from "./api";
 
-export type RelationDto = {
+export type UserDto = {
     name: string,
     email: string,
     username: string,
@@ -8,13 +8,13 @@ export type RelationDto = {
     rating: number
 }
 
-export async function getSuggestions(): Promise<RelationDto[]> {
+export async function getSuggestions(): Promise<UserDto[]> {
     const response = await api.get("/relations/suggestions");
 
     return response.data;
 }
 
-export async function getAllRelations(): Promise<RelationDto[]> {
+export async function getRelations(): Promise<UserDto[]> {
     const response = await api.get("/relations");
 
     return response.data;

@@ -1,20 +1,20 @@
-import {RelationDto} from "../api/relationApi";
+import {UserDto} from "../api/relationApi";
 import {create} from "zustand/react";
 
 type PeopleStore = {
-    relations: Array<RelationDto>,
-    allPeople: Array<RelationDto>,
-    setPeople: (relations: RelationDto[]) => void
-    setAllPeople: (relations: RelationDto[]) => void
+    relations: Array<UserDto>,
+    suggestions: Array<UserDto>,
+    setRelations: (relations: UserDto[]) => void
+    setSuggestions: (relations: UserDto[]) => void
 }
 
 export const usePeopleStore = create<PeopleStore>()((set) => ({
     relations: [],
-    allPeople: [],
-    setPeople: (payload: RelationDto[]) => {
+    suggestions: [],
+    setRelations: (payload: UserDto[]) => {
         set((state: PeopleStore) => ({relations: payload}))
     },
-    setAllPeople: (payload: RelationDto[]) => {
-        set((state: PeopleStore) => ({allPeople: payload}))
+    setSuggestions: (payload: UserDto[]) => {
+        set((state: PeopleStore) => ({suggestions: payload}))
     }
-}))
+}));

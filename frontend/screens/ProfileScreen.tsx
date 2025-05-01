@@ -31,6 +31,12 @@ const ProfileScreen = () => {
         });
     };
 
+    const goToScheduleLesson = async () => {
+        navigation.navigate("ScheduleLesson", {
+            person: route.params.person
+        });
+    };
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -77,7 +83,7 @@ const ProfileScreen = () => {
                 ) : (
                     <>
 
-                        <Button mode="contained-tonal" icon="calendar-edit" onPress={() => {}}>
+                        <Button mode="contained-tonal" icon="calendar-edit" onPress={goToScheduleLesson}>
                             <Text variant="titleMedium">
                                 {t("get-into-schedule")}
                             </Text>

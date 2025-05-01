@@ -8,18 +8,18 @@ import PersonList from "../component/PersonList";
 
 const AddRelationScreen = () => {
 
-    const { setAllPeople, allPeople } = usePeopleStore();
+    const { suggestions, setSuggestions } = usePeopleStore();
 
     useEffect(() => {
         getSuggestions()
-            .then(setAllPeople)
+            .then(setSuggestions)
     }, []);
 
     const navigation = useNavigation<AddRelationScreenNavigationProp>()
 
     return (
         <PersonList
-            relations={allPeople}
+            relations={suggestions}
             onPress={async relation => {
                 navigation.navigate(
                     "Profile",

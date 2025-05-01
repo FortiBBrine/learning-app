@@ -1,15 +1,15 @@
 import React, {FC, useState} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
-import {RelationDto} from "../api/relationApi";
+import {UserDto} from "../api/relationApi";
 import {Avatar, IconButton, Text} from "react-native-paper";
 import {StatusBar} from "expo-status-bar";
 
 type PersonListProps = {
-    removeUser?: (relation: RelationDto) => Promise<void>;
+    removeUser?: (relation: UserDto) => Promise<void>;
     addButton?: boolean;
     onRefresh?: () => Promise<void>;
-    relations: RelationDto[];
-    onPress?: (relation: RelationDto) => Promise<void>,
+    relations: UserDto[];
+    onPress?: (relation: UserDto) => Promise<void>,
     refreshing?: boolean;
 }
 

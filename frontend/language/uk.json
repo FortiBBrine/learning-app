@@ -1,20 +1,20 @@
 {
-  "login-page-title": "Log in to your account",
+  "login-page-title": "Login to your account",
   "login": "Username",
   "password": "Password",
-  "login-button": "Log in",
+  "login-button": "Login",
   "register-goto-button": "Register",
 
-  "register-page-title": "Sign up",
-  "username": "Username",
+  "register-page-title": "Register",
+  "username": "Nickname",
   "name": "Name",
   "email": "Email",
-  "register-button": "Sign up",
-  "personal-data": "I consent to the processing of personal data.",
+  "register-button": "Register",
+  "personal-data": "I agree to the processing of personal data",
 
-  "get-into-schedule": "Join a class",
+  "get-into-schedule": "Schedule a lesson",
   "schedule": "Schedule",
-  "upload": "Upload",
+  "upload": "Upload file",
 
   "main-page-title": "Teachers / Students",
   "delete-dialog-title": "Delete",
@@ -23,15 +23,15 @@
   "no-button": "No",
 
   "create-relation-dialog-title": "Create",
-  "create-relation-dialog-content": "Attention! This is a temporary menu!",
+  "create-relation-dialog-content": "Warning! This is a temporary menu!",
   "create-relation-dialog-input": "User",
   "create-relation-dialog-button": "Create",
 
   "profile": "Profile",
-  "calendar": "Calendar",
+  "calendar": "Schedule",
 
   "add": "Add",
-  "logout": "Log out",
+  "logout": "Logout",
 
   "change-language": "Select language",
   "ua-language": "Ukrainian",
@@ -45,11 +45,20 @@
   "chemistry": "Chemistry",
   "algebra": "Algebra",
   "geometry": "Geometry",
-  "information-technology": "Information Technology",
-  "foreign-languages": "Foreign Languages",
+  "information-technology": "Computer Science",
+  "foreign-languages": "Foreign Language",
 
   "chat": "Chat",
   "chat-message": "Message",
 
-  "rating": "Rating"
+  "rating": "Rating",
+
+  "requests": "Requests",
+  "schedule-lesson": "Schedule a lesson",
+
+  "title-lesson": "Lesson topic",
+  "subject": "Subject",
+  "from-time": "Start time",
+  "to-time": "End time",
+  "online": "Online"
 }

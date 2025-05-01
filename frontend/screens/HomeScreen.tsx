@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
-import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
-import {StatusBar} from "expo-status-bar";
-import {Appbar, Avatar, Button, Dialog, FAB, IconButton, Portal, Text} from "react-native-paper";
+import {StyleSheet} from "react-native";
+import {Appbar, Button, Dialog, FAB, Portal, Text} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
 import {HomeScreenNavigationProp} from "../navigation/Navigator";
-import {deleteRelation, getAllRelations} from "../api/relationApi";
+import {deleteRelation, getRelations} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import {usePeopleStore} from "../store/peopleStore";
 import PersonList from "../component/PersonList";
 
 const HomeScreen = () => {
 
-    const { relations, setPeople } = usePeopleStore();
+    const { relations, setRelations } = usePeopleStore();
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
@@ -27,8 +26,8 @@ const HomeScreen = () => {
     const onRefresh = async () => {
         setRefreshing(true);
 
-        const data = await getAllRelations()
-        setPeople(data);
+        const data = await getRelations();
+        setRelations(data);
 
         setRefreshing(false);
     }
@@ -46,7 +45,8 @@ const HomeScreen = () => {
         <>
             <Appbar.Header>
                 <Appbar.Content title={t("main-page-title")} />
-                <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("Calendar")} />
+                <Appbar.Action icon={"bell-outline"} onPress={() => navigation.navigate("RequestsScreen")} />
+                <Appbar.Action icon={"calendar-month"} onPress={() => navigation.navigate("ScheduledLessonsScreen")} />
                 <Appbar.Action icon={"tune"} onPress={async () => {
                     navigation.navigate("Tune")
                 }} />

@@ -12,7 +12,7 @@
   "register-button": "Зареєструватись",
   "personal-data": "Даю згоду на обробку персональних даних",
 
-  "get-into-schedule": "Записатись на заняття",
+  "get-into-schedule": "Запланувати заняття",
   "schedule": "Розклад",
   "upload": "Завантажити файл",
 
@@ -51,5 +51,14 @@
   "chat": "Чат",
   "chat-message": "Повідомлення",
 
-  "rating": "Рейтинг"
+  "rating": "Рейтинг",
+
+  "requests": "Запити",
+  "schedule-lesson": "Запланувати заняття",
+
+  "title-lesson": "Тема заняття",
+  "subject": "Предмет",
+  "from-time": "Початок",
+  "to-time": "Кінець",
+  "online": "Дистанційно"
 }

@@ -32,7 +32,7 @@ const TuneScreen = () => {
     useEffect(() => {
         getMySubjectList()
             .then(data => {
-                setSelected(data.subjects)
+                setSelected(data)
             });
     }, [])
 
