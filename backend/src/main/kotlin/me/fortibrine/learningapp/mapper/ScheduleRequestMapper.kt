@@ -27,7 +27,7 @@ interface ScheduleRequestMapper {
         request: ScheduleRequestDto,
         source: User,
         target: User,
-        id: Long?
+        id: Long? = null
     ): ScheduleRequest
 
 }

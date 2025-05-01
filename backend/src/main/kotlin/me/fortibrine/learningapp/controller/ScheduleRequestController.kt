@@ -42,8 +42,7 @@ class ScheduleRequestController(
         scheduleRequestRepository.save(scheduleRequestMapper.fromDto(
             scheduleRequestDto,
             principal,
-            userRepository.findByUsername(scheduleRequestDto.target) ?: return,
-            null
+            userRepository.findByUsername(scheduleRequestDto.target) ?: return
         ))
     }
 
