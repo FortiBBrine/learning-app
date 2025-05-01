@@ -1,9 +1,11 @@
 package me.fortibrine.learningapp.controller
 
-import me.fortibrine.learningapp.dto.lesson.ScheduleRequestDto
+import me.fortibrine.learningapp.dto.lesson.request.ScheduleRequestDto
 import me.fortibrine.learningapp.mapper.ScheduleRequestMapper
+import me.fortibrine.learningapp.mapper.UserMapper
 import me.fortibrine.learningapp.model.ScheduledLesson
 import me.fortibrine.learningapp.model.User
+import me.fortibrine.learningapp.repository.RatingRepository
 import me.fortibrine.learningapp.repository.ScheduleRequestRepository
 import me.fortibrine.learningapp.repository.ScheduledLessonRepository
 import me.fortibrine.learningapp.repository.UserRepository
@@ -21,16 +23,33 @@ class ScheduleRequestController(
     private val scheduleRequestRepository: ScheduleRequestRepository,
     private val scheduleRequestMapper: ScheduleRequestMapper,
     private val userRepository: UserRepository,
-    private val scheduledLessonRepository: ScheduledLessonRepository
+    private val scheduledLessonRepository: ScheduledLessonRepository,
+    private val userMapper: UserMapper,
+    private val ratingRepository: RatingRepository
 ) {
 
     @GetMapping
     fun getSchedules (
         @AuthenticationPrincipal principal: User,
-    ): List<ScheduleRequestDto> {
+    ): List<me.fortibrine.learningapp.dto.lesson.response.ScheduleRequestDto> {
         return scheduleRequestRepository
             .findByTarget(principal)
-            .map(scheduleRequestMapper::toDto)
+            .map { me.fortibrine.learningapp.dto.lesson.response.ScheduleRequestDto(
+                id = it.id ?: 0,
+                from = it.fromTime,
+                to = it.toTime,
+                online = it.online,
+                title = it.title,
+                subject = it.subject,
+                source = userMapper.toDto(
+                    it.source,
+                    ratingRepository.findAverageRatingByTarget(it.source) ?: 0.0,
+                    ),
+                target = userMapper.toDto(
+                    it.target,
+                    ratingRepository.findAverageRatingByTarget(it.target) ?: 0.0,
+                ),
+            ) }
     }
 
     @PostMapping

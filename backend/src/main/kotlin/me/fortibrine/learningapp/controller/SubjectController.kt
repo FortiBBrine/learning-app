@@ -1,7 +1,5 @@
 package me.fortibrine.learningapp.controller
 
-import me.fortibrine.learningapp.dto.subject.request.ChangeSubjectListDto
-import me.fortibrine.learningapp.dto.subject.response.GetSubjectListDto
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.UserRepository
 import org.springframework.http.HttpStatus
@@ -22,19 +20,16 @@ class SubjectController (
     @GetMapping
     fun getMySubjectList(
         @AuthenticationPrincipal principal: User
-    ): GetSubjectListDto {
-        val subjects = principal.subjects
-        return GetSubjectListDto(subjects.toList())
-    }
+    ): List<String> = principal.subjects.toList()
 
     @PostMapping
     fun changeSubjectList(
         @RequestBody
-        request: ChangeSubjectListDto,
+        request: List<String>,
 
         @AuthenticationPrincipal principal: User,
     ): ResponseEntity<Void> {
-        principal.subjects = request.subjects.toMutableSet()
+        principal.subjects = request.toMutableSet()
         userRepository.save(principal)
 
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -10,10 +10,10 @@ class Relation (
     var id: Long? = null,
 
     @field:ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @field:JoinColumn(name = "target_id", nullable = false)
+    @field:JoinColumn(name = "source_id", nullable = false)
     var source: User,
 
     @field:ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @field:JoinColumn(name = "relation_id", nullable = false)
+    @field:JoinColumn(name = "target_id", nullable = false)
     var target: User
 )

@@ -1,7 +1,7 @@
 package me.fortibrine.learningapp.controller
 
-import me.fortibrine.learningapp.dto.relation.RelationDto
-import me.fortibrine.learningapp.mapper.RelationMapper
+import me.fortibrine.learningapp.dto.user.UserDto
+import me.fortibrine.learningapp.mapper.UserMapper
 import me.fortibrine.learningapp.model.Rating
 import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.repository.RatingRepository
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/relations")
 class RelationController(
     private val relationRepository: RelationRepository,
-    private val relationMapper: RelationMapper,
+    private val userMapper: UserMapper,
     private val ratingRepository: RatingRepository,
     private val userRepository: UserRepository
 ) {
@@ -27,21 +27,21 @@ class RelationController(
     @GetMapping("/suggestions")
     fun suggestions(
         @AuthenticationPrincipal principal: User
-    ): List<RelationDto> {
+    ): List<UserDto> {
         return relationRepository.findNotInRelation(principal).map {
             val rating = ratingRepository.findAverageRatingByTarget(it) ?: 0.0
-            return@map relationMapper.toDto(it, rating)
+            return@map userMapper.toDto(it, rating)
         }
     }
 
     @GetMapping
     fun allRelations(
         @AuthenticationPrincipal principal: User
-    ): List<RelationDto> {
+    ): List<UserDto> {
         val relations = relationRepository.findBySource(principal)
         return relations.map {
             val rating = ratingRepository.findAverageRatingByTarget(it.target) ?: 0.0
-            return@map relationMapper.toDto(it, rating)
+            return@map userMapper.toDto(it.target, rating)
         }
     }
 

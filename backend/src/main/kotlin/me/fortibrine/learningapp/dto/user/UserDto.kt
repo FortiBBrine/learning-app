@@ -1,6 +1,6 @@
-package me.fortibrine.learningapp.dto.relation
+package me.fortibrine.learningapp.dto.user
 
-data class RelationDto (
+data class UserDto (
     val name: String,
     val username: String,
     val email: String,
