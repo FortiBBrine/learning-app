@@ -6,6 +6,7 @@ import me.fortibrine.learningapp.dto.register.RegisterRequestDto
 import me.fortibrine.learningapp.dto.register.RegisterValidator
 import me.fortibrine.learningapp.exception.ValidationError
 import me.fortibrine.learningapp.model.User
+import me.fortibrine.learningapp.repository.UserRepository
 import me.fortibrine.learningapp.service.HashService
 import me.fortibrine.learningapp.service.TokenService
 import me.fortibrine.learningapp.service.UserService
@@ -15,12 +16,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/auth")
-class AuthController (
+class AuthController(
     private val hashService: HashService,
     private val tokenService: TokenService,
     private val userService: UserService,
     private val loginValidator: LoginValidator,
-    private val registerValidator: RegisterValidator
+    private val registerValidator: RegisterValidator,
+    private val userRepository: UserRepository
 ) {
 
     @PostMapping("/login")
@@ -41,10 +43,14 @@ class AuthController (
         }
 
         val user = userService.findByUsername(payload.username) as User
+        val refreshToken = tokenService.createRefreshToken(user)
+
+        user.tokens.add(refreshToken)
+        userRepository.save(user)
 
         return LoginResponseDto(
             accessToken = tokenService.createAccessToken(user),
-            refreshToken = tokenService.createRefreshToken(user)
+            refreshToken = refreshToken
         )
     }
 
@@ -74,9 +80,14 @@ class AuthController (
 
         val savedUser = userService.save(user)
 
+        val refreshToken = tokenService.createRefreshToken(savedUser)
+
+        savedUser.tokens.add(refreshToken)
+        userRepository.save(savedUser)
+
         return LoginResponseDto(
             accessToken = tokenService.createAccessToken(savedUser),
-            refreshToken = tokenService.createRefreshToken(savedUser)
+            refreshToken = refreshToken
         )
     }
 

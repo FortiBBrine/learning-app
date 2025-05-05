@@ -42,7 +42,7 @@ class TokenService (
             val jwt = jwtDecoder.decode(token)
             val userId = jwt.claims["userId"] as Long
 
-            if (jwt.claims["access"] as Boolean) {
+            if (!(jwt.claims["access"] as Boolean)) {
                 return null
             }
 
@@ -57,7 +57,7 @@ class TokenService (
             val jwt = jwtDecoder.decode(token)
             val userId = jwt.claims["userId"] as Long
 
-            if (!(jwt.claims["access"] as Boolean)) {
+            if (jwt.claims["access"] as Boolean) {
                 return null
             }
 
