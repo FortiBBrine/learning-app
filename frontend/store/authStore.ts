@@ -1,5 +1,6 @@
 import {create} from "zustand/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {logout} from "../api/loginApi";
 
 type AuthStore = {
     accessToken: string | null;
@@ -41,7 +42,13 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     },
 
     logout: async () => {
+        const refreshToken = get().refreshToken;
+
         set({accessToken: null, refreshToken: null});
+
+        if (!!refreshToken) {
+            await logout(refreshToken);
+        }
     }
 
 }));

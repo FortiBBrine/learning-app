@@ -44,3 +44,11 @@ export async function login(
         return { accessToken: null, refreshToken: null, errors: {} };
     }
 }
+
+export async function logout(
+    refreshToken: string
+): Promise<void> {
+    await api.post("/auth/logout", {
+        refreshToken: refreshToken,
+    })
+}

@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from "react-native";
-import {Button, Chip} from "react-native-paper";
+import {Button, Chip, Text} from "react-native-paper";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import {TuneScreenNavigationProp} from "../navigation/Navigator";
 import {changeSubjectList, getMySubjectList} from "../api/subjectApi";
 import {useAuthStore} from "../store/authStore";
+import { UserDto } from '../api/relationApi';
+import {getProfile} from "../api/profileApi";
 
 const TuneScreen = () => {
 
     const { t } = useTranslation();
     const navigation = useNavigation<TuneScreenNavigationProp>();
 
-    const { setAccessToken, setRefreshToken } = useAuthStore();
-
+    const { logout } = useAuthStore();
     const [selected, setSelected] = useState<string[]>([]);
+    const [user, setUser] = useState<UserDto | null>(null);
 
     const subjects = [
         "math",
@@ -30,10 +32,11 @@ const TuneScreen = () => {
     ];
 
     useEffect(() => {
-        getMySubjectList()
-            .then(data => {
-                setSelected(data)
-            });
+        getProfile()
+            .then(user => {
+                setUser(user);
+                setSelected(user.subjects);
+            })
     }, [])
 
     const onSelect = async (value: string) => {
@@ -47,6 +50,20 @@ const TuneScreen = () => {
 
     return (
         <View style={styles.container}>
+            { user && (
+                <>
+                    <Text variant={"bodyMedium"}>
+                        {t("name")}: {user.name}
+                    </Text>
+                    <Text variant={"bodyMedium"}>
+                        {t("email")}: {user.email}
+                    </Text>
+                    <Text variant={"bodyMedium"}>
+                        {t("rating")}: {user.rating}
+                    </Text>
+                </>
+            )}
+
             <View style={styles.chips}>
                 { subjects.map((subject, index) => (
                     <Chip
@@ -61,10 +78,7 @@ const TuneScreen = () => {
             <Button icon="translate" mode="contained-tonal" onPress={() => {
                 navigation.navigate("ChangeLanguage");
             }}>{t("change-language")}</Button>
-            <Button icon="lock" mode="contained-tonal" onPress={async () => {
-                await setAccessToken(null);
-                await setRefreshToken(null);
-            }}>{t("logout")}</Button>
+            <Button icon="lock" mode="contained-tonal" onPress={logout}>{t("logout")}</Button>
         </View>
     );
 };
