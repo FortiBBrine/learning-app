@@ -27,7 +27,7 @@ class AuthChannelInterceptor(
             ?.substringAfter("Bearer ")
             ?: throw InvalidBearerTokenException("Token not found")
 
-        val user = tokenService.parseToken(token)
+        val user = tokenService.parseAccessToken(token)
             ?: throw InvalidBearerTokenException("Invalid token")
 
         val auth = UsernamePasswordAuthenticationToken(
