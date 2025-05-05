@@ -16,7 +16,7 @@ const ChatScreen = () => {
     const [message, setMessage] = useState<string>("");
     const { t } = useTranslation();
     const [stompClient, setStompClient] = useState<CompatClient | null>(null);
-    const { token } = useAuthStore();
+    const { accessToken } = useAuthStore();
 
     useEffect(() => {
         getMessages(route.params.person.username)
@@ -30,7 +30,7 @@ const ChatScreen = () => {
             const client = Stomp.over(socket);
 
             client.connect(
-                { Authorization: `Bearer ${token}` },
+                { Authorization: `Bearer ${accessToken}` },
                 () => {
                     client.subscribe('/user/queue/private', (message) => {
                         const newMessage: ChatMessageDto = JSON.parse(message.body);
@@ -44,8 +44,8 @@ const ChatScreen = () => {
             return () => client.disconnect();
         };
 
-        if (token) initializeWebSocket();
-    }, [token]);
+        if (accessToken) initializeWebSocket();
+    }, [accessToken]);
 
     const writeMessage = async () => {
         if (!message.trim() || !stompClient) return;

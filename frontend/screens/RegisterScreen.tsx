@@ -8,7 +8,7 @@ import {useAuthStore} from "../store/authStore";
 
 const RegisterScreen = () => {
 
-    const { setToken } = useAuthStore();
+    const { setAccessToken, setRefreshToken } = useAuthStore();
 
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
@@ -56,7 +56,7 @@ const RegisterScreen = () => {
     const onPress = async () => {
         const res = await register(email, name, username, password);
 
-        if (res.token == null) {
+        if (res.accessToken == null || res.refreshToken == null) {
             setUsernameErrors(res.errors.username);
             setEmailErrors(res.errors.email);
             setPasswordErrors(res.errors.password);
@@ -64,9 +64,8 @@ const RegisterScreen = () => {
             return;
         }
 
-        const token = res.token;
-
-        await setToken(token);
+        await setAccessToken(res.accessToken);
+        await setRefreshToken(res.refreshToken);
     };
 
     return (

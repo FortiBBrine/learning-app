@@ -12,7 +12,7 @@ const TuneScreen = () => {
     const { t } = useTranslation();
     const navigation = useNavigation<TuneScreenNavigationProp>();
 
-    const { setToken } = useAuthStore();
+    const { setAccessToken, setRefreshToken } = useAuthStore();
 
     const [selected, setSelected] = useState<string[]>([]);
 
@@ -62,7 +62,8 @@ const TuneScreen = () => {
                 navigation.navigate("ChangeLanguage");
             }}>{t("change-language")}</Button>
             <Button icon="lock" mode="contained-tonal" onPress={async () => {
-                await setToken(null);
+                await setAccessToken(null);
+                await setRefreshToken(null);
             }}>{t("logout")}</Button>
         </View>
     );

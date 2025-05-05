@@ -11,7 +11,7 @@ import {useAuthStore} from "../store/authStore";
 const LoginScreen = () => {
 
     const navigation = useNavigation<LoginScreenNavigationProp>();
-    const { setToken } = useAuthStore();
+    const { setAccessToken, setRefreshToken } = useAuthStore();
 
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -25,15 +25,14 @@ const LoginScreen = () => {
     const onPress = async () => {
         const data = await login(username, password);
 
-        if (data.token == null) {
+        if (data.accessToken == null || data.refreshToken == null) {
             setUsernameErrors(data.errors.username);
             setPasswordErrors(data.errors.password);
             return;
         }
 
-        const token = data.token;
-
-        await setToken(token);
+        await setAccessToken(data.accessToken);
+        await setRefreshToken(data.refreshToken);
     };
 
     const changeUsernameText = (value: string) => {

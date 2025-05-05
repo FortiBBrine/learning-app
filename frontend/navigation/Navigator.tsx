@@ -9,7 +9,6 @@ import {UserDto} from "../api/relationApi";
 import {useTranslation} from "react-i18next";
 import ScheduledLessonScreen from "../screens/ScheduledLessonScreen";
 import AddRelationScreen from "../screens/AddRelationScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import TuneScreen from "../screens/TuneScreen";
 import ChangeLanguageScreen from "../screens/ChangeLanguageScreen";
 import ChatScreen from "../screens/ChatScreen";
@@ -47,20 +46,20 @@ const Stack = createStackNavigator<RootStackParamList>()
 
 const Navigator = () => {
 
-    const { token, setToken } = useAuthStore()
+    const { isAuth, initializeAuthState } = useAuthStore()
 
     const { t } = useTranslation()
 
     useEffect(() => {
-        AsyncStorage.getItem("token")
-            .then(data => setToken(data))
-            .catch(err => console.error(err));
+        initializeAuthState()
+            .then()
+            .catch(err => console.log(err));
     }, [])
 
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                { token !== null ?
+                { isAuth() ?
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
                         <Stack.Screen options={{headerTitle: t("profile")}} name="Profile" component={ProfileScreen} />
