@@ -54,7 +54,7 @@ class GlobalExceptionHandler {
         exception: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.badRequest()
+        return ResponseEntity.internalServerError()
             .body(ErrorResponse(
                 error = ErrorDetail(
                     type = "INTERNAL_SERVER_ERROR",
@@ -71,7 +71,7 @@ class GlobalExceptionHandler {
         exception: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(ErrorResponse(
                 error = ErrorDetail(
                     type = "INVALID_TOKEN_ERROR",
