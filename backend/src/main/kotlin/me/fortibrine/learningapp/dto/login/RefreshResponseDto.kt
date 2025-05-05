@@ -1,6 +1,5 @@
 package me.fortibrine.learningapp.dto.login
 
-data class LoginResponseDto (
+data class RefreshResponseDto (
     val accessToken: String,
-    val refreshToken: String,
 )

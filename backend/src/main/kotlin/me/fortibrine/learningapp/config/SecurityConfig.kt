@@ -39,7 +39,7 @@ class SecurityConfig (
         }
         http.authenticationManager { auth ->
             val jwt = auth as BearerTokenAuthenticationToken
-            val user = tokenService.parseToken(jwt.token) ?: throw InvalidBearerTokenException("Invalid token")
+            val user = tokenService.parseAccessToken(jwt.token) ?: throw InvalidBearerTokenException("Invalid token")
             UsernamePasswordAuthenticationToken(user, "", user.roles.map { SimpleGrantedAuthority(it) })
         }
 

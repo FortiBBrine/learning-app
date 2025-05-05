@@ -16,6 +16,9 @@ class User (
     var roles: List<String> = listOf("ROLE_USER"),
 
     @field:ElementCollection(fetch = FetchType.EAGER)
-    var subjects: MutableSet<String> = mutableSetOf()
+    var subjects: MutableSet<String> = mutableSetOf(),
+
+    @field:ElementCollection(fetch = FetchType.EAGER)
+    var tokens: MutableSet<String> = mutableSetOf()
 
 )

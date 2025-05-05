@@ -1,9 +1,7 @@
 package me.fortibrine.learningapp.controller
 
 import jakarta.validation.Valid
-import me.fortibrine.learningapp.dto.login.LoginRequestDto
-import me.fortibrine.learningapp.dto.login.LoginResponseDto
-import me.fortibrine.learningapp.dto.login.LoginValidator
+import me.fortibrine.learningapp.dto.login.*
 import me.fortibrine.learningapp.dto.register.RegisterRequestDto
 import me.fortibrine.learningapp.dto.register.RegisterValidator
 import me.fortibrine.learningapp.exception.ValidationError
@@ -11,6 +9,7 @@ import me.fortibrine.learningapp.model.User
 import me.fortibrine.learningapp.service.HashService
 import me.fortibrine.learningapp.service.TokenService
 import me.fortibrine.learningapp.service.UserService
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 
@@ -43,7 +42,10 @@ class AuthController (
 
         val user = userService.findByUsername(payload.username) as User
 
-        return LoginResponseDto(tokenService.createToken(user))
+        return LoginResponseDto(
+            accessToken = tokenService.createAccessToken(user),
+            refreshToken = tokenService.createRefreshToken(user)
+        )
     }
 
     @PostMapping("/register")
@@ -72,7 +74,26 @@ class AuthController (
 
         val savedUser = userService.save(user)
 
-        return LoginResponseDto(tokenService.createToken(savedUser))
+        return LoginResponseDto(
+            accessToken = tokenService.createAccessToken(savedUser),
+            refreshToken = tokenService.createRefreshToken(savedUser)
+        )
+    }
+
+    @PostMapping("/refresh")
+    fun refresh(
+        @RequestBody
+        payload: RefreshRequestDto,
+    ): RefreshResponseDto {
+        val user = tokenService.parseRefreshToken(payload.refreshToken)
+            ?: throw InvalidBearerTokenException("Invalid token")
+
+        if (!user.tokens.contains(payload.refreshToken))
+            throw InvalidBearerTokenException("Invalid token")
+
+        return RefreshResponseDto(
+            accessToken = tokenService.createAccessToken(user),
+        )
     }
 
 }
