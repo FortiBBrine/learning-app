@@ -107,4 +107,19 @@ class AuthController(
         )
     }
 
+    @PostMapping("/logout")
+    fun logout(
+        @RequestBody
+        payload: RefreshRequestDto,
+    ) {
+        val user = tokenService.parseRefreshToken(payload.refreshToken)
+            ?: throw InvalidBearerTokenException("Invalid token")
+
+        if (!user.tokens.contains(payload.refreshToken))
+            throw InvalidBearerTokenException("Invalid token")
+
+        user.tokens.remove(payload.refreshToken)
+        userRepository.save(user)
+    }
+
 }
