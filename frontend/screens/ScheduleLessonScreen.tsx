@@ -40,7 +40,7 @@ const ScheduleLessonScreen = () => {
             </Appbar.Header>
 
             <View style={styles.container}>
-                <TextInput label={t("title-subject")} value={title} onChangeText={setTitle} />
+                <TextInput label={t("title-lesson")} value={title} onChangeText={setTitle} />
                 <TextInput label={t("subject")} value={subject} onChangeText={setSubject} />
                 <TextInput label={t("from-time")} value={from} onChangeText={setFrom} />
                 <TextInput label={t("to-time")} value={to} onChangeText={setTo} />

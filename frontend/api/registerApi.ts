@@ -1,6 +1,6 @@
 
 import {api} from "./api";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export type RegisterResponseDto = {
     token: string | null;
@@ -32,22 +32,21 @@ export async function register(
             return { token: null, errors: {} };
         }
 
-        if (!error.response) {
+        const axiosError = error as AxiosError<ErrorResponse>;
+
+        if (!axiosError.response?.data?.error) {
             return { token: null, errors: {} };
         }
 
-        const { data, status } = error.response;
+        const { error: apiError } = axiosError.response.data;
 
-        if (data.message === "VALIDATION_ERROR") {
+        if (apiError.type === "VALIDATION_ERROR") {
             return {
                 token: null,
-                errors: data.errors || {},
+                errors: apiError.data || {},
             };
         }
 
-        return {
-            token: null,
-            errors: {},
-        };
+        return { token: null, errors: {} };
     }
 }

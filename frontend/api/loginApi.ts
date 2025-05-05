@@ -1,5 +1,5 @@
 import {api} from "./api";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export type LoginResponseDto = {
     token: string | null;
@@ -24,29 +24,21 @@ export async function login(
             return { token: null, errors: {} };
         }
 
-        if (!error.response) {
+        const axiosError = error as AxiosError<ErrorResponse>;
+
+        if (!axiosError.response?.data?.error) {
             return { token: null, errors: {} };
         }
 
-        const { data, status } = error.response;
+        const { error: apiError } = axiosError.response.data;
 
-        if (data.message === "VALIDATION_ERROR") {
+        if (apiError.type === "VALIDATION_ERROR") {
             return {
                 token: null,
-                errors: data.errors || {},
+                errors: apiError.data || {},
             };
         }
 
-        /*
-        let errors = {};
-        if (status === 401) {
-            errors = { password: data.message };
-        } else if (status === 404) {
-            errors = { username: data.message }; */
-
-        return {
-            token: null,
-            errors: {},
-        };
+        return { token: null, errors: {} };
     }
 }
