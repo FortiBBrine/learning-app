@@ -52,3 +52,11 @@ export async function logout(
         refreshToken: refreshToken,
     })
 }
+
+export async function logoutAll(
+    refreshToken: string
+): Promise<void> {
+    await api.post("/auth/logout/all", {
+        refreshToken: refreshToken,
+    })
+}

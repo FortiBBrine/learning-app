@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from "react-native";
-import {useRoute} from "@react-navigation/native";
-import {ChatScreenRouteProp} from "../navigation/Navigator";
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {
+    ChatScreenNavigationProp,
+    ChatScreenRouteProp
+} from "../navigation/Navigator";
 import {useTranslation} from "react-i18next";
-import {Text, TextInput} from "react-native-paper";
+import {Appbar, IconButton, Text, TextInput} from "react-native-paper";
 import {ChatMessageDto, getMessages} from "../api/messagesApi";
 import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import {useAuthStore} from "../store/authStore";
 
 const ChatScreen = () => {
+
+    const navigation = useNavigation<ChatScreenNavigationProp>();
 
     const route = useRoute<ChatScreenRouteProp>();
     const [messages, setMessages] = useState<ChatMessageDto[]>([]);
@@ -68,37 +73,45 @@ const ChatScreen = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text variant="displayMedium" style={styles.username}>
-                {route.params.person.name}
-            </Text>
-            <ScrollView style={{
-                flex: 1,
-                padding: 10
-            }}>
-                <View style={{
-                    gap: 10
-                }}>
-                    { messages.map((message, index) => (
-                        <View style={[styles.message, {
-                            alignSelf: (route.params.person.username === message.sender) ? "flex-start" : "flex-end"
-                        }]} key={index}>
-                            <Text style={{color: "white"}}>{message.content}</Text>
-                        </View>
-                    ))}
-                </View>
-            </ScrollView>
+        <>
+            <Appbar.Header>
+                <Appbar.BackAction onPress={navigation.goBack} />
+                <Appbar.Content title={route.params.person.name} />
+            </Appbar.Header>
 
-            <View style={styles.input}>
-                <TextInput
-                    placeholder={t("chat-message")}
-                    onSubmitEditing={writeMessage}
-                    onChangeText={setMessage}
-                    mode="outlined"
-                    value={message}
-                />
+            <View style={styles.container}>
+                <ScrollView style={{
+                    flex: 1,
+                    padding: 10
+                }}>
+                    <View style={{
+                        gap: 10
+                    }}>
+                        { messages.map((message, index) => (
+                            <View style={[styles.message, {
+                                alignSelf: (route.params.person.username === message.sender) ? "flex-start" : "flex-end"
+                            }]} key={index}>
+                                <Text style={{color: "white"}}>{message.content}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </ScrollView>
+
+                <View style={styles.input}>
+                    <TextInput
+                        placeholder={t("chat-message")}
+                        onSubmitEditing={writeMessage}
+                        onChangeText={setMessage}
+                        mode="outlined"
+                        value={message}
+                        style={{flex: 1}}
+                    />
+                    <IconButton icon={"attachment"} />
+                    <IconButton icon={"send"} />
+                </View>
             </View>
-        </View>
+        </>
+
     );
 };
 
@@ -118,7 +131,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     input: {
-
+        margin: 5,
+        flexDirection: "row"
     }
 })
 

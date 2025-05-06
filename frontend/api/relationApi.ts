@@ -5,7 +5,8 @@ export type UserDto = {
     email: string,
     username: string,
     subjects: string[],
-    rating: number
+    rating: number,
+    role: string
 }
 
 export async function getSuggestions(): Promise<UserDto[]> {

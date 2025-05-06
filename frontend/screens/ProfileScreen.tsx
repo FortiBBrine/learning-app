@@ -95,9 +95,9 @@ const ProfileScreen = () => {
                             </Text>
                         </Button>
 
-                        <Button mode="contained-tonal" icon="cloud-upload-outline" onPress={() => {}}>
+                        <Button mode="contained-tonal" icon="alert-circle-outline" onPress={() => {}}>
                             <Text variant="titleMedium">
-                                {t("upload")}
+                                {t("report")}
                             </Text>
                         </Button>
                         <Button mode="contained-tonal"icon="message-text-outline" onPress={goToChat}>

@@ -37,16 +37,23 @@
   "ua-language": "Ukrainian",
   "uk-language": "English",
 
-  "math": "Mathematics",
-  "physics": "Physics",
-  "geography": "Geography",
-  "history": "History",
-  "biology": "Biology",
-  "chemistry": "Chemistry",
+  "ukrainian-language": "Ukrainian language",
+  "ukrainian-literature": "Ukrainian literature",
+  "english-language": "English language",
+  "german-language": "German language",
+  "polish-language": "Polish language",
+  "french-language": "French language",
+  "world-literature": "World literature",
+  "ukrainian-history": "History of Ukraine",
+  "world-history": "World History",
   "algebra": "Algebra",
   "geometry": "Geometry",
-  "information-technology": "Computer Science",
-  "foreign-languages": "Foreign Language",
+  "biology": "Biology",
+  "geography": "Geography",
+  "physics": "Physics",
+  "astronomy": "Astronomy",
+  "chemistry": "Chemistry",
+  "computer-science": "Computer Science",
 
   "chat": "Chat",
   "chat-message": "Message",
@@ -60,5 +67,25 @@
   "subject": "Subject",
   "from-time": "Start time",
   "to-time": "End time",
-  "online": "Online"
+  "online": "Online",
+
+  "report": "Report",
+
+  "teacher": "Teacher",
+  "student": "Student",
+
+  "choose-subjects": "Choose subjects",
+
+  "logout-all": "Log out from all devices",
+
+  "search": "Search",
+  "security": "Security",
+
+  "delete-data": "Delete all data",
+
+  "ability-to-add": "Ability to add",
+
+  "all": "All",
+  "by-request": "By request",
+  "nobody": "Nobody"
 }

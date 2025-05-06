@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChangeLanguageScreen = () => {
 
-    const { t } = useTranslation();
+    const [t, i18n] = useTranslation();
     const [value, setValue] = React.useState<string>(i18n.language);
 
     const setLanguage = async (language: string) => {

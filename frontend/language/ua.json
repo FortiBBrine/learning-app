@@ -37,16 +37,23 @@
   "ua-language": "Українська",
   "uk-language": "Англійська",
 
-  "math": "Математика",
-  "physics": "Фізика",
-  "geography": "Географія",
-  "history": "Історія",
-  "biology": "Біологія",
-  "chemistry": "Хімія",
+  "ukrainian-language": "Українська мова",
+  "ukrainian-literature": "Українська література",
+  "english-language": "Англійська мова",
+  "german-language": "Німецька мова",
+  "polish-language": "Польська мова",
+  "french-language": "Французька мова",
+  "world-literature": "Зарубіжна література",
+  "ukrainian-history": "Історія України",
+  "world-history": "Всесвітня історія",
   "algebra": "Алгебра",
   "geometry": "Геометрія",
-  "information-technology": "Інформатика",
-  "foreign-languages": "Іноземна мова",
+  "biology": "Біологія",
+  "geography": "Географія",
+  "physics": "Фізика",
+  "astronomy": "Астрономія",
+  "chemistry": "Хімія",
+  "computer-science": "Інформатика",
 
   "chat": "Чат",
   "chat-message": "Повідомлення",
@@ -60,5 +67,23 @@
   "subject": "Предмет",
   "from-time": "Початок",
   "to-time": "Кінець",
-  "online": "Дистанційно"
+  "online": "Дистанційно",
+
+  "report": "Поскаржитись",
+
+  "teacher": "Вчитель",
+  "student": "Учень",
+
+  "choose-subjects": "Вибрати предмети",
+  "logout-all": "Вийти скрізь",
+
+  "search": "Пошук",
+  "security": "Безпека",
+
+  "delete-data": "Видалити всю інформацію",
+  "ability-to-add": "Можливість додати",
+
+  "all": "Всі користувачі",
+  "by-request": "Через запит",
+  "nobody": "Ніхто"
 }
