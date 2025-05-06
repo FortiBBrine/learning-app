@@ -11,6 +11,7 @@ interface UserMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "user.email", target = "email")
     @Mapping(source = "user.subjects", target = "subjects")
+    @Mapping(source = "user.role", target = "role")
     @Mapping(target = "rating", source = "rating")
     fun toDto(user: User, rating: Double): UserDto
 }
