@@ -31,7 +31,7 @@ class RelationController(
         return relationRepository.findNotInRelation(principal).map {
             val rating = ratingRepository.findAverageRatingByTarget(it) ?: 0.0
             return@map userMapper.toDto(it, rating)
-        }
+        }.filter { principal.role != it.role }
     }
 
     @GetMapping
@@ -42,7 +42,7 @@ class RelationController(
         return relations.map {
             val rating = ratingRepository.findAverageRatingByTarget(it.target) ?: 0.0
             return@map userMapper.toDto(it.target, rating)
-        }
+        }.filter { principal.role != it.role }
     }
 
     @PostMapping

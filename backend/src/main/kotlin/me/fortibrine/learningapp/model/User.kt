@@ -12,6 +12,9 @@ class User (
     var password: String = "",
     var email: String = "",
 
+    @Enumerated(EnumType.STRING)
+    var role: Role = Role.NONE,
+
     @field:ElementCollection(fetch = FetchType.EAGER)
     var roles: List<String> = listOf("ROLE_USER"),
 

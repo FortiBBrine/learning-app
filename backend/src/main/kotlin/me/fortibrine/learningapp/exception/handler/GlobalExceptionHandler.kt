@@ -10,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.servlet.NoHandlerFoundException
 import java.lang.Exception
 
 @ControllerAdvice
@@ -49,22 +50,6 @@ class GlobalExceptionHandler {
             ))
     }
 
-    @ExceptionHandler(Exception::class)
-    fun handlerOtherException(
-        exception: Exception,
-        request: HttpServletRequest,
-    ): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.internalServerError()
-            .body(ErrorResponse(
-                error = ErrorDetail(
-                    type = "INTERNAL_SERVER_ERROR",
-                    message = "Internal Server Error",
-                    status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    path = request.requestURI,
-                    data = null
-                )
-            ))
-    }
 
     @ExceptionHandler(InvalidBearerTokenException::class)
     fun handleInvalidTokenException(
@@ -82,5 +67,40 @@ class GlobalExceptionHandler {
                 )
             ))
     }
+
+    @ExceptionHandler(NoHandlerFoundException::class)
+    fun handleNoHandlerFoundException(
+        exception: Exception,
+        request: HttpServletRequest,
+    ): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse(
+                error = ErrorDetail(
+                    type = "NOT_FOUND",
+                    message = "Not Found",
+                    status = HttpStatus.NOT_FOUND.value(),
+                    path = request.requestURI,
+                    data = null
+                )
+            ))
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handlerOtherException(
+        exception: Exception,
+        request: HttpServletRequest,
+    ): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.internalServerError()
+            .body(ErrorResponse(
+                error = ErrorDetail(
+                    type = "INTERNAL_SERVER_ERROR",
+                    message = "Internal Server Error",
+                    status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    path = request.requestURI,
+                    data = null
+                )
+            ))
+    }
+
 
 }

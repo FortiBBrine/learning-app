@@ -122,4 +122,16 @@ class AuthController(
         userRepository.save(user)
     }
 
+    @PostMapping("/logout/all")
+    fun logoutEverywhere(
+        @RequestBody
+        payload: RefreshRequestDto
+    ) {
+        val user = tokenService.parseRefreshToken(payload.refreshToken)
+            ?: throw InvalidBearerTokenException("Invalid token")
+
+        user.tokens = mutableSetOf(payload.refreshToken)
+        userRepository.save(user)
+    }
+
 }
