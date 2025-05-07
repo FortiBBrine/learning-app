@@ -22,7 +22,7 @@ const AddRelationScreen = () => {
     const navigation = useNavigation<AddRelationScreenNavigationProp>()
 
     return (
-        <View style={{gap: 10}}>
+        <View style={{gap: 5, flex: 1}}>
             <Searchbar
                 placeholder={t("search")}
                 onChangeText={setSearchQuery}

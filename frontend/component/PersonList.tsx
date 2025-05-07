@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Pressable, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {UserDto} from "../api/relationApi";
 import {Avatar, IconButton, Text} from "react-native-paper";
@@ -18,7 +18,7 @@ const PersonList: FC<PersonListProps> = (props: PersonListProps) => {
     return (
         <ScrollView
             style={styles.list}
-            refreshControl={<RefreshControl onRefresh={props.onRefresh} refreshing={props.refreshing} />}
+            refreshControl={<RefreshControl onRefresh={props.onRefresh} refreshing={props.refreshing === true} />}
         >
 
             { props.relations.map((item, index) => (
