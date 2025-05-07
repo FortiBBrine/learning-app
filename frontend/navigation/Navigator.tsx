@@ -19,6 +19,7 @@ import {getProfile} from "../api/profileApi";
 import {usePeopleStore} from "../store/peopleStore";
 import ChangeSubjectsScreen from "../screens/ChangeSubjectsScreen";
 import SecurityScreen from "../screens/SecurityScreen";
+import ShareScreen from "../screens/ShareScreen";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -34,6 +35,7 @@ export type RootStackParamList = {
     ScheduleLesson: { person: UserDto };
     ChangeSubjects: undefined;
     Security: undefined;
+    Share: undefined;
 }
 
 export type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">
@@ -46,6 +48,7 @@ export type ScheduleLessonScreenNavigationProp = StackNavigationProp<RootStackPa
 export type ChangeSubjectsScreenNavigationProp = StackNavigationProp<RootStackParamList, "ChangeSubjects">
 export type ChatScreenNavigationProp = StackNavigationProp<RootStackParamList, "Chat">
 export type SecurityScreenNavigationProp = StackNavigationProp<RootStackParamList, "Security">
+export type ShareScreenNavigationProp = StackNavigationProp<RootStackParamList, "Share">
 
 export type ProfileScreenRouteProp = RouteProp<RootStackParamList, "Profile">
 export type ChatScreenRouteProp = RouteProp<RootStackParamList, "Chat">
@@ -89,6 +92,7 @@ const Navigator = () => {
                         <Stack.Screen options={{headerTitle: t("change-language")}} name={"ChangeLanguage"} component={ChangeLanguageScreen} />
                         <Stack.Screen options={{headerShown: false}} name={"ChangeSubjects"} component={ChangeSubjectsScreen} />
                         <Stack.Screen options={{headerShown: false}} name={"Security"} component={SecurityScreen} />
+                        <Stack.Screen options={{headerShown: false}} name={"Share"} component={ShareScreen} />
                     </> :
                     <>
                         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />

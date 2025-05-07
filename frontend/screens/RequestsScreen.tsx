@@ -50,12 +50,14 @@ const RequestsScreen = () => {
                     right={props =>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <IconButton
+                                {...props}
                                 icon="check"
                                 iconColor="green"
                                 size={20}
                                 onPress={() => handleApprove(scheduleRequest.id)}
                             />
                             <IconButton
+                                {...props}
                                 icon="close"
                                 iconColor="red"
                                 size={20}

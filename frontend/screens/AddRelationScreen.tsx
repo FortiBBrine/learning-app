@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 import {AddRelationScreenNavigationProp} from "../navigation/Navigator";
 import {usePeopleStore} from "../store/peopleStore";
 import PersonList from "../component/PersonList";
-import {Searchbar} from "react-native-paper";
+import {IconButton, Searchbar} from "react-native-paper";
 import {useTranslation} from "react-i18next";
 
 const AddRelationScreen = () => {
@@ -28,6 +28,12 @@ const AddRelationScreen = () => {
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 style={{margin: 10}}
+                right={props => (
+                    <IconButton
+                        icon={"qrcode"}
+                        size={20}
+                    />
+                )}
             />
 
             <PersonList

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 import {Button, SegmentedButtons, Text, TextInput} from "react-native-paper";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
@@ -62,55 +62,60 @@ const TuneScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            { profile && (
-                <>
-                    <TextInput
-                        label={t("name")}
-                        disabled={!nameEdit}
-                        value={name}
-                        onChangeText={setName}
-                        right={<TextInput.Icon icon="account-edit-outline" onPress={changeUserName} />}
-                    />
-                    <TextInput
-                        label={t("email")}
-                        disabled={!emailEdit}
-                        value={email}
-                        onChangeText={setEmail}
-                        right={<TextInput.Icon icon="account-edit-outline" onPress={changeUserEmail} />}
-                    />
-                    <Text variant={"bodyMedium"}>
-                        {t("rating")}: {profile.rating}
-                    </Text>
-                    <SegmentedButtons buttons={[
-                        {
-                            "value": "TEACHER",
-                            "label": t("teacher")
-                        },
-                        {
-                            "value": "STUDENT",
-                            "label": t("student")
-                        }
-                    ]} value={role} onValueChange={changeUserRole} />
-                </>
-            )}
+        <ScrollView>
+            <View style={styles.container}>
+                { profile && (
+                    <>
+                        <TextInput
+                            label={t("name")}
+                            disabled={!nameEdit}
+                            value={name}
+                            onChangeText={setName}
+                            right={<TextInput.Icon icon="account-edit-outline" onPress={changeUserName} />}
+                        />
+                        <TextInput
+                            label={t("email")}
+                            disabled={!emailEdit}
+                            value={email}
+                            onChangeText={setEmail}
+                            right={<TextInput.Icon icon="account-edit-outline" onPress={changeUserEmail} />}
+                        />
+                        <Text variant={"bodyMedium"}>
+                            {t("rating")}: {profile.rating}
+                        </Text>
+                        <SegmentedButtons buttons={[
+                            {
+                                "value": "TEACHER",
+                                "label": t("teacher")
+                            },
+                            {
+                                "value": "STUDENT",
+                                "label": t("student")
+                            }
+                        ]} value={role} onValueChange={changeUserRole} />
+                    </>
+                )}
 
-            <Button icon="book-edit" mode="contained-tonal" onPress={() => {
-                navigation.navigate("ChangeSubjects");
-            }}>{t("choose-subjects")}</Button>
-            <Button icon="translate" mode="contained-tonal" onPress={() => {
-                navigation.navigate("ChangeLanguage");
-            }}>{t("change-language")}</Button>
-            <Button icon="security" mode="contained-tonal" onPress={() => {
-                navigation.navigate("Security");
-            }}>{t("security")}</Button>
-            <Button icon="lock" mode="contained-tonal" onPress={async () => {
-                if (refreshToken != null) {
-                    await logoutAll(refreshToken);
-                }
-            }}>{t("logout-all")}</Button>
-            <Button icon="lock" mode="contained-tonal" onPress={logout}>{t("logout")}</Button>
-        </View>
+                <Button icon="book-edit" mode="contained-tonal" onPress={() => {
+                    navigation.navigate("ChangeSubjects");
+                }}>{t("choose-subjects")}</Button>
+                <Button mode="contained-tonal" icon={"share"} onPress={() => {
+                    navigation.navigate("Share");
+                }}>{t("share")}</Button>
+                <Button icon="translate" mode="contained-tonal" onPress={() => {
+                    navigation.navigate("ChangeLanguage");
+                }}>{t("change-language")}</Button>
+                <Button icon="security" mode="contained-tonal" onPress={() => {
+                    navigation.navigate("Security");
+                }}>{t("security")}</Button>
+                <Button icon="lock" mode="contained-tonal" onPress={async () => {
+                    if (refreshToken != null) {
+                        await logoutAll(refreshToken);
+                    }
+                }}>{t("logout-all")}</Button>
+                <Button icon="lock" mode="contained-tonal" onPress={logout}>{t("logout")}</Button>
+            </View>
+        </ScrollView>
     );
 };
 
@@ -118,6 +123,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         margin: 30,
+        marginVertical: 45,
         gap: 20,
         alignItems: "stretch",
         justifyContent: "center",

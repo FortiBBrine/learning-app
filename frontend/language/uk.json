@@ -87,5 +87,7 @@
 
   "all": "All",
   "by-request": "By request",
-  "nobody": "Nobody"
+  "nobody": "Nobody",
+
+  "share": "Share"
 }
