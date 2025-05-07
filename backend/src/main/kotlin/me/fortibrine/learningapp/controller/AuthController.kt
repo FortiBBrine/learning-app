@@ -46,7 +46,6 @@ class AuthController(
         val refreshToken = tokenService.createRefreshToken(user)
 
         user.tokens.add(refreshToken)
-        userRepository.save(user)
 
         return LoginResponseDto(
             accessToken = tokenService.createAccessToken(user),
@@ -71,22 +70,19 @@ class AuthController(
             })
         }
 
-        val user = User(
+        val user = userService.save(User(
             email = payload.email,
             name = payload.name,
             username = payload.username,
             password = hashService.hashBcrypt(payload.password),
-        )
+        ))
 
-        val savedUser = userService.save(user)
+        val refreshToken = tokenService.createRefreshToken(user)
 
-        val refreshToken = tokenService.createRefreshToken(savedUser)
-
-        savedUser.tokens.add(refreshToken)
-        userRepository.save(savedUser)
+        user.tokens.add(refreshToken)
 
         return LoginResponseDto(
-            accessToken = tokenService.createAccessToken(savedUser),
+            accessToken = tokenService.createAccessToken(user),
             refreshToken = refreshToken
         )
     }
@@ -119,7 +115,6 @@ class AuthController(
             throw InvalidBearerTokenException("Invalid token")
 
         user.tokens.remove(payload.refreshToken)
-        userRepository.save(user)
     }
 
     @PostMapping("/logout/all")

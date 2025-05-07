@@ -90,6 +90,7 @@ class GlobalExceptionHandler {
         exception: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
+        exception.printStackTrace()
         return ResponseEntity.internalServerError()
             .body(ErrorResponse(
                 error = ErrorDetail(
